@@ -17,7 +17,7 @@ function a = idm(params, consts)
 h_star = consts.h_0 + consts.T * params.v + (params.v * params.delta_v) / (2 * sqrt(consts.a_max * consts.b_max));
 
 %% Calculate current acceleration
-% a = consts.a_max * (1 - (params.v / consts.v_0)^consts.delta - (s_star / params.s)^2);
+% a = consts.a_max * (1 - (params.v / consts.v_0)^consts.delta - (h_star / params.h)^2);
 
 if h_star/params.h > 1
     a = consts.a_max * (1 - (h_star / params.h)^2);

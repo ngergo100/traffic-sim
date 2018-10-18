@@ -16,7 +16,7 @@ omega = 0*2*pi;
 dt = 0.01;
 Tend = 100;
 t(1) = 0;
-N = ((Tend - t(1)) / dt);
+N = ((Tend - t(1)) / dt) - 1;
 y(1)= 1;
 
 x1(1) = 71.5;       % Initial position of car 1
@@ -25,13 +25,13 @@ v1(1) = 130/3.6;    % Initial velocity of car 1 (36.1111 m/s)
 v2(1) = 130/3.6;    % Initial velocity of car 2 (36.1111 m/s)
 
 %% Compute the solution on the grid
-for i=1:N-1
+for i=1:N
     % Calculate current time stamp
     t(i + 1) = t(i) + dt;
     
     a = 0;
     v1(i + 1) = v1(i) + dt * a;
-    x1(i + 1) = x1(i) + dt * v1(i) + 1 / 2 * a * dt^2;
+    x1(i + 1) = x1(i) + dt * v1(i);
 
     params.v = v2(i);
     params.h = x1(i) - x2(i) - L;
@@ -39,7 +39,7 @@ for i=1:N-1
    
     a = idm(params, consts);
     v2(i + 1) = v2(i) + dt * a; 
-    x2(i + 1) = x2(i) + dt * v2(i) + 1 / 2 * a * dt^2;
+    x2(i + 1) = x2(i) + dt * v2(i);
 end
 
 figure
