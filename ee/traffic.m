@@ -9,7 +9,7 @@ consts.v_0 = 130/3.6;    %% limit speed
 consts.T = 1.8;          %% German recommendation at driving schools
 consts.h_0 = 2;          %% standstill minimum gap
 consts.delta = 4;        %% acceleration exponent
-L = 4.5;                    %% cars length
+L = 4.5;                 %% cars length
 omega = 0*2*pi;
 
 %% Grid parameters
@@ -19,26 +19,26 @@ t(1) = 0;
 N = ((Tend - t(1)) / dt) - 1;
 y(1)= 1;
 
-x1(1) = 71.5;       % Initial position of car 1
+x1(1) = 100;       % Initial position of car 1
 x2(1) = 0;          % Initial position of car 2
-v1(1) = 130/3.6;    % Initial velocity of car 1 (36.1111 m/s)
-v2(1) = 130/3.6;    % Initial velocity of car 2 (36.1111 m/s)
+v1(1) = 100/3.6;    % Initial velocity of car 1 (36.1111 m/s)
+v2(1) = 100/3.6;    % Initial velocity of car 2 (36.1111 m/s)
 
 %% Compute the solution on the grid
 for i=1:N
     % Calculate current time stamp
     t(i + 1) = t(i) + dt;
     
-    a = 0;
-    v1(i + 1) = v1(i) + dt * a;
+    a1 = 0;
+    v1(i + 1) = v1(i) + dt * a1;
     x1(i + 1) = x1(i) + dt * v1(i);
 
     params.v = v2(i);
     params.h = x1(i) - x2(i) - L;
     params.delta_v = v2(i) - v1(i);
    
-    a = idm(params, consts);
-    v2(i + 1) = v2(i) + dt * a; 
+    a2 = idm(params, consts);
+    v2(i + 1) = v2(i) + dt * a2; 
     x2(i + 1) = x2(i) + dt * v2(i);
 end
 
