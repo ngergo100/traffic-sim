@@ -11,12 +11,12 @@ consts.h_0 = 2;          %% standstill minimum gap
 consts.delta = 4;        %% acceleration exponent
 consts.L = 4.5;          %% cars length
 
-T = 20;
+T = 100;
 y0 = [
     0;        % Initial position of car 1
     100/3.6   % Initial velocity of car 1
     -100;     % Initial position of car 2
-    130/3.6   % Initial velocity of car 2
+    100/3.6   % Initial velocity of car 2
 ];
 
 [t,y] = ode45(@(t,y) idm(t, y, consts), [0 T], y0);
