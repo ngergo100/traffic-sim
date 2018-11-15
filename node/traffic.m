@@ -4,9 +4,7 @@ close all
 
 models = {
     0, 100/3.6, ChillModel;
-    -50, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5));
-    -100, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5));
-    -150, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5));
+    -50, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
 };
 
 for i=1:size(models)
@@ -17,7 +15,7 @@ end
 y0 = y0';
 
 T = 150;
-opts = odeset('RelTol',1e-4);
+opts = odeset('RelTol',1e-6);
 [t,y] = ode45(@(t,y) lane(t, y, models), [0 T], y0, opts);
 
 plotcount = size(models);
@@ -27,7 +25,7 @@ figure();
 for i=1:plotcount
    hold on;
    subplot(2,1,1)
-   plot(t,y(:,2*i))
+   plot(t,y(:,2*i)*3.6)
    legendInfoVelocity{i} = ['v_' num2str(i)];
 end
 
@@ -41,7 +39,7 @@ hold on;
 subplot(2,1,1)
 title('Velocity and Headway')
 legend(legendInfoVelocity)
-ylabel('v [m/s]')
+ylabel('v [km/h]')
 xlabel('t [s]')
 hold on;
 subplot(2,1,2)

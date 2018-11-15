@@ -1,22 +1,18 @@
-consts.a_max = 1.5;      %% 0.8 to 2.5 m/s^s
-consts.b_max = 1.67;     %% around 2 m/s^s
-consts.v_0 = 130/3.6;    %% limit speed
-consts.T = 1.8;          %% German recommendation at driving schools
-consts.h_0 = 2;          %% standstill minimum gap
-consts.delta = 4;        %% acceleration exponent
-L = 4.5;                 %% cars length
+clear
+clc
+close all
 
-starting=2;
+starting=7;
 ending=200;
-step=1;
+step=0.5;
 h_stac = starting:step:ending;
 
-for i=1:(ending-starting)/step
-    syms v_stac
-    eqn = consts.a_max * (1 - (v_stac/consts.v_0)^4 - ((consts.h_0 + v_stac * consts.T) / h_stac(i))^2) == 0;
-    sol(i)=vpasolve(eqn, v_stac, [0 100])*3.6;
+for i = 1:length(h_stac)
+    f = @(v_stac) idm_stac(v_stac, h_stac(i));
+    velocity(i) = fsolve(f, 100);
 end
 
-plot(sol)
-
-
+figure();
+plot(h_stac, velocity * 3.6)
+ylabel('v_{stac} [km/h]')
+xlabel('h_{stac} [m]')
