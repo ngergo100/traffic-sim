@@ -1,6 +1,6 @@
 classdef ChillModel
     methods
-        function dy = nextStep(~, ~, y, ~, ~)
+        function dy = next_step(~, ~, y, ~, ~)
             dy = [
                 y(2);
                 0

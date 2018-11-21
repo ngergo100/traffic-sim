@@ -18,7 +18,7 @@ classdef IDModel
             obj.delta = consts.delta;
             obj.L = consts.L;
         end
-        function dy = nextStep(obj, ~, y, x_l, v_l)
+        function dy = next_step(obj, ~, y, x_l, v_l)
             h_star = obj.h_0 + y(2) * obj.T  + (y(2) * (y(2) - v_l)) / (2 * sqrt(obj.a_max * obj.b_max));
             h = x_l - y(1) - obj.L;
             dy = [

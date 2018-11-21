@@ -1,13 +1,8 @@
-function [position_leading, velocity_leading] = find_leading(y, lane_numbers, current_car)
+function [position_leading, velocity_leading] = find_leading(sorted_traffic, current_car_data, lane)
 
-% positions, velocities, lane_numbers
-traffic = [y(1:2:end), y(2:2:end), lane_numbers];
-current_car_data = traffic(current_car,:);
-sorted_traffic = sortrows(traffic);
-
-position_indices_in_same_lane = find(sorted_traffic(:,3) == current_car_data(3));
+position_indices_in_same_lane = find((sorted_traffic(:,3) == lane) | (sorted_traffic(:,4) == current_car_data(4)));
 traffic_in_my_lane = sorted_traffic(position_indices_in_same_lane,:);
-my_index = find(traffic_in_my_lane(:,1) == current_car_data(1) & traffic_in_my_lane(:,2) == current_car_data(2));
+my_index = find(traffic_in_my_lane(:,1) == current_car_data(1) & traffic_in_my_lane(:,2) == current_car_data(2) & traffic_in_my_lane(:,3) == current_car_data(3));
 
 if size(traffic_in_my_lane, 1) > my_index
     leading_car_data = traffic_in_my_lane(my_index + 1,:);
