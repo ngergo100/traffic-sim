@@ -6,7 +6,7 @@ consts.v_0 = 130/3.6;    %% limit speed
 consts.T = 1.8;          %% German recommendation at driving schools
 consts.h_0 = 2;          %% standstill minimum gap
 consts.delta = 4;        %% acceleration exponent
-consts.L = 4.5;        %% acceleration exponent
+consts.L = 4.5;          %% acceleration exponent
 
-F = consts.a_max * (1 - (v_stac/consts.v_0)^4 - ((consts.h_0 + v_stac * consts.T) / (hstac - consts.L))^2);
+F = consts.a_max * (1 - (v_stac/consts.v_0)^4 - ((consts.h_0 + v_stac * consts.T) / hstac)^2);
 

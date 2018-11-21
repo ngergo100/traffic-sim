@@ -4,10 +4,15 @@ close all
 
 models = {
     0, 100/3.6, ChillModel, 1;
-    -20, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 1;
+    -20, 110/3.6, ChillModel, 2;
     -40, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 1;
-    -60, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 2;
+    -60, 110/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 2;
     -80, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 1;
+    -100, 110/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 2;
+    -120, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 1;
+    -140, 110/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 2;
+    -160, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 1;
+    -180, 110/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 2;
 };
 
 for i=1:size(models)
@@ -28,14 +33,14 @@ for i=1:plotcount
    hold on;
    subplot(2,1,1)
    plot(t,y(:,2*i)*3.6)
-   legendInfoVelocity{i} = ['v_' num2str(i)];
+   legendInfoVelocity{i} = ['v_{' num2str(i) '}'];
 end
 
 for i=2:plotcount
     hold on;
     subplot(2,1,2)
     plot(t,y(:,2*i-3)-y(:,2*i-1))
-    legendInfoHeadaway{i-1} = ['h_' num2str(i-1) '_-_' num2str(i)];
+    legendInfoHeadaway{i-1} = ['h_{' num2str(i-1) '-' num2str(i) '}'];
 end
 hold on;
 subplot(2,1,1)

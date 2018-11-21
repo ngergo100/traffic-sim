@@ -4,10 +4,7 @@ close all
 
 models = {
     0, 100/3.6, ChillModel;
-    -20, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-    -40, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-    -60, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-    -80, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    -50, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
 };
 
 for i=1:size(models)
@@ -34,7 +31,7 @@ end
 for i=2:plotcount
     hold on;
     subplot(2,1,2)
-    plot(t,y(:,2*i-3)-y(:,2*i-1))
+    plot(t,y(:,2*i-3)-y(:,2*i-1)-4.5)
     legendInfoHeadaway{i-1} = ['h_' num2str(i-1) '_-_' num2str(i)];
 end
 hold on;
