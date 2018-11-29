@@ -1,5 +1,5 @@
-function dy = lanes(t, y, models)
-
+function dy = lanes(t, y)
+global models
 identifiers = cat(1, models{:,1});
 lane_numbers = cat(1, models{:,5});
 traffic = [y(1 : 2 : end), y(2 : 2 : end), lane_numbers, identifiers];
@@ -56,7 +56,7 @@ for i=1:size(models, 1)
   end
   
   chosen_direction = mobil(mobil_params);
-  models{i,5} = 91;%chosen_direction.chosen_lane;
+  models{i,5} = chosen_direction.chosen_lane;
 
   dy(2*i-1)= chosen_direction.a_c(1);
   dy(2*i)= chosen_direction.a_c(2);

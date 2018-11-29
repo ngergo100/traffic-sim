@@ -5,6 +5,7 @@ close all
 %% Define Models
 % parameters in models
 % id, initial position, initial velocity, ACC model, lane
+global models
 models = {
     1, 0, 100/3.6, ChillModel, 1;
     2, -20, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5)), 1;
@@ -37,7 +38,7 @@ T = 150;
 opts = odeset('RelTol',1e-5);
 
 %% Solving
-[t,y] = ode45(@(t,y) lanes(t, y, models), [0 T], y0, opts);
+[t,y] = ode45(@(t,y) lanes(t, y), [0 T], y0, opts);
 
 plotcount = size(models,1);
 figure();
