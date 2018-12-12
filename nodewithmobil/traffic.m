@@ -4,26 +4,27 @@ close all
 
 %% Define Models
 % parameters in models
-% id, initial position, initial velocity, ACC model, lane
+% id, lane, initial position, initial velocity, ACC model
 global models possible_lane_numbers
 models = {
-    1, 0, 110/3.6, ChillModel;
-    2, -100, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-    3, -200, 90/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    1, 1, 0, 100/3.6, ChillModel;
+    2, 1, -100, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    3, 1, -200, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    4, 1, -300, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
 };
-lane_config = [1;1;1];
-possible_lane_numbers = [1;2];
+lane_config = cat(1, models{:,2});
+possible_lane_numbers = [1;2;3];
 
 %% Initialization
 for i=1:size(models, 1)
-   y0(2*i-1) = models{i,2};
-   y0(2*i) = models{i,3};
+   y0(2*i-1) = models{i,3};
+   y0(2*i) = models{i,4};
 end
 y0 = y0';
 
 %% Duration
 t0 = 0;
-T = 100;
+T = 200;
 dt = 0.5;
 t(1) = 0;
 N = ((T - t(1)) / dt) - 1;
@@ -42,12 +43,28 @@ velocities = y(2:2:end,:);
 
 %% 
 velocity_figure = figure('Name', 'Velocities', 'NumberTitle', 'off');
+velocity_count = size(velocities,1);
 
-for i=1:size(velocities,1)
-    hold on;
-    velocity = velocities(i,:);
-    lane = lane_config(i,:);
-    plot(t(lane==1), velocity(lane==1),'+', t(lane==2), velocity(lane==2),'*')
+for i=1:length(possible_lane_numbers)
+    clear legendInfoVelocity
+    for j=1:velocity_count
+        color = [1 - j/velocity_count, j/velocity_count, j/velocity_count];
+        hold on;
+        subplots(i) = subplot(length(possible_lane_numbers),1,i);
+        velocity = velocities(j,:);
+        lane = lane_config(j,:);
+        plot(t(lane==possible_lane_numbers(i)), velocity(lane==possible_lane_numbers(i)), '.', 'color', color)
+        if ismember(possible_lane_numbers(i), lane) == 1
+            if exist('legendInfoVelocity','var') == 1
+            legendInfoVelocity{length(legendInfoVelocity) + 1} = ['v_{' num2str(models{j,1}) '}'];
+            else
+            legendInfoVelocity{1} = ['v_{' num2str(models{i,1}) '}'];
+            end
+        end
+    end
+    
+    legend(legendInfoVelocity)
 end
+set(subplots,'YLim',[min(velocities(:))-0.5 max(velocities(:))+0.5])
 
 

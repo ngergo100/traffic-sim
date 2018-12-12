@@ -15,16 +15,16 @@ for i=1:size(models, 1)
   mobil_params.current_lane = current_car_data(3);
   
   leading_car = find_leading(sorted_traffic, current_car_data, current_car_data(3));
-  mobil_params.a_c = models{i, 4}.next_step(t, [current_car_data(1); current_car_data(2)], leading_car.position, leading_car.velocity);
-  if mobil_params.left_lane ~= 0 
+  mobil_params.a_c = models{i, 5}.next_step(t, [current_car_data(1); current_car_data(2)], leading_car);
+  if mobil_params.left_lane ~= 0
       left_leading_car = find_leading(sorted_traffic, current_car_data, mobil_params.left_lane);
-      mobil_params.a_c_left = models{i, 4}.next_step(t, [current_car_data(1); current_car_data(2)], left_leading_car.position, left_leading_car.velocity);
+      mobil_params.a_c_left = models{i, 5}.next_step(t, [current_car_data(1); current_car_data(2)], left_leading_car);
       left_following_car = find_leading(reverse_sorted_traffic, current_car_data, mobil_params.left_lane);
       if left_following_car.identifier ~=0
         left_following_car_index = find(traffic(:,4) == left_following_car.identifier);
-        left_following_car_model = models{left_following_car_index, 4};
-        mobil_params.a_n_left = left_following_car_model.next_step(t, [left_following_car.position; left_following_car.velocity], current_car_data(1), current_car_data(2));
-        mobil_params.b_max_left = models{left_following_car_index, 4}.b_max;
+        left_following_car_model = models{left_following_car_index, 5};
+        mobil_params.a_n_left = left_following_car_model.next_step(t, [left_following_car.position; left_following_car.velocity], struct('position', current_car_data(1), 'velocity', current_car_data(2), 'identifier',current_car_data(4)));
+        mobil_params.b_max_left = models{left_following_car_index, 5}.b_max;
       else 
         mobil_params.a_n_left = [0,0];
         mobil_params.b_max_left = 1;
@@ -37,13 +37,13 @@ for i=1:size(models, 1)
   
   if mobil_params.right_lane ~=0
       right_leading_car = find_leading(sorted_traffic, current_car_data, mobil_params.right_lane);
-      mobil_params.a_c_right = models{i, 4}.next_step(t, [current_car_data(1); current_car_data(2)], right_leading_car.position, right_leading_car.velocity);
+      mobil_params.a_c_right = models{i, 5}.next_step(t, [current_car_data(1); current_car_data(2)], right_leading_car);
       right_following_car = find_leading(reverse_sorted_traffic, current_car_data, mobil_params.right_lane);
       if right_following_car.identifier ~=0
         right_following_car_index = find(traffic(:,4) == right_following_car.identifier);
-        right_following_car_model = models{right_following_car_index, 4};
-        mobil_params.a_n_right = right_following_car_model.next_step(t, [right_following_car.position; right_following_car.velocity],current_car_data(1), current_car_data(2));
-        mobil_params.b_max_right = models{right_following_car_index, 4}.b_max;
+        right_following_car_model = models{right_following_car_index, 5};
+        mobil_params.a_n_right = right_following_car_model.next_step(t, [right_following_car.position; right_following_car.velocity], struct('position', current_car_data(1),'velocity', current_car_data(2), 'identifier',current_car_data(4)));
+        mobil_params.b_max_right = models{right_following_car_index, 5}.b_max;
       else 
         mobil_params.a_n_right = [0,0];
         mobil_params.b_max_right = 1;
@@ -54,7 +54,7 @@ for i=1:size(models, 1)
       mobil_params.b_max_right = -1;
   end
   
-  chosen_direction = mobil(mobil_params);
+  chosen_direction = mobil(mobil_params, t);
   next_lane_numbers(i) = chosen_direction.chosen_lane;
 
   dy(2*i-1)= chosen_direction.a_c(1);
