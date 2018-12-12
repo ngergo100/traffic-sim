@@ -18,13 +18,21 @@ classdef IDModel
             obj.delta = consts.delta;
             obj.L = consts.L;
         end
-        function dy = next_step(obj, ~, y, x_l, v_l)
-            h_star = obj.h_0 + y(2) * obj.T  + (y(2) * (y(2) - v_l)) / (2 * sqrt(obj.a_max * obj.b_max));
-            h = x_l - y(1) - obj.L;
-            dy = [
-                y(2);
-                obj.a_max * (1 - (y(2) / obj.v_0)^obj.delta - (h_star / h)^2)
+        function dy = next_step(obj, ~, y, leading_car)
+            if leading_car.identifier ~= 0
+                h_star = obj.h_0 + y(2) * obj.T  + (y(2) * (y(2) - leading_car.velocity)) / (2 * sqrt(obj.a_max * obj.b_max));
+                h = leading_car.position - y(1) - obj.L;
+                dy = [
+                    y(2);
+                    obj.a_max * (1 - (y(2) / obj.v_0)^obj.delta - (h_star / h)^2)
                 ];
+            else
+                dy = [
+                    y(2);
+                    obj.a_max * (1 - (y(2) / obj.v_0)^obj.delta)
+                ];
+            end
+            
         end
     end
 end
