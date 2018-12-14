@@ -7,10 +7,14 @@ close all
 % id, lane, initial position, initial velocity, ACC model
 global models possible_lane_numbers
 models = {
-    1, 1, 0, 100/3.6, ChillModel;
-    2, 1, -100, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-    3, 1, -200, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-    4, 1, -300, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    11, 1, 0, 100/3.6, ChillModel;
+    22, 1, -100, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    33, 1, -200, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    44, 1, -300, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    55, 1, -400, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    66, 1, -500, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    77, 1, -600, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+    88, 1, -700, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
 };
 lane_config = cat(1, models{:,2});
 possible_lane_numbers = [1;2];
@@ -25,7 +29,7 @@ y = y0;
 
 % Time initialization
 t0 = 0;
-T = 100;
+T = 150;
 dt = 0.5;
 t(1) = 0;
 N = ((T - t(1)) / dt) - 1;
@@ -42,18 +46,20 @@ end
 identifiers = cat(1, models{:,1});
 positions = y(1:2:end,:);
 velocities = y(2:2:end,:);
+lane_count = length(possible_lane_numbers);
+cars_in_lane_count = prepare_lane_count(possible_lane_numbers, lane_config);
 
 % Headways
 headway_figure = figure('Name', 'Headways', 'NumberTitle', 'off');
 headways = prepare_headways(positions, lane_config, identifiers);
 headway_count = size(headways, 1);
 
-for i=1:length(possible_lane_numbers)
+for i=1:lane_count
     clear legendInfoHeadway
     for j=1:headway_count
         color = [1 - j/headway_count, j/headway_count, j/headway_count];
         hold on;
-        subplots(i) = subplot(length(possible_lane_numbers),1,i);
+        subplots(i) = subplot(lane_count+1,1,i);
         headway = headways(j,:);
         lane = lane_config(j,:);
         plot(t(lane==possible_lane_numbers(i)), headway(lane==possible_lane_numbers(i)), '.', 'color', color)
@@ -65,20 +71,28 @@ for i=1:length(possible_lane_numbers)
             end
         end
     end
+    xlabel('t [s]')
+    ylabel('Headway [m/s]')
+    title(['Lane #' num2str(possible_lane_numbers(i))])
     legend(legendInfoHeadway)
 end
 set(subplots,'YLim',[min(headways(:))-1 max(headways(:))+1])
+
+subplot(lane_count+1,1,lane_count+1)
+plot(t,cars_in_lane_count)
+xlabel('t [s]')
+ylabel('Car count')
 
 % Velocities
 velocity_figure = figure('Name', 'Velocities', 'NumberTitle', 'off');
 velocity_count = size(velocities, 1);
 
-for i=1:length(possible_lane_numbers)
+for i=1:lane_count
     clear legendInfoVelocity
     for j=1:velocity_count
         color = [1 - j/velocity_count, j/velocity_count, j/velocity_count];
         hold on;
-        subplots(i) = subplot(length(possible_lane_numbers),1,i);
+        subplots(i) = subplot(lane_count+1,1,i);
         velocity = velocities(j,:);
         lane = lane_config(j,:);
         plot(t(lane==possible_lane_numbers(i)), velocity(lane==possible_lane_numbers(i)), '.', 'color', color)
@@ -90,6 +104,14 @@ for i=1:length(possible_lane_numbers)
             end
         end
     end
+    xlabel('t [s]')
+    ylabel('Velocity [m/s]')
+    title(['Lane #' num2str(possible_lane_numbers(i))]) 
     legend(legendInfoVelocity)
 end
 set(subplots,'YLim',[min(velocities(:))-0.5 max(velocities(:))+0.5])
+
+subplot(lane_count+1,1,lane_count+1)
+plot(t,cars_in_lane_count)
+xlabel('t [s]')
+ylabel('Car count')
