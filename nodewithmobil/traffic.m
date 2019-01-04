@@ -7,11 +7,11 @@ close all
 % id, lane, initial position, initial velocity, ACC model
 global models possible_lane_numbers
 models = {
-    11, 1, 0, 100/3.6, ChillModel;
-    22, 1, -100, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-    33, 1, -200, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-    44, 1, -300, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-%     55, 1, -400, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+     11, 1, 0, 100/3.6, ChillModel;
+     22, 1, -100, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+     33, 1, -200, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+     44, 1, -300, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+     55, 1, -400, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
 %     66, 1, -500, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
 %     77, 1, -600, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
 %     88, 1, -700, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
@@ -29,7 +29,7 @@ y = y0;
 
 % Time initialization
 t0 = 0;
-T = 50;
+T = 150;
 dt = 0.5;
 t(1) = 0;
 N = ((T - t(1)) / dt) - 1;
@@ -122,11 +122,11 @@ ylabel('Car count')
 v = VideoWriter('video','MPEG-4');
 v.Quality = 50;
 open(v);
-ratio = 1.5;
-width = 900;
-fig = figure('Renderer', 'painters', 'Position', [10 10 width width/ratio]);
+ratio = 3/2;
+height = 600;
+fig = figure('Renderer', 'painters', 'Position', [0 0 height*ratio height]);
 [img, map, alphachannel] = imread('bugattismall.png');
-carToFollow = 33;
+carToFollow = 11;
 indexOfChosenCar = find(identifiers==carToFollow);
 
 % Uncomment these lines to see full highway (cars will be too small)
@@ -139,17 +139,19 @@ for i = 1:size(positions,2)
         
         % Group follower
         % Minimum current position to maximum current position
-        %xlimit = [min(positions(:,i))-50 max(positions(:,i))+50];
+        xlimit = [min(positions(:,i))-10 max(positions(:,i))+10];
         
         % Car follower
-        xlimit = [min(positions(indexOfChosenCar,i))-100 max(positions(indexOfChosenCar,i))+100];
+        %xlimit = [min(positions(indexOfChosenCar,i))-100 max(positions(indexOfChosenCar,i))+100];
         
-        ylimit = (xlimit(2) - xlimit(1))/ratio;
+        ylimit = [-(xlimit(2) - xlimit(1))/2/ratio (xlimit(2) - xlimit(1))/2/ratio];
         xlim(xlimit);
-        ylim([-ylimit/2 ylimit/2]);
+        ylim(ylimit);
         xPos = positions(j,i);
-        yPos = lane_config(j,i)*4;
-        image('CData',img,'XData', [xPos - models{j,5}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel);
+        yPos = lane_config(j,i)*10;
+        image('CData',img,'XData', [xPos - models{j,5}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel);        
+        txt = num2str(identifiers(j));
+        text(xPos,yPos,txt)
     end
     writeVideo(v,getframe);
 end
