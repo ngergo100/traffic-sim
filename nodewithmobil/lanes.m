@@ -1,6 +1,6 @@
 function [dy, next_lane_numbers] = lanes(t, y, lane_numbers)
 
-global models possible_lane_numbers
+global models possible_lane_numbers latest_lane_changes
 
 %% Initial settings
 % Get identifiers for all cars
@@ -11,14 +11,14 @@ traffic = [y(1 : 2 : end), y(2 : 2 : end), lane_numbers, identifiers];
 sorted_traffic = sortrows(traffic);
 % Reverse sort traffic matrix based on the position
 reverse_sorted_traffic = flipud(sorted_traffic);
-% Create an empty array for the next loops initial lanes
+% Create an empty array for the next loop's initial lanes
 next_lane_numbers = zeros(length(lane_numbers), 1);
 
 %% Loop over all car models
-
 for i=1:size(models, 1)
   % i-th car's position, velocity, lane and id 
   current_car_data = traffic(i,:);
+  
   
   % Current car's left lane and right lane
   possible_left_lane = current_car_data(3) - 1;
@@ -34,6 +34,7 @@ for i=1:size(models, 1)
   % leader
   mobil_params.a_c = models{i, 5}.next_step(t, [current_car_data(1); current_car_data(2)], leading_car);
   
+  if latest_lane_changes(i) + models{i, 5}.time_to_change_lane <= t
   % If a left lane exist
   if mobil_params.left_lane ~= 0
       % Find current car's leader if it would in the left lane
@@ -81,10 +82,19 @@ for i=1:size(models, 1)
   end
   
   chosen_direction = mobil(mobil_params, t);
+  if mobil_params.current_lane ~= chosen_direction.chosen_lane
+      latest_lane_changes(i) = t;
+  end
   next_lane_numbers(i) = chosen_direction.chosen_lane;
 
   dy(2*i-1)= chosen_direction.a_c(1);
   dy(2*i)= chosen_direction.a_c(2);
+  
+  else
+  next_lane_numbers(i) = mobil_params.current_lane;
+  dy(2*i-1)= mobil_params.a_c(1);
+  dy(2*i)= mobil_params.a_c(2);
+  end
 end
 
 dy = dy';

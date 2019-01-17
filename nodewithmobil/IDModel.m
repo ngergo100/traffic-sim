@@ -7,6 +7,7 @@ classdef IDModel
         h_0
         delta
         L
+        time_to_change_lane
     end
     methods
         function obj = IDModel(consts)
@@ -17,6 +18,7 @@ classdef IDModel
             obj.h_0 = consts.h_0;
             obj.delta = consts.delta;
             obj.L = consts.L;
+            obj.time_to_change_lane = consts.time_to_change_lane;
         end
         function dy = next_step(obj, ~, y, leading_car)
             if leading_car.identifier ~= 0
