@@ -5,18 +5,19 @@ close all
 %% Define the model
 % parameters in models
 % id, lane, initial position, initial velocity, ACC model
-global models possible_lane_numbers
+global models possible_lane_numbers latest_lane_changes
 models = {
      11, 1, 0, 100/3.6, ChillModel;
-     22, 1, -100, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-     33, 1, -200, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-     44, 1, -300, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-     55, 1, -400, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-     66, 1, -500, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-     77, 1, -600, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-     88, 1, -700, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
+     22, 1, -100, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
+     33, 1, -200, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
+     44, 1, -300, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
+     55, 1, -400, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
+     66, 1, -500, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
+     77, 1, -600, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
+     88, 1, -700, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
 };
 lane_config = cat(1, models{:,2});
+latest_lane_changes = zeros(length(lane_config),1);
 possible_lane_numbers = [1;2;3];
 
 %% Initialization
@@ -128,17 +129,14 @@ fig = figure('Renderer', 'painters', 'Position', [0 0 width width*ratio]);
 [img, map, alphachannel] = imread('bugattismall.png');
 carToFollow = 11;
 indexOfChosenCar = find(identifiers==carToFollow);
-
-% Uncomment these lines to see full highway (cars will be too small)
 path_limit = [min(positions(:)) max(positions(:))];
-% ylimit = xlimit(2) - xlimit(1);
 
 for i = 1:size(positions,2)
     clf(fig)
     for j = 1:length(possible_lane_numbers)-1
         path = path_limit(1);
         while path < path_limit(2)
-            plot([path path+5],[(possible_lane_numbers(j)+0.5)*10 (possible_lane_numbers(j)+0.5)*10],'r');
+            plot([path path+5],[(possible_lane_numbers(j)+0.5)*10 (possible_lane_numbers(j)+0.5)*10],'b');
             path = path + 8;
             hold on;
         end
