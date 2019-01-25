@@ -2,7 +2,8 @@ classdef ChillModel
     properties
         b_max = 1.67;
         L = 4.5
-        time_to_change_lane = 0
+        time_to_change_lane = 2
+        lane_change_duration = 2
     end
     
     methods
