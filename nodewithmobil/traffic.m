@@ -9,12 +9,12 @@ global models possible_lane_numbers latest_lane_changes_start latest_lane_change
 models = {
      11, 1, 0, 0,   0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
      22, 1, 0, -10, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
-     33, 1, 0, -20, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 10, 'lane_change_duration',4));
-     44, 1, 0, -30, 0/3.6, IDModel(struct('a_max',0.5, 'b_max',1.67, 'v_0',40/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 10, 'lane_change_duration',4));
-     55, 1, 0, -40, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
-     66, 1, 0, -50, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
-     77, 1, 0, -60, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
-     88, 1, 0, -70, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
+     33, 1, 0, -20, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
+     44, 1, 0, -30, 0/3.6, IDModel(struct('a_max',0.7, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 20, 'time_to_change_lane', 2, 'lane_change_duration',5));
+     55, 1, 0, -60, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
+     66, 1, 0, -70, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
+     77, 1, 0, -80, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
+     88, 1, 0, -90, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
 };
 
 lane_config_source = cat(1, models{:,2});
@@ -165,8 +165,9 @@ for i = 1:size(positions,2)
             yPos = lane_config_source(j,i)*10;
         end
 %         image('CData',img,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel);
-        rectangle('Position',[xPos yPos-1 models{j,6}.L 2])
-        text(xPos+4, yPos, num2str(identifiers(j)))
+        rectangle('Position',[xPos-models{j,6}.L yPos-1 models{j,6}.L 2])
+        textToWrite = [num2str(identifiers(j)) ' ' num2str(velocities(j,i)*3.6,2)];
+        text(xPos-models{j,6}.L + 0.1, yPos, textToWrite)
     end
     legend(cellstr(num2str(t(i))));
     writeVideo(v,getframe);

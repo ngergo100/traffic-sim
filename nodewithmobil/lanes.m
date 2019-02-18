@@ -4,9 +4,11 @@ global models possible_lane_numbers latest_lane_changes_start latest_lane_change
 
 %% Initial settings
 % Get identifiers for all cars
-identifiers = cat(1, models{:,1}); 
+identifiers = cat(1, models{:, 1});
+% Get lenfth for all cars
+lengths =  arrayfun(@(a) a.L, cat(1, models{:, 6}));
 % Create matrix with position, velocity, current lane and ids at a given t
-traffic = [y(1 : 2 : end), y(2 : 2 : end), source_lane_numbers, target_lane_numbers, identifiers];
+traffic = [y(1 : 2 : end), y(2 : 2 : end), source_lane_numbers, target_lane_numbers, identifiers, lengths];
 % Sort traffic matrix based on the position
 sorted_traffic = sortrows(traffic);
 % Reverse sort traffic matrix based on the position
@@ -49,7 +51,7 @@ for i=1:size(models, 1)
       if left_following_car.identifier ~=0
         left_following_car_index = find(traffic(:,5) == left_following_car.identifier);
         left_following_car_model = models{left_following_car_index, 6};
-        mobil_params.a_n_left = left_following_car_model.next_step(t, [left_following_car.position; left_following_car.velocity], struct('position', current_car_data(1), 'velocity', current_car_data(2), 'identifier',current_car_data(5)));
+        mobil_params.a_n_left = left_following_car_model.next_step(t, [left_following_car.position; left_following_car.velocity], struct('position', current_car_data(1), 'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
         mobil_params.b_max_left = models{left_following_car_index, 6}.b_max;
       else 
         mobil_params.a_n_left = [0,0];
@@ -72,7 +74,7 @@ for i=1:size(models, 1)
       if right_following_car.identifier ~=0
         right_following_car_index = find(traffic(:,5) == right_following_car.identifier);
         right_following_car_model = models{right_following_car_index, 6};
-        mobil_params.a_n_right = right_following_car_model.next_step(t, [right_following_car.position; right_following_car.velocity], struct('position', current_car_data(1),'velocity', current_car_data(2), 'identifier',current_car_data(5)));
+        mobil_params.a_n_right = right_following_car_model.next_step(t, [right_following_car.position; right_following_car.velocity], struct('position', current_car_data(1),'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
         mobil_params.b_max_right = models{right_following_car_index, 6}.b_max;
       else 
         mobil_params.a_n_right = [0,0];

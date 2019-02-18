@@ -5,7 +5,7 @@ my_index = find(traffic_in_my_lane(:,5) == current_car_data(5));
 
 if size(traffic_in_my_lane, 1) > my_index
     leading_car_data = traffic_in_my_lane(my_index + 1,:);
-    car = struct('position', leading_car_data(1),'velocity', leading_car_data(2), 'identifier',leading_car_data(5));
+    car = struct('position', leading_car_data(1),'velocity', leading_car_data(2), 'identifier',leading_car_data(5), 'L',leading_car_data(6));
 else
     car = struct('identifier', 0);
 end
