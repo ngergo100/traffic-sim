@@ -4,26 +4,29 @@ close all
 
 %% Define the model
 % parameters in models
-% id, lane, initial position, initial velocity, ACC model
-global models possible_lane_numbers latest_lane_changes
+% id, sourcelane, targetlane, initial position, initial velocity, ACC model
+global models possible_lane_numbers latest_lane_changes_start latest_lane_changes_end
 models = {
-     11, 1, 0, 100/3.6, ChillModel;
-     22, 1, -100, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
-     33, 1, -200, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
-     44, 1, -300, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
-     55, 1, -400, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',120/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
-     66, 1, -500, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
-     77, 1, -600, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
-     88, 1, -700, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2));
+     11, 1, 0, 0,   0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
+     22, 1, 0, -10, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
+     33, 1, 0, -20, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 10, 'lane_change_duration',4));
+     44, 1, 0, -30, 0/3.6, IDModel(struct('a_max',0.5, 'b_max',1.67, 'v_0',40/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 10, 'lane_change_duration',4));
+     55, 1, 0, -40, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
+     66, 1, 0, -50, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
+     77, 1, 0, -60, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
+     88, 1, 0, -70, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5, 'time_to_change_lane', 2, 'lane_change_duration',2));
 };
-lane_config = cat(1, models{:,2});
-latest_lane_changes = zeros(length(lane_config),1);
-possible_lane_numbers = [1;2;3];
+
+lane_config_source = cat(1, models{:,2});
+lane_config_target = cat(1, models{:,3});
+latest_lane_changes_start = zeros(length(lane_config_target),1);
+latest_lane_changes_end = zeros(length(lane_config_source),1);
+possible_lane_numbers = [1;2];
 
 %% Initialization
 for i=1:size(models, 1)
-   y0(2*i-1) = models{i,3};
-   y0(2*i) = models{i,4};
+   y0(2*i-1) = models{i,4};
+   y0(2*i) = models{i,5};
 end
 y0 = y0';
 y = y0;
@@ -37,10 +40,11 @@ N = ((T - t(1)) / dt) - 1;
 
 %% Solving
 for i=1:N
-    t(i + 1) = t(i) + dt;
-    [dy, next_lanes] = lanes(t(i), y(:,i), lane_config(:,i));
-    y(:,i + 1) = y(:,i) + dt * dy;
-    lane_config(:,i + 1) = next_lanes;
+    t(i+1) = t(i) + dt;
+    [dy, next_source_lanes, next_target_lanes] = lanes(t(i), y(:,i), lane_config_source(:,i), lane_config_target(:,i));
+    y(:,i+1) = y(:,i) + dt * dy;
+    lane_config_source(:,i+1) = next_source_lanes;
+    lane_config_target(:,i+1) = next_target_lanes;
 end
 
 %% Post processing
@@ -48,11 +52,11 @@ identifiers = cat(1, models{:,1});
 positions = y(1:2:end,:);
 velocities = y(2:2:end,:);
 lane_count = length(possible_lane_numbers);
-cars_in_lane_count = prepare_lane_count(possible_lane_numbers, lane_config);
+cars_in_lane_count = prepare_lane_count(possible_lane_numbers, lane_config_source);
 
 % Headways
 headway_figure = figure('Name', 'Headways', 'NumberTitle', 'off');
-headways = prepare_headways(positions, lane_config, identifiers);
+headways = prepare_headways(positions, lane_config_source, identifiers);
 headway_count = size(headways, 1);
 
 for i=1:lane_count
@@ -62,7 +66,7 @@ for i=1:lane_count
         hold on;
         subplots(i) = subplot(lane_count+1,1,i);
         headway = headways(j,:);
-        lane = lane_config(j,:);
+        lane = lane_config_source(j,:);
         plot(t(lane==possible_lane_numbers(i)), headway(lane==possible_lane_numbers(i)), '.', 'color', color)
         if ismember(possible_lane_numbers(i), lane) == 1
             if exist('legendInfoHeadway','var') == 1
@@ -96,7 +100,7 @@ for i=1:lane_count
         hold on;
         subplots(i) = subplot(lane_count+1,1,i);
         velocity = velocities(j,:);
-        lane = lane_config(j,:);
+        lane = lane_config_source(j,:);
         plot(t(lane==possible_lane_numbers(i)), velocity(lane==possible_lane_numbers(i)), '.', 'color', color)
         if ismember(possible_lane_numbers(i), lane) == 1
             if exist('legendInfoVelocity','var') == 1
@@ -123,7 +127,7 @@ ylabel('Car count')
 v = VideoWriter('video','MPEG-4');
 v.Quality = 50;
 open(v);
-ratio = 150/1200;
+ratio = 400/1200;
 width = 1200;
 fig = figure('Renderer', 'painters', 'Position', [0 0 width width*ratio]);
 [img, map, alphachannel] = imread('bugattismall.png');
@@ -136,8 +140,8 @@ for i = 1:size(positions,2)
     for j = 1:length(possible_lane_numbers)-1
         path = path_limit(1);
         while path < path_limit(2)
-            plot([path path+5],[(possible_lane_numbers(j)+0.5)*10 (possible_lane_numbers(j)+0.5)*10],'b');
-            path = path + 8;
+            plot([path path+8],[(possible_lane_numbers(j)+0.5)*10 (possible_lane_numbers(j)+0.5)*10],'b');
+            path = path + 30;
             hold on;
         end
     end
@@ -154,10 +158,17 @@ for i = 1:size(positions,2)
         xlim(xlimit);
         ylim(ylimit);
         xPos = positions(j,i);
-        yPos = lane_config(j,i)*10;
-        image('CData',img,'XData', [xPos - models{j,5}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel);        
-        text(xPos, yPos, num2str(identifiers(j)))
+        
+        if lane_config_target(j,i) ~= 0
+            yPos = (lane_config_source(j,i) + lane_config_target(j,i)) / 2 * 10;
+        else
+            yPos = lane_config_source(j,i)*10;
+        end
+%         image('CData',img,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel);
+        rectangle('Position',[xPos yPos-1 models{j,6}.L 2])
+        text(xPos+4, yPos, num2str(identifiers(j)))
     end
+    legend(cellstr(num2str(t(i))));
     writeVideo(v,getframe);
 end
 close(v);
