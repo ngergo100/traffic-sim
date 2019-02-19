@@ -36,6 +36,8 @@ for i=1:size(models, 1)
   % Calculate what would happen if current car would go straight behind its
   % leader
   mobil_params.a_c = models{i, 6}.next_step(t, [current_car_data(1); current_car_data(2)], leading_car);
+  mobil_params.current_position = current_car_data(1);
+  mobil_params.length = current_car_data(6);
   
   % if the ith target lane is 0, which means ith car isn't 
   % changing lanes currently
@@ -53,14 +55,17 @@ for i=1:size(models, 1)
         left_following_car_model = models{left_following_car_index, 6};
         mobil_params.a_n_left = left_following_car_model.next_step(t, [left_following_car.position; left_following_car.velocity], struct('position', current_car_data(1), 'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
         mobil_params.b_max_left = models{left_following_car_index, 6}.b_max;
+        mobil_params.current_position_left_car = traffic(left_following_car_index,1);
       else 
         mobil_params.a_n_left = [0,0];
         mobil_params.b_max_left = 1;
+        mobil_params.current_position_left_car = mobil_params.current_position - mobil_params.length;
       end
   else 
      mobil_params.a_c_left = [0,0];
      mobil_params.a_n_left = [0,0];
      mobil_params.b_max_left = -1;
+     mobil_params.current_position_left_car = mobil_params.length;
   end
   
   % If a right lane exist
@@ -76,14 +81,17 @@ for i=1:size(models, 1)
         right_following_car_model = models{right_following_car_index, 6};
         mobil_params.a_n_right = right_following_car_model.next_step(t, [right_following_car.position; right_following_car.velocity], struct('position', current_car_data(1),'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
         mobil_params.b_max_right = models{right_following_car_index, 6}.b_max;
+        mobil_params.current_position_right_car = traffic(right_following_car_index,1);
       else 
         mobil_params.a_n_right = [0,0];
         mobil_params.b_max_right = 1;
+        mobil_params.current_position_right_car = mobil_params.current_position - mobil_params.length;
       end
   else 
       mobil_params.a_c_right = [0,0];
       mobil_params.a_n_right = [0,0];
       mobil_params.b_max_right = -1;
+      mobil_params.current_position_right_car = mobil_params.length;
   end
   
     chosen_direction = mobil(mobil_params, t);
