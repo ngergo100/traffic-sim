@@ -36,6 +36,7 @@ for i=1:size(models, 1)
   % Calculate what would happen if current car would go straight behind its
   % leader
   mobil_params.a_c = models{i, 6}.next_step(t, [current_car_data(1); current_car_data(2)], leading_car);
+  mobil_params.current_position = current_car_data(1);
   
   % if the ith target lane is 0, which means ith car isn't 
   % changing lanes currently
@@ -51,16 +52,17 @@ for i=1:size(models, 1)
       if left_following_car.identifier ~=0
         left_following_car_index = find(traffic(:,5) == left_following_car.identifier);
         left_following_car_model = models{left_following_car_index, 6};
-        mobil_params.a_n_left = left_following_car_model.next_step(t, [left_following_car.position; left_following_car.velocity], struct('position', current_car_data(1), 'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
-        mobil_params.b_max_left = models{left_following_car_index, 6}.b_max;
+        a_n_left = left_following_car_model.next_step(t, [left_following_car.position; left_following_car.velocity], struct('position', current_car_data(1), 'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
+        mobil_params.safe_change_to_left = a_n_left(2) > -models{left_following_car_index, 6}.b_max;
+        mobil_params.can_change_to_left = current_car_data(1) - current_car_data(6) >= traffic(left_following_car_index,1);
       else 
-        mobil_params.a_n_left = [0,0];
-        mobil_params.b_max_left = 1;
+        mobil_params.safe_change_to_left = true;
+        mobil_params.can_change_to_left = true;
       end
   else 
      mobil_params.a_c_left = [0,0];
-     mobil_params.a_n_left = [0,0];
-     mobil_params.b_max_left = -1;
+     mobil_params.safe_change_to_left = false;
+     mobil_params.can_change_to_left = false;
   end
   
   % If a right lane exist
@@ -74,16 +76,17 @@ for i=1:size(models, 1)
       if right_following_car.identifier ~=0
         right_following_car_index = find(traffic(:,5) == right_following_car.identifier);
         right_following_car_model = models{right_following_car_index, 6};
-        mobil_params.a_n_right = right_following_car_model.next_step(t, [right_following_car.position; right_following_car.velocity], struct('position', current_car_data(1),'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
-        mobil_params.b_max_right = models{right_following_car_index, 6}.b_max;
+        a_n_right = right_following_car_model.next_step(t, [right_following_car.position; right_following_car.velocity], struct('position', current_car_data(1),'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
+        mobil_params.safe_change_to_right = a_n_right(2) > -models{right_following_car_index, 6}.b_max;
+        mobil_params.can_change_to_right = current_car_data(1) - current_car_data(6) >= traffic(right_following_car_index,1);
       else 
-        mobil_params.a_n_right = [0,0];
-        mobil_params.b_max_right = 1;
+        mobil_params.safe_change_to_right = true;
+        mobil_params.can_change_to_right = true;
       end
   else 
       mobil_params.a_c_right = [0,0];
-      mobil_params.a_n_right = [0,0];
-      mobil_params.b_max_right = -1;
+      mobil_params.safe_change_to_right = false;
+      mobil_params.can_change_to_right = false;
   end
   
     chosen_direction = mobil(mobil_params, t);
