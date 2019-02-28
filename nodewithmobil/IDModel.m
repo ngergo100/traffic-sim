@@ -9,6 +9,7 @@ classdef IDModel
         L
         time_to_change_lane
         lane_change_duration
+        not_paying_attention
     end
     methods
         function obj = IDModel(consts)
@@ -21,6 +22,7 @@ classdef IDModel
             obj.L = consts.L;
             obj.time_to_change_lane = consts.time_to_change_lane;
             obj.lane_change_duration = consts.lane_change_duration;
+            obj.not_paying_attention = consts.not_paying_attention;
         end
         function dy = next_step(obj, ~, y, leading_car)
             if leading_car.identifier ~= 0

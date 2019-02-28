@@ -4,6 +4,7 @@ classdef ChillModel
         L = 4.5
         time_to_change_lane = 2
         lane_change_duration = 2
+        not_paying_attention = []
     end
     
     methods

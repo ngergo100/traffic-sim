@@ -5,9 +5,10 @@ global models possible_lane_numbers latest_lane_changes_start latest_lane_change
 %% Initial settings
 % Get identifiers for all cars
 identifiers = cat(1, models{:, 1});
-% Get lenfth for all cars
-lengths =  arrayfun(@(a) a.L, cat(1, models{:, 6}));
-% Create matrix with position, velocity, current lane and ids at a given t
+% Get lengths for all cars
+lengths = arrayfun(@(a) a.L, cat(1, models{:, 6}));
+% Create a matrix with positions, velocities, source lanes, target lanes,
+% ids and lengths at a given t
 traffic = [y(1 : 2 : end), y(2 : 2 : end), source_lane_numbers, target_lane_numbers, identifiers, lengths];
 % Sort traffic matrix based on the position
 sorted_traffic = sortrows(traffic);
@@ -35,12 +36,24 @@ for i=1:size(models, 1)
   leading_car = find_leading(sorted_traffic, current_car_data, current_car_data(3));
   % Calculate what would happen if current car would go straight behind its
   % leader
-  mobil_params.a_c = models{i, 6}.next_step(t, [current_car_data(1); current_car_data(2)], leading_car);
+%   paying_attention = randi([1 4]) ~= 0; %% random 80% 
+  paying_attention = is_paying_attention_at_the_moment(models{i,6}.not_paying_attention, t);
+  if paying_attention
+      mobil_params.a_c = models{i, 6}.next_step(t, [current_car_data(1); current_car_data(2)], leading_car);
+  else
+      mobil_params.a_c = [current_car_data(2), 0];
+  end
+  
+  if ~paying_attention
+      disp(['Number ' num2str(current_car_data(5)) ' driver is not paying attantion at moment: ' num2str(t)])
+  end
+  
   mobil_params.current_position = current_car_data(1);
   
   % if the ith target lane is 0, which means ith car isn't 
-  % changing lanes currently
-  if target_lane_numbers(i) == 0 && latest_lane_changes_end(i) + models{i, 6}.time_to_change_lane <= t
+  % changing lanes currently and time_to_change_lane parameter allows the
+  % lane change and ith car's driver is paying attention
+  if target_lane_numbers(i) == 0 && latest_lane_changes_end(i) + models{i, 6}.time_to_change_lane <= t && paying_attention
   % If a left lane exist
   if mobil_params.left_lane ~= 0
       % Find current car's leader if it would in the left lane
@@ -93,6 +106,7 @@ for i=1:size(models, 1)
     % if chosen lane is not the current lane then save the start of 
     if mobil_params.current_lane ~= chosen_direction.chosen_lane
       latest_lane_changes_start(i) = t;
+      disp(['Number ' num2str(current_car_data(5)) ' driver started his lane change at time: ' num2str(t)])
       next_source_lane_numbers(i) = mobil_params.current_lane;
       next_target_lane_numbers(i) = chosen_direction.chosen_lane;
     else
@@ -106,13 +120,13 @@ for i=1:size(models, 1)
   else % if target_lane_numbers(i) not 0 or she/he does not want to change yet
     if latest_lane_changes_start(i) + models{i, 6}.lane_change_duration <= t && target_lane_numbers(i) ~= 0 
         latest_lane_changes_end(i) = t;
+        disp(['Number ' num2str(current_car_data(5)) ' driver ended his lane change at time: ' num2str(t)])
         next_source_lane_numbers(i) = target_lane_numbers(i);
         next_target_lane_numbers(i) = 0;
     else
         next_source_lane_numbers(i) = source_lane_numbers(i);
         next_target_lane_numbers(i) = target_lane_numbers(i);
     end 
-    
 
     dy(2*i-1)= mobil_params.a_c(1);
     dy(2*i)= mobil_params.a_c(2);
