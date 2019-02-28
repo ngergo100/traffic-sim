@@ -25,7 +25,7 @@ classdef IDModel
         function dy = next_step(obj, ~, y, leading_car)
             if leading_car.identifier ~= 0
                 h_star = obj.h_0 + y(2) * obj.T  + (y(2) * (y(2) - leading_car.velocity)) / (2 * sqrt(obj.a_max * obj.b_max));
-                h = leading_car.position - y(1) - leading_car.L;
+                h = leading_car.position - leading_car.L - y(1);
                 dy = [
                     y(2);
                     obj.a_max * (1 - (y(2) / obj.v_0)^obj.delta - (h_star / h)^2)
