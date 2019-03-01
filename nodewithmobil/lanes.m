@@ -127,9 +127,32 @@ for i=1:size(models, 1)
         next_source_lane_numbers(i) = source_lane_numbers(i);
         next_target_lane_numbers(i) = target_lane_numbers(i);
     end 
+    
+    if latest_lane_changes_start(i) + models{i, 6}.lane_change_duration > t && target_lane_numbers(i) ~= 0
+        disp(['Number ' num2str(current_car_data(5)) ' driver is changing lanes at t: ' num2str(t)])
+        
+        start = latest_lane_changes_start(i);
+        duration = models{i, 6}.lane_change_duration;
+        unit_elapsed_time = (t - latest_lane_changes_start(i)) / duration;
+        unit_remaining_time = (start + duration - t) / duration;
+        disp(['unit_elapsed_time ' num2str(unit_elapsed_time)])
+        disp(['unit_remaining_time ' num2str(unit_remaining_time)])
+        if target_lane_numbers(i) == mobil_params.right_lane
+            dy(2*i-1) = mobil_params.a_c(1) * unit_remaining_time + mobil_params.a_c_right(1) * unit_elapsed_time;
+            dy(2*i) = mobil_params.a_c(2) * unit_remaining_time + mobil_params.a_c_right(2) * unit_elapsed_time;
+        elseif target_lane_numbers(i) == mobil_params.left_lane
+            dy(2*i-1) = mobil_params.a_c(1) * unit_remaining_time + mobil_params.a_c_left(1) * unit_elapsed_time;
+            dy(2*i) = mobil_params.a_c(2) * unit_remaining_time + mobil_params.a_c_left(2) * unit_elapsed_time;
+        else
+            dy(2*i-1) = mobil_params.a_c(1);
+            dy(2*i) = mobil_params.a_c(2);
+        end
+    else 
+        dy(2*i-1) = mobil_params.a_c(1);
+        dy(2*i) = mobil_params.a_c(2);
+    end
 
-    dy(2*i-1)= mobil_params.a_c(1);
-    dy(2*i)= mobil_params.a_c(2);
+    
   end
 end
 
