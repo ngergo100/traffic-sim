@@ -21,7 +21,7 @@ lane_config_source = cat(1, models{:,2});
 lane_config_target = cat(1, models{:,3});
 latest_lane_changes_start = zeros(length(lane_config_target),1);
 latest_lane_changes_end = zeros(length(lane_config_source),1);
-weighted_average_acceleration_calculation_enabled = true;
+weighted_average_acceleration_calculation_enabled = false;
 possible_lane_numbers = [1;2];
 
 %% Initialization
@@ -34,7 +34,7 @@ y = y0;
 
 % Time initialization
 t0 = 0;
-dt = 0.5;
+dt = 0.2;
 T = 30;
 t(1) = 0;
 N = ((T - t(1)) / dt) - 1;
@@ -161,9 +161,11 @@ for i = 1:size(positions,2)
         xPos = positions(j,i);
         
         if lane_config_target(j,i) ~= 0
-            yPos = (lane_config_source(j,i) + lane_config_target(j,i)) / 2 * 10;
+            [starting, ending] = find_start_end(i, lane_config_target(j,:));
+            elapsed_steps = (i-starting)/(ending-starting);
+            yPos = (lane_config_source(j,i) + (lane_config_target(j,i) - lane_config_source(j,i)) * elapsed_steps) * 10;
         else
-            yPos = lane_config_source(j,i)*10;
+            yPos = lane_config_source(j,i) * 10;
         end
 %         image('CData',img,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel);
         rectangle('Position',[xPos-models{j,6}.L yPos-1 models{j,6}.L 2])
