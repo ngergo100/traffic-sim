@@ -5,7 +5,7 @@ close all
 %% Define the model
 % parameters in models
 % id, sourcelane, targetlane, initial position, initial velocity, ACC model
-global models possible_lane_numbers latest_lane_changes_start latest_lane_changes_end
+global models possible_lane_numbers latest_lane_changes_start latest_lane_changes_end weighted_average_acceleration_calculation_enabled
 models = {
      11, 1, 0, 0,   0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[]));
      22, 1, 0, -10, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[]));
@@ -21,6 +21,7 @@ lane_config_source = cat(1, models{:,2});
 lane_config_target = cat(1, models{:,3});
 latest_lane_changes_start = zeros(length(lane_config_target),1);
 latest_lane_changes_end = zeros(length(lane_config_source),1);
+weighted_average_acceleration_calculation_enabled = true;
 possible_lane_numbers = [1;2];
 
 %% Initialization
@@ -33,8 +34,8 @@ y = y0;
 
 % Time initialization
 t0 = 0;
-T = 50;
 dt = 0.5;
+T = 30;
 t(1) = 0;
 N = ((T - t(1)) / dt) - 1;
 
