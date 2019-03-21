@@ -31,6 +31,8 @@ for i=1:size(models, 1)
   mobil_params.left_lane = ismember(possible_left_lane, possible_lane_numbers) * possible_left_lane;
   mobil_params.right_lane = ismember(possible_right_lane, possible_lane_numbers) * possible_right_lane;
   mobil_params.current_lane = current_car_data(3);
+  mobil_params.acceleration_threshold = models{i, 6}.acceleration_threshold;
+  mobil_params.acceleration_difference_threshold = models{i, 6}.acceleration_difference_threshold;
   
   % Find current car's leader
   leading_car = find_leading(sorted_traffic, current_car_data, current_car_data(3));

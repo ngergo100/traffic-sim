@@ -10,6 +10,8 @@ classdef IDModel
         time_to_change_lane
         lane_change_duration
         not_paying_attention
+        acceleration_threshold
+        acceleration_difference_threshold
     end
     methods
         function obj = IDModel(consts)
@@ -23,6 +25,8 @@ classdef IDModel
             obj.time_to_change_lane = consts.time_to_change_lane;
             obj.lane_change_duration = consts.lane_change_duration;
             obj.not_paying_attention = consts.not_paying_attention;
+            obj.acceleration_threshold = consts.acceleration_threshold;
+            obj.acceleration_difference_threshold = consts.acceleration_difference_threshold;
         end
         function dy = next_step(obj, ~, y, leading_car)
             if leading_car.identifier ~= 0
