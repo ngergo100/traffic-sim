@@ -21,7 +21,8 @@ lane_config_source = cat(1, models{:,2});
 lane_config_target = cat(1, models{:,3});
 latest_lane_changes_start = zeros(length(lane_config_target),1);
 latest_lane_changes_end = zeros(length(lane_config_source),1);
-weighted_average_acceleration_calculation_enabled = false;
+weighted_average_acceleration_calculation_enabled = true;
+should_use_images = false;
 possible_lane_numbers = [1;2];
 
 %% Initialization
@@ -131,7 +132,8 @@ open(v);
 ratio = 400/1200;
 width = 1200;
 fig = figure('Renderer', 'painters', 'Position', [0 0 width width*ratio]);
-[img, map, alphachannel] = imread('bugattismall.png');
+[img_car, map_car, alphachannel_car] = imread('bugattismall.png');
+[img_bus, map_bus, alphachannel_bus] = imread('bus.png');
 carToFollow = 11;
 indexOfChosenCar = find(identifiers==carToFollow);
 path_limit = [min(positions(:)) max(positions(:))];
@@ -163,14 +165,22 @@ for i = 1:size(positions,2)
         if lane_config_target(j,i) ~= 0
             [starting, ending] = find_start_end(i, lane_config_target(j,:));
             elapsed_steps = (i-starting)/(ending-starting);
-            yPos = (lane_config_source(j,i) + (lane_config_target(j,i) - lane_config_source(j,i)) * elapsed_steps) * 10;
+            yPos = (lane_config_source(j,i) + (lane_config_target(j,i) - lane_config_source(j,i)) * easeinout(elapsed_steps, 2)) * 10;
         else
             yPos = lane_config_source(j,i) * 10;
         end
-%         image('CData',img,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel);
-        rectangle('Position',[xPos-models{j,6}.L yPos-1 models{j,6}.L 2])
-        textToWrite = [num2str(identifiers(j)) ' ' num2str(velocities(j,i)*3.6,2)];
-        text(xPos-models{j,6}.L + 0.1, yPos, textToWrite)
+        if should_use_images
+            if models{j,6}.L > 10 
+                image('CData',img_bus,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel_bus);
+            else
+                image('CData',img_car,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel_car);
+            end
+        else
+            rectangle('Position',[xPos-models{j,6}.L yPos-1 models{j,6}.L 2])
+            textToWrite = [num2str(identifiers(j)) ' ' num2str(velocities(j,i)*3.6,2)];
+            text(xPos-models{j,6}.L + 0.1, yPos, textToWrite)
+        end
+
     end
     legend(cellstr(num2str(t(i))));
     writeVideo(v,getframe);
