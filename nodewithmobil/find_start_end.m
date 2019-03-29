@@ -13,10 +13,15 @@ end
 next_number = i;
 while next_number ~= 0
     next_number = next_number + 1;
-    if array(next_number) ~= i_number
-        end_number = next_number-1;
+    if length(array) >= next_number
+        if array(next_number) ~= i_number
+            end_number = next_number-1;
+            next_number = 0;
+        end
+    else
+        end_number = next_number;
         next_number = 0;
-    end
+    end 
 end
 
 end
