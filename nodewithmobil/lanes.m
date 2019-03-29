@@ -18,7 +18,7 @@ reverse_sorted_traffic = flipud(sorted_traffic);
 next_source_lane_numbers = zeros(length(source_lane_numbers), 1);
 % Create an empty array for the next loop's target lanes
 next_target_lane_numbers = zeros(length(target_lane_numbers), 1);
-
+clear dy
 %% Loop over all car models
 for i=1:size(models, 1)
   % i-th car's position, velocity, lane and id 
@@ -38,7 +38,6 @@ for i=1:size(models, 1)
   leading_car = find_leading(sorted_traffic, current_car_data, current_car_data(3));
   % Calculate what would happen if current car would go straight behind its
   % leader
-%   paying_attention = randi([1 4]) ~= 0; %% random 80% 
   paying_attention = is_paying_attention_at_the_moment(models{i,6}.not_paying_attention, t);
   if paying_attention
       mobil_params.a_c = models{i, 6}.next_step(t, [current_car_data(1); current_car_data(2)], leading_car);
@@ -56,8 +55,8 @@ for i=1:size(models, 1)
   % changing lanes currently and time_to_change_lane parameter allows the
   % lane change and ith car's driver is paying attention
   if target_lane_numbers(i) == 0 && latest_lane_changes_end(i) + models{i, 6}.time_to_change_lane <= t && paying_attention
-  % If a left lane exist
-  if mobil_params.left_lane ~= 0
+    % If a left lane exist
+    if mobil_params.left_lane ~= 0
       % Find current car's leader if it would in the left lane
       left_leading_car = find_leading(sorted_traffic, current_car_data, mobil_params.left_lane);
       % Calculate what would happen if current car would go straight behind
@@ -74,14 +73,14 @@ for i=1:size(models, 1)
         mobil_params.safe_change_to_left = true;
         mobil_params.can_change_to_left = true;
       end
-  else 
+   else 
      mobil_params.a_c_left = [0,0];
      mobil_params.safe_change_to_left = false;
      mobil_params.can_change_to_left = false;
-  end
+   end
   
   % If a right lane exist
-  if mobil_params.right_lane ~=0
+   if mobil_params.right_lane ~=0
       % Find current car's leader if it would in the right lane
       right_leading_car = find_leading(sorted_traffic, current_car_data, mobil_params.right_lane);
       % Calculate what would happen if current car would go straight behind
@@ -98,11 +97,11 @@ for i=1:size(models, 1)
         mobil_params.safe_change_to_right = true;
         mobil_params.can_change_to_right = true;
       end
-  else 
+   else 
       mobil_params.a_c_right = [0,0];
       mobil_params.safe_change_to_right = false;
       mobil_params.can_change_to_right = false;
-  end
+   end
   
     chosen_direction = mobil(mobil_params, t);
     % if chosen lane is not the current lane then save the start of 
@@ -119,7 +118,7 @@ for i=1:size(models, 1)
     dy(2*i-1)= chosen_direction.a_c(1);
     dy(2*i)= chosen_direction.a_c(2);
   
-  else % if target_lane_numbers(i) not 0 or she/he does not want to change yet
+ else % if target_lane_numbers(i) not 0 or she/he does not want to change yet
     if latest_lane_changes_start(i) + models{i, 6}.lane_change_duration <= t && target_lane_numbers(i) ~= 0 
         latest_lane_changes_end(i) = t;
         disp(['Number ' num2str(current_car_data(5)) ' driver ended his lane change at time: ' num2str(t)])
@@ -142,9 +141,13 @@ for i=1:size(models, 1)
         if target_lane_numbers(i) == mobil_params.right_lane
             dy(2*i-1) = mobil_params.a_c(1) * unit_remaining_time + mobil_params.a_c_right(1) * unit_elapsed_time;
             dy(2*i) = mobil_params.a_c(2) * unit_remaining_time + mobil_params.a_c_right(2) * unit_elapsed_time;
+            
+            
         elseif target_lane_numbers(i) == mobil_params.left_lane
             dy(2*i-1) = mobil_params.a_c(1) * unit_remaining_time + mobil_params.a_c_left(1) * unit_elapsed_time;
             dy(2*i) = mobil_params.a_c(2) * unit_remaining_time + mobil_params.a_c_left(2) * unit_elapsed_time;
+            
+            
         else
             dy(2*i-1) = mobil_params.a_c(1);
             dy(2*i) = mobil_params.a_c(2);
@@ -154,6 +157,14 @@ for i=1:size(models, 1)
         dy(2*i) = mobil_params.a_c(2);
     end
     
+  end
+  
+  if dy(2*i-1) <= 0 && dy(2*i) < 0
+      dy(2*i-1) = mobil_params.a_c(1);
+      dy(2*i) = 0;
+  else
+      dy(2*i-1) = mobil_params.a_c(1);
+      dy(2*i) = mobil_params.a_c(2);
   end
 end
 
