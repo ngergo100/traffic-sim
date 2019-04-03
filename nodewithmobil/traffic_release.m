@@ -3,23 +3,12 @@ clear
 close all
 
 should_use_images = false;
+
 global models possible_lane_numbers latest_lane_changes_start latest_lane_changes_end weighted_average_acceleration_calculation_enabled
 %% Define the model
 % parameters in models
 % id, sourcelane, targetlane, initial position, initial velocity, ACC model
-models = {
-     11, 1, 0, 0,   0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     22, 2, 0, 0,   0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     33, 1, 0, -10, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 20, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     44, 2, 0, -10, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     55, 1, 0, -35, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     66, 2, 0, -20, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     77, 1, 0, -45, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     88, 2, 0, -30, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-};
-
-weighted_average_acceleration_calculation_enabled = true;
-possible_lane_numbers = [1;2];
+load('Configurations/default.mat')
 
 %% Initialization
 lane_config_source = cat(1, models{:,2});
@@ -36,7 +25,7 @@ y = y0;
 % Time initialization
 t0 = 0;
 dt = 0.2;
-T = 10;
+T = 30;
 t(1) = 0;
 N = ((T - t(1)) / dt) - 1;
 
@@ -129,7 +118,7 @@ ylabel('Car count')
 v = VideoWriter('video','MPEG-4');
 v.Quality = 50;
 open(v);
-ratio = 600/1200;
+ratio = 400/1200;
 width = 1200;
 fig = figure('Renderer', 'painters', 'Position', [0 0 width width*ratio]);
 [img_car, map_car, alphachannel_car] = imread('bugattismall.png');

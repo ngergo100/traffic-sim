@@ -12,8 +12,6 @@ lengths = arrayfun(@(a) a.L, cat(1, models{:, 6}));
 traffic = [y(1 : 2 : end), y(2 : 2 : end), source_lane_numbers, target_lane_numbers, identifiers, lengths];
 % Sort traffic matrix based on the position
 sorted_traffic = sortrows(traffic);
-% Reverse sort traffic matrix based on the position
-reverse_sorted_traffic = flipud(sorted_traffic);
 % Create an empty array for the next loop's source lanes
 next_source_lane_numbers = zeros(length(source_lane_numbers), 1);
 % Create an empty array for the next loop's target lanes
@@ -62,13 +60,13 @@ for i=1:size(models, 1)
       % Calculate what would happen if current car would go straight behind
       % its left leader
       mobil_params.a_c_left = models{i, 6}.next_step(t, [current_car_data(1); current_car_data(2)], left_leading_car);
-      left_following_car = find_leading(reverse_sorted_traffic, current_car_data, mobil_params.left_lane);
+      left_following_car = find_following(sorted_traffic, current_car_data, mobil_params.left_lane);
       if left_following_car.identifier ~=0
         left_following_car_index = find(traffic(:,5) == left_following_car.identifier);
         left_following_car_model = models{left_following_car_index, 6};
         a_n_left = left_following_car_model.next_step(t, [left_following_car.position; left_following_car.velocity], struct('position', current_car_data(1), 'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
         mobil_params.safe_change_to_left = a_n_left(2) > -models{left_following_car_index, 6}.b_max;
-        mobil_params.can_change_to_left = current_car_data(1) - current_car_data(6) >= traffic(left_following_car_index,1);
+        mobil_params.can_change_to_left = current_car_data(1) - current_car_data(6) >= left_following_car.position && left_leading_car.position - left_leading_car.L >= current_car_data(1);
       else 
         mobil_params.safe_change_to_left = true;
         mobil_params.can_change_to_left = true;
@@ -86,13 +84,13 @@ for i=1:size(models, 1)
       % Calculate what would happen if current car would go straight behind
       % its right leader
       mobil_params.a_c_right = models{i, 6}.next_step(t, [current_car_data(1); current_car_data(2)], right_leading_car);
-      right_following_car = find_leading(reverse_sorted_traffic, current_car_data, mobil_params.right_lane);
+      right_following_car = find_following(sorted_traffic, current_car_data, mobil_params.right_lane);
       if right_following_car.identifier ~=0
         right_following_car_index = find(traffic(:,5) == right_following_car.identifier);
         right_following_car_model = models{right_following_car_index, 6};
         a_n_right = right_following_car_model.next_step(t, [right_following_car.position; right_following_car.velocity], struct('position', current_car_data(1),'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
         mobil_params.safe_change_to_right = a_n_right(2) > -models{right_following_car_index, 6}.b_max;
-        mobil_params.can_change_to_right = current_car_data(1) - current_car_data(6) >= traffic(right_following_car_index,1);
+        mobil_params.can_change_to_right = current_car_data(1) - current_car_data(6) >= right_following_car.position && right_leading_car.position - right_leading_car.L >= current_car_data(1);
       else 
         mobil_params.safe_change_to_right = true;
         mobil_params.can_change_to_right = true;
