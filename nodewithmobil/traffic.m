@@ -9,18 +9,18 @@ global models possible_lane_numbers latest_lane_changes_start latest_lane_change
 % id, sourcelane, targetlane, initial position, initial velocity, ACC model
 models = {
      11, 1, 0, 0,   0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     22, 2, 0, 0,   0/3.6, IDModel(struct('a_max',1.2, 'b_max',1.67, 'v_0',40/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     33, 1, 0, -10, 0/3.6, IDModel(struct('a_max',0.8, 'b_max',1.67, 'v_0',30/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 20, 'time_to_change_lane',2, 'lane_change_duration',4, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
+     22, 2, 0, 0,   0/3.6, IDModel(struct('a_max',1.2, 'b_max',1.67, 'v_0',45/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
+     33, 1, 0, -10, 0/3.6, IDModel(struct('a_max',0.8, 'b_max',1.67, 'v_0',40/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 20, 'time_to_change_lane',2, 'lane_change_duration',4, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
      44, 2, 0, -10, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[10,15], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     55, 1, 0, -35, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     66, 2, 0, -20, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     77, 1, 0, -45, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
+     55, 1, 0, -35, 0/3.6, IDModel(struct('a_max',1.1, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
+     66, 2, 0, -20, 0/3.6, IDModel(struct('a_max',1.2, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
+     77, 1, 0, -45, 0/3.6, IDModel(struct('a_max',1.4, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
      88, 2, 0, -30, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
 };
 
 weighted_average_acceleration_calculation_enabled = true;
 possible_lane_numbers = [1;2];
-target_line = 350;
+target_line = 100;
 
 
 %% Initialization
@@ -35,10 +35,11 @@ for i=1:size(models, 1)
 end
 y0 = y0';
 y = y0;
+first_car_reached_the_target_line = false;
 
 % Time initialization
 t0 = 0;
-dt = 0.2;
+dt = 0.1;
 i = 1;
 t(1) = 0;
 
@@ -46,6 +47,10 @@ t(1) = 0;
 % run the simulation until the last car will reach the target line
 while min(y(1:2:end,i)) < target_line
     t(i+1) = t(i) + dt;
+    if max(y(1:2:end,i)) > target_line && ~first_car_reached_the_target_line
+        first_car_reached_the_target_line = true;
+        disp(['First driver reeached his the target line at: ' num2str(t(i))])
+    end
 
     [dy, next_source_lanes, next_target_lanes, next_states_of_cars] = lanes(t(i), y(:,i), lane_config_source(:,i), lane_config_target(:,i));
     y(:,i+1) = y(:,i) + dt * dy;
@@ -186,13 +191,12 @@ for i = 1:size(positions,2)
         else
             r = rectangle('Position',[xPos-models{j,6}.L yPos-1 models{j,6}.L 2]);
             if states_of_cars(j,i) == 1
-                r.FaceColor = [1 0 0];
-            elseif states_of_cars(j,i) == 2
                 r.FaceColor = [0 1 0];
+            elseif states_of_cars(j,i) == 2
+                r.FaceColor = [0 0 1];
             elseif states_of_cars(j,i) == 3
-                r.FaceColor = [0 0 0];
+                r.FaceColor = [1 0 0];
             end
-            
             textToWrite = [num2str(identifiers(j)) ' ' num2str(velocities(j,i)*3.6,2)];
             text(xPos-models{j,6}.L + 0.1, yPos, textToWrite)
         end

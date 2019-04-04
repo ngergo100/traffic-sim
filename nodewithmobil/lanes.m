@@ -69,15 +69,13 @@ for i=1:size(models, 1)
         left_following_car_index = find(traffic(:,5) == left_following_car.identifier);
         left_following_car_model = models{left_following_car_index, 6};
         a_n_left = left_following_car_model.next_step(t, [left_following_car.position; left_following_car.velocity], struct('position', current_car_data(1), 'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
-        mobil_params.safe_change_to_left = a_n_left(2) > -models{left_following_car_index, 6}.b_max;
-        if left_leading_car.identifier ~=0
-            mobil_params.can_change_to_left = current_car_data(1) - current_car_data(6) >= left_following_car.position && left_leading_car.position - left_leading_car.L >= current_car_data(1);
-        else
-            mobil_params.can_change_to_left = current_car_data(1) - current_car_data(6) >= left_following_car.position;
-        end
-        
+        mobil_params.safe_change_to_left = a_n_left(2) > -models{left_following_car_index, 6}.b_max && current_car_data(1) - current_car_data(6) >= left_following_car.position;
       else 
         mobil_params.safe_change_to_left = true;
+      end
+      if left_leading_car.identifier ~=0
+        mobil_params.can_change_to_left = left_leading_car.position - left_leading_car.L >= current_car_data(1);
+      else
         mobil_params.can_change_to_left = true;
       end
    else 
@@ -98,14 +96,13 @@ for i=1:size(models, 1)
         right_following_car_index = find(traffic(:,5) == right_following_car.identifier);
         right_following_car_model = models{right_following_car_index, 6};
         a_n_right = right_following_car_model.next_step(t, [right_following_car.position; right_following_car.velocity], struct('position', current_car_data(1),'velocity', current_car_data(2), 'identifier',current_car_data(5), 'L',current_car_data(6)));
-        mobil_params.safe_change_to_right = a_n_right(2) > -models{right_following_car_index, 6}.b_max;
-        if right_leading_car.identifier ~=0
-            mobil_params.can_change_to_right = current_car_data(1) - current_car_data(6) >= right_following_car.position && right_leading_car.position - right_leading_car.L >= current_car_data(1);
-        else
-            mobil_params.can_change_to_right = current_car_data(1) - current_car_data(6) >= right_following_car.position;
-        end
+        mobil_params.safe_change_to_right = a_n_right(2) > -models{right_following_car_index, 6}.b_max && current_car_data(1) - current_car_data(6) >= right_following_car.position;
       else 
         mobil_params.safe_change_to_right = true;
+      end
+      if right_leading_car.identifier ~=0
+        mobil_params.can_change_to_right = right_leading_car.position - right_leading_car.L >= current_car_data(1);
+      else
         mobil_params.can_change_to_right = true;
       end
    else 
