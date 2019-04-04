@@ -20,6 +20,8 @@ models = {
 
 weighted_average_acceleration_calculation_enabled = true;
 possible_lane_numbers = [1;2];
+target_line = 100;
+
 
 %% Initialization
 lane_config_source = cat(1, models{:,2});
@@ -36,17 +38,21 @@ y = y0;
 % Time initialization
 t0 = 0;
 dt = 0.2;
-T = 10;
+i = 1;
 t(1) = 0;
-N = ((T - t(1)) / dt) - 1;
 
 %% Solving
-for i=1:N
+% run the simulation until the last car will reach the target line
+while min(y(1:2:end,i)) < target_line
     t(i+1) = t(i) + dt;
+
     [dy, next_source_lanes, next_target_lanes] = lanes(t(i), y(:,i), lane_config_source(:,i), lane_config_target(:,i));
     y(:,i+1) = y(:,i) + dt * dy;
+
     lane_config_source(:,i+1) = next_source_lanes;
     lane_config_target(:,i+1) = next_target_lanes;
+    
+    i = i + 1;
 end
 
 %% Post processing
