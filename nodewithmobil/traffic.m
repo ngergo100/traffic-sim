@@ -2,26 +2,13 @@ clc
 clear
 close all
 
+addpath('./Configurations')
 should_use_images = false;
-global models possible_lane_numbers latest_lane_changes_start latest_lane_changes_end weighted_average_acceleration_calculation_enabled
+global models possible_lane_numbers latest_lane_changes_start latest_lane_changes_end target_line
 %% Define the model
 % parameters in models
 % id, sourcelane, targetlane, initial position, initial velocity, ACC model
-models = {
-     11, 1, 0, 0,   0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     22, 2, 0, 0,   0/3.6, IDModel(struct('a_max',1.2, 'b_max',1.67, 'v_0',45/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     33, 1, 0, -10, 0/3.6, IDModel(struct('a_max',0.8, 'b_max',1.67, 'v_0',40/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 20, 'time_to_change_lane',2, 'lane_change_duration',4, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     44, 2, 0, -10, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[10,15], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     55, 1, 0, -35, 0/3.6, IDModel(struct('a_max',1.1, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     66, 2, 0, -20, 0/3.6, IDModel(struct('a_max',1.2, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     77, 1, 0, -45, 0/3.6, IDModel(struct('a_max',1.4, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-     88, 2, 0, -30, 0/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',50/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L',4.5, 'time_to_change_lane',2, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1, 'acceleration_difference_threshold',0.3));
-};
-
-weighted_average_acceleration_calculation_enabled = true;
-possible_lane_numbers = [1;2];
-target_line = 100;
-
+load_data_set_1;
 
 %% Initialization
 lane_config_source = cat(1, models{:,2});
@@ -39,7 +26,7 @@ first_car_reached_the_target_line = false;
 
 % Time initialization
 t0 = 0;
-dt = 0.1;
+dt = 0.15;
 i = 1;
 t(1) = 0;
 
@@ -49,7 +36,7 @@ while min(y(1:2:end,i)) < target_line
     t(i+1) = t(i) + dt;
     if max(y(1:2:end,i)) > target_line && ~first_car_reached_the_target_line
         first_car_reached_the_target_line = true;
-        disp(['First driver reeached his the target line at: ' num2str(t(i))])
+        disp(['First driver reached his target line at: ' num2str(t(i))])
     end
 
     [dy, next_source_lanes, next_target_lanes, next_states_of_cars] = lanes(t(i), y(:,i), lane_config_source(:,i), lane_config_target(:,i));
@@ -61,6 +48,8 @@ while min(y(1:2:end,i)) < target_line
     
     i = i + 1;
 end
+
+disp(['Post proceessing'])
 
 %% Post processing
 identifiers = cat(1, models{:,1});
@@ -138,6 +127,7 @@ legend(cellstr(num2str(possible_lane_numbers)), 'Location', 'eastoutside')
 xlabel('t [s]')
 ylabel('Car count')
 
+disp(['Animation'])
 %% Animation
 v = VideoWriter('video','MPEG-4');
 v.Quality = 50;
@@ -145,8 +135,8 @@ open(v);
 ratio = 600/1200;
 width = 1200;
 fig = figure('Renderer', 'painters', 'Position', [0 0 width width*ratio]);
-[img_car, map_car, alphachannel_car] = imread('bugattismall.png');
-[img_bus, map_bus, alphachannel_bus] = imread('bus.png');
+[img_car, map_car, alphachannel_car] = imread('Pics/bugattismall.png');
+[img_bus, map_bus, alphachannel_bus] = imread('Pics/bus.png');
 carToFollow = 11;
 indexOfChosenCar = find(identifiers==carToFollow);
 path_limit = [min(positions(:)) max(positions(:))];
@@ -206,3 +196,4 @@ for i = 1:size(positions,2)
     writeVideo(v,getframe);
 end
 close(v);
+disp(['Animation done'])
