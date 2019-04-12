@@ -2,7 +2,7 @@ function load_data_set_3
 global models possible_lane_numbers weighted_average_acceleration_calculation_enabled target_line
 
 models = {
-     01, 1, 0, 0,    0/3.6, IDModel(struct('a_max',2.5, 'b_max',3, 'v_0',50/3.6, 'T',1.8, 'h_0',1, 'delta',4, 'L',4.5, 'time_to_change_lane',1, 'lane_change_duration',2, 'not_paying_attention',[], 'acceleration_threshold',1.2, 'acceleration_difference_threshold',0.3));
+     01, 1, 0, 0,    0/3.6, IDModel(struct('a_max',0.5, 'b_max',3, 'v_0',48/3.6, 'T',1.8, 'h_0',1, 'delta',4, 'L',4.2, 'time_to_change_lane',1, 'lane_change_duration',2.0, 'not_paying_attention',[0,2], 'acceleration_threshold',1.2, 'acceleration_difference_threshold',0.3));
      02, 2, 0, 0,    0/3.6, IDModel(struct('a_max',2.2, 'b_max',2, 'v_0',45/3.6, 'T',1.8, 'h_0',1, 'delta',4, 'L',4.5, 'time_to_change_lane',1, 'lane_change_duration',3, 'not_paying_attention',[], 'acceleration_threshold',1.2, 'acceleration_difference_threshold',0.2));
      03, 1, 0, -6,   0/3.6, IDModel(struct('a_max',0.8, 'b_max',2, 'v_0',40/3.6, 'T',1.8, 'h_0',1, 'delta',4, 'L', 20, 'time_to_change_lane',1, 'lane_change_duration',4, 'not_paying_attention',[], 'acceleration_threshold',1.3, 'acceleration_difference_threshold',0.3));
      04, 2, 0, -6,   0/3.6, IDModel(struct('a_max',4.5, 'b_max',3, 'v_0',50/3.6, 'T',1.8, 'h_0',1, 'delta',4, 'L',4.5, 'time_to_change_lane',1, 'lane_change_duration',3, 'not_paying_attention',[], 'acceleration_threshold',1.3, 'acceleration_difference_threshold',0.4));
