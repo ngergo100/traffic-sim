@@ -48,7 +48,7 @@ for i=1:size(models, 1)
   end
   
   if ~paying_attention
-      disp(['Number ' num2str(current_car_data(5)) ' driver is not paying attantion at moment: ' num2str(t)])
+      %disp(['Number ' num2str(current_car_data(5)) ' driver is not paying attantion at moment: ' num2str(t)])
   end
   
   mobil_params.current_position = current_car_data(1);
@@ -118,7 +118,7 @@ for i=1:size(models, 1)
     % if chosen lane is not the current lane then save the start of 
     if mobil_params.current_lane ~= chosen_direction.chosen_lane
       latest_lane_changes_start(i) = t;
-      disp(['Number ' num2str(current_car_data(5)) ' driver started his lane change at time: ' num2str(t)])
+      %disp(['Number ' num2str(current_car_data(5)) ' driver started his lane change at time: ' num2str(t)])
       next_source_lane_numbers(i) = mobil_params.current_lane;
       next_target_lane_numbers(i) = chosen_direction.chosen_lane;
     else
@@ -133,7 +133,7 @@ for i=1:size(models, 1)
      
     if latest_lane_changes_start(i) + models{i, 6}.lane_change_duration <= t && target_lane_numbers(i) ~= 0 
         latest_lane_changes_end(i) = t;
-        disp(['Number ' num2str(current_car_data(5)) ' driver ended his lane change at time: ' num2str(t)])
+        %disp(['Number ' num2str(current_car_data(5)) ' driver ended his lane change at time: ' num2str(t)])
         next_source_lane_numbers(i) = target_lane_numbers(i);
         next_target_lane_numbers(i) = 0;
     else
@@ -142,7 +142,7 @@ for i=1:size(models, 1)
     end 
     
     if latest_lane_changes_start(i) + models{i, 6}.lane_change_duration > t && target_lane_numbers(i) ~= 0
-        disp(['Number ' num2str(current_car_data(5)) ' driver is changing lanes at t: ' num2str(t)])
+        %disp(['Number ' num2str(current_car_data(5)) ' driver is changing lanes at t: ' num2str(t)])
         states_of_cars(i) = 2;
         
         if weighted_average_acceleration_calculation_enabled
@@ -150,8 +150,8 @@ for i=1:size(models, 1)
             duration = models{i, 6}.lane_change_duration;
             unit_elapsed_time = (t - latest_lane_changes_start(i)) / duration;
             unit_remaining_time = (start + duration - t) / duration;
-            disp(['unit_elapsed_time ' num2str(unit_elapsed_time)])
-            disp(['unit_remaining_time ' num2str(unit_remaining_time)])
+            %disp(['unit_elapsed_time ' num2str(unit_elapsed_time)])
+            %disp(['unit_remaining_time ' num2str(unit_remaining_time)])
             if target_lane_numbers(i) == mobil_params.right_lane
                 dy(2*i-1) = mobil_params.a_c(1) * unit_remaining_time + mobil_params.a_c_right(1) * unit_elapsed_time;
                 dy(2*i) = mobil_params.a_c(2) * unit_remaining_time + mobil_params.a_c_right(2) * unit_elapsed_time;

@@ -1,4 +1,3 @@
-function load_data_set_2
 global models possible_lane_numbers weighted_average_acceleration_calculation_enabled target_line
 
 models = {
@@ -17,5 +16,3 @@ models = {
 weighted_average_acceleration_calculation_enabled = true;
 possible_lane_numbers = [1;2];
 target_line = 100;
-
-end
