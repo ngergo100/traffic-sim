@@ -42,7 +42,6 @@ classdef IDModel
                     obj.a_max * (1 - (y(2) / obj.v_0)^obj.delta)
                 ];
             end
-            
         end
     end
 end
