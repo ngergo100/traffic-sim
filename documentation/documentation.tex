@@ -1,28 +1,28 @@
-\documentclass[a4paper,12pt,twoside]{book}
+\documentclass[a4paper,12pt,twoside]{report}
 
 \begin{document}
-	\chapter*{Abstract}
+
+	\begin{abstract}
 		Nowadays traffic in rush hours is crowded. The causes of this issue - besides the countless automobiles which is much more than the streets of cities were initially designed for - are inattention, hurrying and other distracting activities. This report purpose is to investigate the effect of autonomous drivers in the rush hour traffic with special attention to the red light situations.
-		
+
 		A literature review was accomplished to investigate the behavior of normal and autonomous drivers. Based on that it can be stated that traffic models can be divided into micro- and macroscopic models. Microscopic behaviors are more suitable to model red light situations, so the process was continued with these.
-		
+
 		The red light situations were simulated with a car following model. The algorithm used during the simulations was a combination of Intelligent Driver Model and the so called MOBIL model which stands for 'minimizing overall braking induced by lane change'.
-		
+
 		Several simulations with various driver types (form the low reaction time old timer to the aggressive business man) were evaluated.
-		
+
 		The simulations showed that the effect of autonomous drivers is very positive in traffic. 
+	\end{abstract}
+
+	\tableofcontents
+
 	\chapter{Introduction}
-		\section{Motivation}
-			Nowadays there is huge attention on self-driving cars. It seems that in a few years self-driving cars will hit the public roads. So It could be an interesting topic that how much these cars will change on today's crowded streets.
-	\chapter{Models developed by others}
-		\section{Microscopic}
-		\section{Macroscopic}
-	\chapter{Models developed by me}
-		\section{Intelligent driver model}
-		\section{MOBIL}
-	\chapter{Use cases}
-	\chapter{Simulation results}
-	\chapter{Conclusion}
-		\section{}
-		\section{Future plans}
+		Recently there is huge attention on self-driving cars. It seems that in a few years self-driving cars will hit the public roads. So it could be interesting that how much effect these cars will have on today's crowded streets. To find out a model should be developed to simulate real traffic situations without autonomous cars and then exchange real drivers one by one to `robots`. To develop a simulator that is capable of simulating real traffic behaviors It was a must to check out what has been already developed by the industry.
+
+		There are several publications and even open source example implementations on this topic. One of the main applications is that based on the traffic simulation results provided by these simulators, engineers can design better traffic systems. It can be also used to simulate stop and go traffic on the highways and suggest a speed limit based on that to avoid traffic jam. There are researches about improving traffic via network communications between cars and also with traffic lights. Theses researches also based on traffic simulators.
+	\chapter{Traffic models}
+		\section{Theory behind traffic simulators}
+			One of the main branch of these algorithms are the so called macroscopic models. These deal with traffic as a flow and they do not take individual driver actions into consideration. These are based on the vehicle density.
+
+			The other type is the microscopic model. These models do take individual driver movements into consideration. So they are simulating each cars in a particular traffic situation. The task is to find a model that can accurately represent a human driven car. The model consists two parts, longitudinal and transversal movements. Most of the simulations only care about the former one. 
 \end{document}
