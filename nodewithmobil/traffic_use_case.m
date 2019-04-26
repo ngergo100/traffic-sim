@@ -12,6 +12,6 @@ load_data_set_1
 
 traffic
     
-%post_processing
+post_processing
     
-%animation
+animation

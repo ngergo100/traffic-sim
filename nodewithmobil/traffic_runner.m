@@ -7,7 +7,7 @@ clear
 
 addpath('./Configurations')
 
-config_count = 10;
+config_count = 18;
 
 for index=1:config_count
     should_use_images = false;
@@ -24,12 +24,7 @@ for index=1:config_count
  
     %animation
     
-    vehicle_density = density_process(y,target_line);
-    
-    figure(1)
-    hold all;
-    plot(t,vehicle_density, 'DisplayName',num2str(index)) 
-    legend('-DynamicLegend');
+    vehicle_density_post_processing
     
     clear
 end
