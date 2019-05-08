@@ -6,5 +6,6 @@ function dataset_helper(driver, index)
     models{index,6}.not_paying_attention = driver.not_paying_attention;
     models{index,6}.acceleration_threshold = driver.acceleration_threshold;
     models{index,6}.acceleration_difference_threshold = driver.acceleration_difference_threshold;
+    models{index,6}.p = driver.p;
 end
 
