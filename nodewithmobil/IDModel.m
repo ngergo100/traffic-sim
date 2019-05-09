@@ -12,6 +12,7 @@ classdef IDModel
         not_paying_attention
         acceleration_threshold
         acceleration_difference_threshold
+        p
     end
     methods
         function obj = IDModel(consts)
@@ -27,6 +28,7 @@ classdef IDModel
             obj.not_paying_attention = consts.not_paying_attention;
             obj.acceleration_threshold = consts.acceleration_threshold;
             obj.acceleration_difference_threshold = consts.acceleration_difference_threshold;
+            obj.p = consts.p;
         end
         function dy = next_step(obj, ~, y, leading_car)
             if leading_car.identifier ~= 0
@@ -42,7 +44,6 @@ classdef IDModel
                     obj.a_max * (1 - (y(2) / obj.v_0)^obj.delta)
                 ];
             end
-            
         end
     end
 end
