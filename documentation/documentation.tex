@@ -32,7 +32,7 @@
 			One of the main branch of these algorithms are the so called macroscopic or hydrodynamic models. These deal with traffic as a fluid flow and they do not take individual driver actions into consideration. These are based on the vehicle density.
 
 			The other type is the microscopic or car following models. These models do take individual driver behavior into consideration. So they are simulating each cars in a particular traffic situation. Some examples are the optimal velocity model, velocity difference model or the IDM. The task is to find a model that can accurately represent a human driven car. The model consists two parts, longitudinal and transversal movements. Although most of the simulations only care about the former one in this thesis both of them will be investigated.
-		\section{Inteligent Driver Model description} \label{sec:IDM}
+		\section{Intelligent Driver Model description} \label{sec:IDM}
 			One of the most widespread microscopic model is the Intelligent Driver Model. IDM is a time continuous car following model which belongs to the Optimal Velocity model family. IDM is designed to be accident-free. It can only represents longitudinal motions. The fundamental idea behind the model is that every car chooses its speed based on the car before and its individual parameters. In case when there is no car before then it can freely accelerate to its desired speed.
 
 			IDM is defined by its acceleration function. The model is constructed by two parts. The first part represents the \textit{free acceleration} when there is no leading car or it is far away:
@@ -158,13 +158,31 @@
 				\label{eq:numerical_idm}
 			\end{equation}
 	\chapter{Evolution of the simulator}
-			Equation \ref{eq:numerical_idm} can be solved with an Explicit Euler. To test the model a basic setup was implemented in MATLAB. Do visual representation can be found below:
+			Equation \ref{eq:numerical_idm} can be solved with an Explicit Euler. To test the model a basic setup was implemented in MATLAB. The visual representation of the setup can be seen on figure \ref{fig:basic2car}.
 			\begin{figure}[ht]
 				\centering
 				\includegraphics[width=\textwidth]{basic_2_car.eps}
 				\caption{Basic setup with 2 cars}
 				\label{fig:basic2car}
 			\end{figure}
+			The leading car has a constant $100\;km/h$ velocity. The following car which is modeled with IDM has an initial velocity of $100\;km/h$ as well. The parameters of following car can be seen in Table \ref{table:idm_params}
+			\begin{figure}[ht]
+				\begin{center}
+					\begin{tabular}{ |c|c|c| } 
+						\hline
+						$a_{max}$ & $1.5$ & $m/s^2$ \\
+						$b_{max}$ & $1.67$ & $m/s^2$ \\
+						$v_d$ & $130$ & $km/h$ \\
+						$T$ & $1.8$ & $s$ \\
+						$h_0$ & $2$ & $m$ \\
+						$\delta$ & $4$ & $-$ \\
+						$L$ & $4.5$ & $m$ \\
+						\hline
+					\end{tabular}
+				\end{center}
+				\caption{Intelligent Driver Model parameters}
+				\label{table:idm_params}
+			\end{figure}
 	\chapter{Final model}
-		\section{Timestep independence}
+		\section{Time step independence}
 \end{document}

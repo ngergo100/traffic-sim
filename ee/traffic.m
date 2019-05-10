@@ -42,35 +42,38 @@ for i=1:N
     x2(i + 1) = x2(i) + dt * v2(i);
 end
 
-figure
+%figure
 
-subplot(3,2,1)
-plot(t,v1)
-title('Velocity of car 1')
-xlabel('t [s]')
-ylabel('v [m/s]')
+% subplot(3,2,1)
+% plot(t,v1)
+% title('Velocity of car 1')
+% xlabel('t [s]')
+% ylabel('v [m/s]')
+% 
+% subplot(3,2,2)
+% plot(t,v2)
+% title('Velocity of car 2')
+% xlabel('t [s]')
+% ylabel('v [m/s]')
 
-subplot(3,2,2)
-plot(t,v2)
-title('Velocity of car 2')
-xlabel('t [s]')
-ylabel('v [m/s]')
+% subplot(3,2,3)
+% plot(t,x1)
+% title('Position of car 1')
+% xlabel('t [s]')
+% ylabel('x [m]')
+% 
+% subplot(3,2,4)
+% plot(t,x2)
+% title('Position of car 2')
+% xlabel('t [s]')
+% ylabel('x [m]')
 
-subplot(3,2,3)
-plot(t,x1)
-title('Position of car 1')
-xlabel('t [s]')
-ylabel('x [m]')
-
-subplot(3,2,4)
-plot(t,x2)
-title('Position of car 2')
-xlabel('t [s]')
-ylabel('x [m]')
-
-subplot(3,2,5:6)
+figure_size = [0,0,10,5];
+figure('Units','centimeters','Position',figure_size)
+set(gca,'fontname','meslo','fontsize',10')
 plot(t,x1-x2)
 title('Headway of car 2')
 xlabel('t [s]')
 ylabel('s [m]')
+print('basic_2_car_headaway','-depsc')
 
