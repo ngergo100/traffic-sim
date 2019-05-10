@@ -1,8 +1,9 @@
-\documentclass[a4paper,11pt,twoside]{report}
+\documentclass[a4paper,12pt,twoside]{report}
 
 % Packages
 \usepackage{graphicx} % -> Images, includegraphics command
 \usepackage{amsmath} % -> Matrices, pmatrix command
+\usepackage[cm]{fullpage}
 
 % Other configuration
 \graphicspath{ {./Resources/} }
@@ -42,9 +43,9 @@
 			\end{equation}
 			where
 			\begin{itemize}
-				\item $a_{max}$ is the maximum of the acceleration in $[m/s^2]$,
-				\item $v(t)$ is the own velocity at $t$ in $[m/s]$,
-				\item $v_d$ is the desired velocity in $[m/s]$,
+				\item $a_{\rm max}$ $\rm [m/s^2]$ is the maximum of the acceleration,
+				\item $v(t)$ is the own velocity at $t$ in $\rm [m/s]$,
+				\item $v_d$ is the desired velocity in $\rm [m/s]$,
 				\item $\delta$ is the free acceleration exponent.
 			\end{itemize}
 			Equation \ref{eq:afree} produces zero when the current speed equals to the desired speed ($v(t)=v_d$) and it reaches its maximum value when the car is not moving ($v(t)=0$).
@@ -59,19 +60,19 @@
 				\item $h_d(t)$ is the desired safe gap at $t$ in $[m]$.
 			\end{itemize}
 			The current gap at a given $t$ can be calculated from:
-			$$
+			\begin{equation}
 				h(t)=x_l(t)-L_l - x(t)
-			$$
+			\end{equation}
 			where $x_l(t)$ and $L_l$ is the position and length of the described car's leader car, $x(t)$ is the car's own position.
 			The desired safe gap can be calculated from:
-			$$
+			\begin{equation}
 				h_d(t)=h_0 + v(t)\cdot T + \frac{v(t)-v_l(t)}{2\cdot \sqrt{a_{max}\cdot b_{max}}}\,,
-			$$
+			\end{equation}
 			where $h_0$ is the bumper to bumper gap or jam distance, $T$ is the desired safety time headway, $v_l(t)$ is the velocity of its leading car, $b_{max}$ is the maximum value of comfortable deceleration.
 			Equation \ref{eq:afollower} will decreases with increasing own speed, increasing velocity difference and decreasing distance to the front car.
 			\begin{figure}[ht]
 				\centering
-				\includegraphics[width=\textwidth]{idm.eps}
+				\includegraphics[width=.8\textwidth]{idm.eps}
 				\caption{3 special case of IDM model}
 				\label{fig:idm}
 			\end{figure}
