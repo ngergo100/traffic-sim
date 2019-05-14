@@ -68,12 +68,18 @@ end
 % xlabel('t [s]')
 % ylabel('x [m]')
 
-figure_size = [0,0,10,5];
-figure('Units','centimeters','Position',figure_size)
-set(gca,'fontname','meslo','fontsize',10')
-plot(t,x1-x2)
-title('Headway of car 2')
-xlabel('t [s]')
-ylabel('s [m]')
-print('basic_2_car_headaway','-depsc')
+figure_size = [10,10,15.5,10];
+figure1 = figure('Units','centimeters','Position',figure_size);
+plot(t, x1 - x2);
+xlabel('t [s]');
+ylabel('s [m]');
+set(gca,'fontsize',12');
+print('Resources/ee_basic_2_car_headaway_2','-depsc');
+
+figure2 = figure('Units','centimeters','Position',figure_size);
+plot(t, v2*3.6);
+xlabel('t [s]');
+ylabel('v [km/h]');
+set(gca,'fontsize',12');
+print('Resources/ee_basic_2_car_velocity_2','-depsc');
 
