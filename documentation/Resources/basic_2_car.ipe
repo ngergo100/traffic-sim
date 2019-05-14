@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70212" creator="Ipe 7.2.12">
-<info created="D:20190508183704" modified="D:20190509223556"/>
+<info created="D:20190508183704" modified="D:20190514161731"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -3147,7 +3147,7 @@ h
 392 160 m
 464 160 l
 </path>
-<text matrix="1 0 0 1 -28 28" transformations="translations" pos="460 168" stroke="darkorange" type="label" width="102.364" height="12.915" depth="4.3" halign="center" valign="bottom" size="LARGE" style="math">v_0=100 km/h</text>
+<text matrix="1 0 0 1 -28 28" transformations="translations" pos="460 168" stroke="darkorange" type="label" width="90.867" height="10.756" depth="3.59" halign="center" valign="bottom" size="Large">$v_0=100$ km/h</text>
 <path stroke="black" dash="dashed">
 448 192 m
 448 116 l
@@ -3156,12 +3156,12 @@ h
 204 192 m
 204 116 l
 </path>
-<text matrix="1 0 0 1 12 12" transformations="translations" pos="192 100" stroke="black" type="label" width="23.296" height="9.245" depth="0" halign="center" valign="top" size="Large" style="math">0\;m</text>
-<text matrix="1 0 0 1 256.817 13.2075" transformations="translations" pos="191 99" stroke="black" type="label" width="37.343" height="9.245" depth="0" halign="center" valign="top" size="Large" style="math">100\; m</text>
+<text matrix="1 0 0 1 12 12" transformations="translations" pos="192 100" stroke="black" type="label" width="23.412" height="9.245" depth="0" halign="center" valign="top" size="Large">0 m</text>
+<text matrix="1 0 0 1 256.817 13.2075" transformations="translations" pos="191 99" stroke="black" type="label" width="37.459" height="9.245" depth="0" halign="center" valign="top" size="Large">100 m</text>
 <path stroke="darkorange" arrow="normal/normal">
 148 160 m
 224 160 l
 </path>
-<text matrix="1 0 0 1 -276 28" transformations="translations" pos="460 168" stroke="darkorange" type="label" width="27.047" height="12.896" depth="4.29" halign="center" valign="bottom" size="LARGE" style="math">v(t)</text>
+<text matrix="1 0 0 1 -276 28" transformations="translations" pos="460 168" stroke="darkorange" type="label" width="23.304" height="10.756" depth="3.59" halign="center" valign="bottom" size="Large">$v(t)$</text>
 </page>
 </ipe>

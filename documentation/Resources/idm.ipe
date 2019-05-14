@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70212" creator="Ipe 7.2.12">
-<info created="D:20190508183704" modified="D:20190509194651"/>
+<info created="D:20190508183704" modified="D:20190514155712"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -258,9 +258,9 @@ h
 <text layer="alpha" matrix="1 0 0 1 -32 32" transformations="translations" pos="32 288" stroke="black" type="label" width="89.35" height="9.962" depth="2.79" valign="center" size="Large">No leading car</text>
 <text matrix="1 0 0 1 -32 -32" transformations="translations" pos="32 224" stroke="black" type="label" width="179.762" height="9.962" depth="2.79" valign="center" size="Large">Leading car with equal speed</text>
 <text matrix="1 0 0 1 -32 -96" transformations="translations" pos="32 160" stroke="black" type="label" width="67.114" height="9.962" depth="2.79" valign="center" size="Large">Traffic jam</text>
-<text matrix="1 0 0 1 -12 16" transformations="translations" pos="352 304" stroke="darkred" type="label" width="32.845" height="7.409" depth="4.91" valign="baseline" size="LARGE" style="math">a_{free}</text>
-<text matrix="1 0 0 1 -32 -32" transformations="translations" pos="32 208" stroke="darkred" type="label" width="30.614" height="5.151" depth="1.79" valign="baseline" size="large" style="math">v=v_l</text>
-<text matrix="1 0 0 1 -32 -160" transformations="translations" pos="32 208" stroke="darkred" type="label" width="27.688" height="7.704" depth="0" valign="baseline" size="large" style="math">v=0</text>
+<text matrix="1 0 0 1 -12 16" transformations="translations" pos="352 304" stroke="darkred" type="label" width="27.881" height="7.415" depth="2.58" valign="baseline" size="LARGE" style="math">a_{\rm free}</text>
+<text matrix="1 0 0 1 -32 -32" transformations="translations" pos="32 208" stroke="darkred" type="label" width="36.258" height="6.179" depth="2.15" valign="baseline" size="Large" style="math">v=v_{\rm l}</text>
+<text matrix="1 0 0 1 -32 -160" transformations="translations" pos="32 208" stroke="darkred" type="label" width="33.225" height="9.245" depth="0" valign="baseline" size="Large" style="math">v=0</text>
 <path stroke="black" pen="1">
 0 256 m
 512 256 l
@@ -269,7 +269,7 @@ h
 0 256 m
 512 256 l
 </path>
-<text matrix="1 0 0 1 184 -140" transformations="translations" pos="256 288" stroke="black" type="label" width="15.717" height="11.766" depth="2.58" halign="center" valign="baseline" size="LARGE" style="math">L_l</text>
+<text matrix="1 0 0 1 184 -140" transformations="translations" pos="256 288" stroke="black" type="label" width="15.219" height="11.766" depth="2.58" halign="center" valign="baseline" size="LARGE" style="math">L_{\rm l}</text>
 <path stroke="black" arrow="normal/normal" rarrow="normal/normal">
 388 144 m
 488 144 l
