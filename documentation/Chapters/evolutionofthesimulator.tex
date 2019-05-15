@@ -1,55 +1,83 @@
 \chapter{Evolution of the simulator}
-	Equation \ref{eq:numerical_idm} can be solved with an Explicit Euler. To test the model a basic setup was implemented in MATLAB. The visual representation of the setup can be seen on figure \ref{fig:basic2car}.
-	\begin{figure}[ht]
-		\centering
-		\includegraphics[width=.95\textwidth]{common/basic_2_car}
-		\caption{Basic setup with 2 cars}
-		\label{fig:basic2car}
-	\end{figure}
-	The leading car has a constant 100 km/h velocity. The following car - which is modeled with IDM - has an initial velocity of 100 km/h as well. The second car is 100 meters behind the other car. The parameters of following car can be seen in Table \ref{tab:idm_params}. The parameters have been chosen based on literature from [TODO:reference here].
-	\begin{table}[ht]
-		\begin{center}
-			\begin{tabular}{ |c|c|c| }
-				\hline
-				$a_{\rm max}$ & $1.5$ & $\rm m/s^2$ \\
-				$b_{\rm max}$ & $1.67$ & $\rm m/s^2$ \\
-				$v_{\rm d}$ & $130$ & km/h \\
-				$T$ & $1.8$ & s \\
-				$h_0$ & $2$ & m \\
-				$\rm \delta$ & $4$ & - \\
-				$L$ & $4.5$ & m \\
-				\hline
-			\end{tabular}
-		\end{center}
-		\caption{Intelligent Driver Model parameters}
-		\label{tab:idm_params}
-	\end{table}
-	The simulation was run until 100 seconds. Figure \ref{fig:basic2car_case_1} shows the result. The initial gap between the cars is greater than the second car's desired headway, consequently it will accelerate. The gap between the vehicles starts to decrease. At a certain time (around $t =$ 10) the second car starts to decelerate slowly based on the velocity difference and the decreasing headway. It will reach the desired safe gap at some point and will have exactly the same speed as the car before. It will maintain its desired headway.
-	\begin{figure}
-		\centering
-		\begin{minipage}{.5\textwidth}
+	\section{Basic 2 car setup with IDM}\label{sec:base2car}
+		Equation \ref{eq:numerical_idm} can be solved with an Explicit Euler. To test the model a basic setup was implemented in MATLAB. The visual representation of the setup can be seen on figure \ref{fig:basic2car}.
+		\begin{figure}[ht]
 			\centering
-			\includegraphics{ee/basic_2_car_headaway_case_1_2}
-		\end{minipage}\hfill
-		\begin{minipage}{.5\textwidth}
+			\includegraphics[width=.95\textwidth]{common/basic_2_car}
+			\caption{Basic setup with 2 cars}
+			\label{fig:basic2car}
+		\end{figure}
+		The leading car has a constant 100 km/h velocity. The following car - which is modeled with IDM - has an initial velocity of 100 km/h as well. The second car is 100 meters behind the other car. The parameters of following car can be seen in Table \ref{tab:idm_params}. The parameters have been chosen based on literature from [TODO:reference here].
+		\begin{table}[ht]
+			\begin{center}
+				\begin{tabular}{ |c|c|c| }
+					\hline
+					$a_{\rm max}$ & $1.5$ & $\rm m/s^2$ \\
+					$b_{\rm max}$ & $1.67$ & $\rm m/s^2$ \\
+					$v_{\rm d}$ & $130$ & km/h \\
+					$T$ & $1.8$ & s \\
+					$h_0$ & $2$ & m \\
+					$\rm \delta$ & $4$ & - \\
+					$L$ & $4.5$ & m \\
+					\hline
+				\end{tabular}
+			\end{center}
+			\caption{Intelligent Driver Model parameters}
+			\label{tab:idm_params}
+		\end{table}
+		The simulation was run until 100 seconds. Figure \ref{fig:basic2car_case_1} shows the result. The initial gap between the cars is greater than the second car's desired headway, consequently the vehicle will accelerate. The gap between the vehicles starts to decrease. At a certain time (around $t =$ 10) the second car starts to decelerate slowly based on the velocity difference and the decreasing headway. It will reach the desired safe gap at some point and will have exactly the same speed as the car before. It will maintain its desired headway.
+		\begin{figure}[ht]
 			\centering
-			\includegraphics{ee/basic_2_car_velocity_case_1_2}
-		\end{minipage}
-		\caption{Following car's headway and velocity in Setup 1}
-		\label{fig:basic2car_case_1}
-	\end{figure}
+			\begin{minipage}{.5\textwidth}
+				\centering
+				\includegraphics{ee/basic_2_car_headaway_case_1_2}
+			\end{minipage}\hfill
+			\begin{minipage}{.5\textwidth}
+				\centering
+				\includegraphics{ee/basic_2_car_velocity_case_1_2}
+			\end{minipage}
+			\caption{Following car's headway and velocity in Setup 1}
+			\label{fig:basic2car_case_1}
+		\end{figure}
 
-	Another simulation was run with the same configuration except the initial headway was changed to 40 meters. Figure \ref{fig:basic2car_case_2} shows the result.
-	\begin{figure}
-		\centering
-		\begin{minipage}{.5\textwidth}
+		Another simulation was run with the same configuration except that the first car's front is set to be at 40 meters instead of 100. Figure \ref{fig:basic2car_case_2} shows the result. In this case the gap between cars is less than the second vehicle's desired safety headway. So it will decelerate first than accelerate to reach the desired gap. Fundamentally the same happened but in the opposite direction.
+		\begin{figure}[ht]
 			\centering
-			\includegraphics{ee/basic_2_car_headaway_case_2_2}
-		\end{minipage}\hfill
-		\begin{minipage}{.5\textwidth}
+			\begin{minipage}{.5\textwidth}
+				\centering
+				\includegraphics{ee/basic_2_car_headaway_case_2_2}
+			\end{minipage}\hfill
+			\begin{minipage}{.5\textwidth}
+				\centering
+				\includegraphics{ee/basic_2_car_velocity_case_2_2}
+			\end{minipage}
+			\caption{Following car's headway and velocity in Setup 2}
+			\label{fig:basic2car_case_2}
+		\end{figure}
+		Both examples showed that the stationary state does not depend on the initial gap. After a little bit of time the second car has reached the desired safety gap (which is around 64.5 meters) and the 100 km/h speed in both cases.
+	\section{Model behavior verification}
+		In Section \ref{sec:base2car} two examples were shown where the model produced the same stationary state for different initial conditions. Stationary state means that the vehicle's acceleration is zero. So equation \ref{eq:aidm} modifies as followings in a stationary state:
+		\begin{equation}
+		1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T+\frac{v_{\rm stac}(v_{\rm l,stac}-v_{\rm stac})}{2\sqrt{\amax \bmax}}}{x_{\rm l,0}+v_{\rm l, stac}\cdot t-x_{0} - L_{\rm l} + v_{\rm stac}\cdot t} \right )^2=0\,,
+		\label{eq:aidm_stac1}
+		\end{equation}
+		There is an other consequence of this situation as well. As it can be seen in the examples, cars' velocities were equal, which means:
+		\begin{equation}
+			v_{\rm stac}=v_{\rm l,stac}\,,
+		\end{equation}
+		so Equation \ref{eq:aidm_stac1} will further simplifies to:
+		\begin{equation}
+			1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T}{x_{\rm l,0}-x_{0} - L_{\rm l}} \right )^2=0\,.
+		\end{equation}
+		It can be stated that the stationary gap between the vehicles equals to the denominator of the second fraction expression:
+		\begin{equation}
+		1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T}{h_{\rm stac}} \right )^2=0\,.
+		\label{eq:aidm_stac2}
+		\end{equation}
+		Expression \ref{eq:aidm_stac2} shows that $v_{\rm stac}$ only depends on $h_{\rm stac}$. Everything else in the equation is a parameter of the model. Consequently every stationary gap has a corresponding speed value. Plot of Equation \ref{eq:aidm_stac2} can be seen on Figure \ref{fig:aidm_stac}.% [TODO: check this figure error, it hides half of the line before]
+		\begin{figure}[ht]
 			\centering
-			\includegraphics{ee/basic_2_car_velocity_case_2_2}
-		\end{minipage}
-		\caption{Following car's headway and velocity in Setup 2}
-		\label{fig:basic2car_case_2}
-	\end{figure}
+			\includegraphics{check/check_stationary_states}
+			\caption{Stationary velocity based on stationary headway}
+			\label{fig:aidm_stac}
+		\end{figure}
