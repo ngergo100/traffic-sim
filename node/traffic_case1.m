@@ -23,7 +23,7 @@ opts = odeset('RelTol',1e-6);
 [t,y] = ode45(@(t,y) lane(t, y, models), [0 T], y0, opts);
 
 plotcount = size(models,1);
-figure_size = [10,10,8,5];
+figure_size = [10,10,8,6.5];
 figure1 = figure('Units','centimeters','Position',figure_size);
 
 for i=1:plotcount
@@ -41,7 +41,7 @@ print('Resources/n_car_velocity_case1','-depsc');
 figure2 = figure('Units','centimeters','Position',figure_size);
 for i=2:plotcount
     hold on;
-    plot(t,y(:,2*i-3)-y(:,2*i-1)-4.5)
+    plot(t,y(:,2*i-3)-y(:,2*i-1)-models{i,3}.L)
     legendInfoHeadaway{i-1} = ['h' num2str(i-1) '-' num2str(i)];
 end
 hold on;
