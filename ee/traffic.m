@@ -72,7 +72,7 @@ figure1 = figure('Units','centimeters','Position',figure_size);
 plot(t, x1 - x2);
 set(gca,'fontsize',10');
 xlabel('t[s]', 'fontsize',12');
-ylabel('s[m]', 'fontsize',12');
+ylabel('h[m]', 'fontsize',12');
 print('Resources/basic_2_car_headaway_2','-depsc');
 
 figure2 = figure('Units','centimeters','Position',figure_size);
