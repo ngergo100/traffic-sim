@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70212" creator="Ipe 7.2.12">
-<info created="D:20190508183704" modified="D:20190514161731"/>
+<info created="D:20190508183704" modified="D:20190515133258"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -3147,7 +3147,7 @@ h
 392 160 m
 464 160 l
 </path>
-<text matrix="1 0 0 1 -28 28" transformations="translations" pos="460 168" stroke="darkorange" type="label" width="90.867" height="10.756" depth="3.59" halign="center" valign="bottom" size="Large">$v_0=100$ km/h</text>
+<text matrix="1 0 0 1 -28 28" transformations="translations" pos="460 168" stroke="darkorange" type="label" width="100.666" height="10.756" depth="3.59" halign="center" valign="bottom" size="Large">$v_{\rm l}(t)= $100 km/h</text>
 <path stroke="black" dash="dashed">
 448 192 m
 448 116 l
@@ -3162,6 +3162,6 @@ h
 148 160 m
 224 160 l
 </path>
-<text matrix="1 0 0 1 -276 28" transformations="translations" pos="460 168" stroke="darkorange" type="label" width="23.304" height="10.756" depth="3.59" halign="center" valign="bottom" size="Large">$v(t)$</text>
+<text matrix="1 0 0 1 -276 28" transformations="translations" pos="460 168" stroke="darkorange" type="label" width="23.304" height="10.756" depth="3.59" halign="center" valign="bottom" size="Large" style="math">v(t)</text>
 </page>
 </ipe>
