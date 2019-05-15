@@ -1,19 +1,22 @@
 \documentclass[a4paper,12pt,twoside]{report} % TODO: add `openright` option when you have at least 50 pages
 
 % Packages
-\usepackage[top=2cm, bottom=2.5cm, inner=2cm, outer=2cm, bindingoffset=1.5cm]{geometry} % -> Makes custom margins for the twoside document style. Use `\usepackage{showframe}` command to show the margins and bindingoffsets
+\usepackage[top=2cm, bottom=2.5cm, inner=2cm, outer=2cm, bindingoffset=1.5cm]{geometry} % -> Makes custom margins for the twoside document style. Use `\usepackage{showframe}` command to show the margins and bindingoffset
 \usepackage{graphicx} % -> Images, includegraphics command
 \usepackage{amsmath} % -> Matrices, pmatrix command
+\usepackage{psfrag} % -> To be able to change text font on matlab exports, psfrag command. Change default compiler to DVI-PS-PDF chain.
+
+% Replace these texts on .eps pictures
+\psfrag{t[s]}{$t$ [s]}
+\psfrag{s[m]}{$s$ [m]}
+\psfrag{v[km/h]}{$v$ [km/h]}
 
 % Other configuration
-\graphicspath{ 
-	{./Resources/} 
-	{../check/Resources} 
-	{../ee/Resources}
-	{../eemobil/Resources}
-	{../node/Resources}
-	{../ode/Resources}
-}
+\graphicspath{{./Resources/}}
+
+% Custom commands
+\newcommand{\amax}{a_{\rm max}}
+\newcommand{\bmax}{b_{\rm max}}
 
 \begin{document}
 	\input{Chapters/abstract}
