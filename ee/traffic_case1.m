@@ -41,44 +41,18 @@ for i=1:N
     x2(i + 1) = x2(i) + dt * v2(i);
 end
 
-%figure
-
-% subplot(3,2,1)
-% plot(t,v1)
-% title('Velocity of car 1')
-% xlabel('t [s]')
-% ylabel('v [m/s]')
-% 
-% subplot(3,2,2)
-% plot(t,v2)
-% title('Velocity of car 2')
-% xlabel('t [s]')
-% ylabel('v [m/s]')
-
-% subplot(3,2,3)
-% plot(t,x1)
-% title('Position of car 1')
-% xlabel('t [s]')
-% ylabel('x [m]')
-% 
-% subplot(3,2,4)
-% plot(t,x2)
-% title('Position of car 2')
-% xlabel('t [s]')
-% ylabel('x [m]')
-
 figure_size = [10,10,8,5];
 figure1 = figure('Units','centimeters','Position',figure_size);
 plot(t, x1 - x2);
 set(gca,'fontsize',10');
 xlabel('t[s]', 'fontsize',12');
 ylabel('h[m]', 'fontsize',12');
-print('Resources/basic_2_car_headaway_2','-depsc');
+print('Resources/basic_2_car_headaway_case_1_2','-depsc');
 
 figure2 = figure('Units','centimeters','Position',figure_size);
 plot(t, v2*3.6);
 set(gca,'fontsize',10');
 xlabel('t[s]', 'fontsize',12');
 ylabel('v[km/h]', 'fontsize',12');
-print('Resources/basic_2_car_velocity_2','-depsc');
+print('Resources/basic_2_car_velocity_case_1_2','-depsc');
 
