@@ -1,18 +1,19 @@
 \documentclass[a4paper,12pt,twoside]{report} % TODO: add `openright` option when you have at least 50 pages
 
 % Packages
+\usepackage{amsmath} % -> Matrices, `pmatrix` command
+\usepackage{auto-pst-pdf} % -> Dependency of psfrag. Add `-shell-escape` paramter to pdflatex command in Commands menu
 \usepackage[top=2cm, bottom=2.5cm, inner=2cm, outer=2cm, bindingoffset=1.5cm]{geometry} % -> Makes custom margins for the twoside document style. Use `\usepackage{showframe}` command to show the margins
-\usepackage{graphicx} % -> Images, includegraphics command
-\usepackage{amsmath} % -> Matrices, pmatrix command
-\usepackage{psfrag} % -> To be able to change text font on matlab exports, psfrag command.
-\usepackage{auto-pst-pdf} % -> Dependency of psfrag. Add `-shell-escape` paramter to pdflatex command
+\usepackage{graphicx} % -> Images, `includegraphics` command
+\usepackage[parfill]{parskip} % -> Makes new paragraphs without indentation.
+\usepackage{psfrag} % -> To be able to change text font on matlab exports, `psfrag` command
 
 % Replace these texts on .eps pictures
-\psfrag{t[s]}{$t$ [s]}
-\psfrag{h[m]}{$h$ [m]}
-\psfrag{v[km/h]}{$v$ [km/h]}
-\psfrag{vstac[km/h]}{$v_{\rm stac}$ [km/h]}
-\psfrag{hstac[m]}{$h_{\rm stac}$ [m]}
+\psfrag{t[s]}{$t$[s]}
+\psfrag{h[m]}{$h$[m]}
+\psfrag{v[km/h]}{$v$[km/h]}
+\psfrag{vstac[km/h]}{$v_{\rm stac}$[km/h]}
+\psfrag{hstac[m]}{$h_{\rm stac}$[m]}
 
 % Other configuration
 \graphicspath{{./Resources/}}
