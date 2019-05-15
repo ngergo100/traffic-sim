@@ -16,6 +16,6 @@ figure_size = [10,10,15,10];
 figure1 = figure('Units','centimeters','Position',figure_size);
 plot(h_stac, velocity * 3.6)
 set(gca,'fontsize',10');
-ylabel('v_{stac}[km/h]', 'fontsize',12')
-xlabel('h_{stac}[m]', 'fontsize',12')
+ylabel('vstac[km/h]', 'fontsize',12')
+xlabel('hstac[m]', 'fontsize',12')
 print('Resources/check_stationary_states','-depsc');
