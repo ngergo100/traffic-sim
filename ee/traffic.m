@@ -10,7 +10,6 @@ consts.T = 1.8;          %% German recommendation at driving schools
 consts.h_0 = 2;          %% standstill minimum gap
 consts.delta = 4;        %% acceleration exponent
 L = 4.5;                 %% cars length
-omega = 0*2*pi;
 
 %% Grid parameters
 dt = 0.01;
@@ -68,18 +67,18 @@ end
 % xlabel('t [s]')
 % ylabel('x [m]')
 
-figure_size = [10,10,15,10];
+figure_size = [10,10,8,5];
 figure1 = figure('Units','centimeters','Position',figure_size);
 plot(t, x1 - x2);
-xlabel('t[s]');
-ylabel('s[m]');
-set(gca,'fontsize',12');
+set(gca,'fontsize',10');
+xlabel('t[s]', 'fontsize',12');
+ylabel('s[m]', 'fontsize',12');
 print('Resources/basic_2_car_headaway_2','-depsc');
 
 figure2 = figure('Units','centimeters','Position',figure_size);
 plot(t, v2*3.6);
-xlabel('t[s]');
-ylabel('v[km/h]');
-set(gca,'fontsize',12');
+set(gca,'fontsize',10');
+xlabel('t[s]', 'fontsize',12');
+ylabel('v[km/h]', 'fontsize',12');
 print('Resources/basic_2_car_velocity_2','-depsc');
 
