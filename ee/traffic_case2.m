@@ -43,7 +43,7 @@ end
 
 figure_size = [10,10,8,5];
 figure1 = figure('Units','centimeters','Position',figure_size);
-plot(t, x1 - x2);
+plot(t, x1 - L - x2);
 set(gca,'fontsize',10');
 xlabel('t[s]', 'fontsize',12');
 ylabel('h[m]', 'fontsize',12');
