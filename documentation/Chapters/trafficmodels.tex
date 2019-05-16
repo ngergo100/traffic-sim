@@ -8,47 +8,47 @@
 
 		IDM is defined by its acceleration function. The model is constructed by two parts. The first part represents the \textit{free acceleration} when there is no leading car or it is far away:
 		\begin{equation}
-			a_{\rm free}=\amax\cdot \left [ 1 - \left ( \frac{v(t)}{v_{\rm d}} \right )^{\rm \delta} \right ]\,,
+			\afree=\amax\left [ 1 - \left ( \frac{\vt}{\vd} \right )^{\delta} \right ]\,,
 			\label{eq:afree}
 		\end{equation}
 		where
 		\begin{itemize}
-			\item $\amax$ $\rm [m/s^2]$ is the maximum of the acceleration,
-			\item $v(t)$ $\rm [m/s]$ is the own velocity at $t$,
-			\item $v_{\rm d}$ $\rm [m/s]$ is the desired velocity,
-			\item $\rm \delta$ $\rm [-]$ is the free acceleration exponent.
+			\item $\amax$ $\rm [m/s^2]$ is the maximum acceleration of the vehicle,
+			\item $\vt$ $\rm [m/s]$ is the velocity of the vehicle at $t$,
+			\item $\vd$ $\rm [m/s]$ is the desired velocity of the vehicle,
+			\item $\delta$ $\rm [-]$ is the free acceleration exponent of the vehicle.
 		\end{itemize}
-		Equation \ref{eq:afree} produces zero when the current speed equals to the desired speed ($v(t)=v_{\rm d}$) and it reaches its maximum value when the car is not moving ($v(t)=0$).
+		Equation \ref{eq:afree} produces zero when the current speed equals to the desired speed ($\vt=\vd$) and it reaches its maximum value when the car is not moving ($\vt=0$).
 		The second part corresponds to the \textit{follower behavior} or \textit{breaking strategy} of the model:
 		\begin{equation}
-			a_{\rm follower}=-\amax\cdot \left ( \frac{h_{\rm d}(t)}{h(t)} \right )^2\,,
+			\afollower=-\amax\cdot \left ( \frac{\hd}{\h} \right )^2\,,
 			\label{eq:afollower}
 		\end{equation}
 		where
 		\begin{itemize}
-			\item $h_{\rm d}(t)$ $\rm [m]$ is the desired safe gap at $t$,
-			\item $h(t)$ $\rm [m]$ is the gap at $t$.
+			\item $\hd$ $\rm [m]$ is the desired safe headway of the vehicle at $t$,
+			\item $\h$ $\rm [m]$ is the current headway of the vehicle at $t$.
 		\end{itemize}
 		The current gap at a given $t$ can be calculated from:
 		\begin{equation}
-			h(t)=x_{\rm l}(t)-L_{\rm l} - x(t)
+			\h=\posleader-\lengthleader- x(t)
 		\end{equation}
-		where $x_{\rm l}(t)$ and $L_{\rm l}$ is the position and length of the described car's leader car, $x(t)$ is the car's own position.
+		where $x(t)$ is the position of the car, $\posleader$ and $\lengthleader$ is the position and length of the  car's leader vehicle.
 		The desired safe gap can be calculated from:
 		\begin{equation}
-			h_{\rm d}(t)=h_0 + v(t)\cdot T + \frac{v(t)-v_{\rm l}(t)}{2\cdot \sqrt{\amax\cdot\bmax}}\,,
+			\hd=h_0 + \vt\cdot T + \frac{\vt\cdot(\vt-\vleader)}{2\cdot \sqrt{\amax\cdot\bmax}}\,,
 		\end{equation}
-		where $h_0$ is the bumper to bumper gap or jam distance, $T$ is the desired safety time headway, $v_{\rm l}(t)$ is the velocity of its leading car, $\bmax$ is the maximum value of comfortable deceleration.
+		where $h_0$ is the bumper to bumper gap or jam distance, $T$ is the desired safety time headway, $\vleader$ is the velocity of its leader car, $\bmax$ is the maximum value of comfortable deceleration.
 		Equation \ref{eq:afollower} will decreases with increasing own speed, increasing velocity difference and decreasing distance to the front car.
 		\begin{figure}[ht]
 			\centering
 			\includegraphics[width=.95\textwidth]{common/idm}
-			\caption{3 special case of IDM model}
+			\caption{3 cases of IDM model}
 			\label{fig:idm}
 		\end{figure}
 		The sum of equation \ref{eq:afree} and \ref{eq:afollower} is the IDM equation which reads as follows:
 		\begin{equation}
-			a(t)=a_{\rm free}+a_{\rm follower}=\amax\left [ 1 - \left ( \frac{v(t)}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_{\rm d}(t)}{h(t)} \right )^2 \right ]\,.
+			a(t)=\afree+\afollower=\amax\left [ 1 - \left ( \frac{\vt}{\vd} \right )^{\delta} - \left ( \frac{\hd}{\h} \right )^2 \right ]\,.
 			\label{eq:aidm}
 		\end{equation}
 		Equation \ref{eq:aidm} represents the longitudinal behavior mechanism of a human driven car.
@@ -88,7 +88,7 @@
 		\section{Numerical solver}
 			In Section \ref{sec:IDM} and \ref{sec:MOBIL} a vehicle behavior in traffic has been shown and modeled. The mathematical model of a driver is a second order differential equation. There is no analytical solution, so a numerical one should be carried out. To be able to use one of the common numerical solvers (like Explict Euler or 4th order Runge Kutta) the second order differential equation should be transformed into a first order differential equation system. So the second order differential equation is based on \ref{eq:aidm}:
 			\begin{equation}
-				\ddot{x}=\amax\left [ 1 - \left ( \frac{\dot{x}}{v_{\rm d}} \right )^\delta - \left ( \frac{h_0 + \dot{x}\cdot T + \frac{\dot{x}-v_{\rm l}}{{\rm c}}}{x_{\rm l}-L_{\rm l} - x} \right )^2 \right ]\,.
+				\ddot{x}=\amax\left [ 1 - \left ( \frac{\dot{x}}{\vd} \right )^\delta - \left ( \frac{h_0 + \dot{x}\cdot T + \frac{\dot{x}(\dot{x}-v_{\rm lead})}{{\rm c}}}{x_{\rm lead}-L_{\rm lead} - x} \right )^2 \right ]\,.
 				\label{eq:idm_num1}
 			\end{equation}
 			Let's say
@@ -124,7 +124,7 @@
 				\dot{y}=
 				\begin{pmatrix}
 					y_2\\
-					\amax\left [ 1 - \left ( \frac{y_2}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0 + y_2\cdot T + \frac{y_2-v_{\rm l}}{{\rm c}}}{x_{\rm l}-L_{\rm l} - y_1} \right )^2 \right ]
+					\amax\left [ 1 - \left ( \frac{y_2}{\vd} \right )^{\delta} - \left ( \frac{h_0 + y_2\cdot T + \frac{y_2(y_2-v_{\rm lead})}{{\rm c}}}{x_{\rm lead} - L_{\rm lead} - y_1} \right )^2 \right ]
 				\end{pmatrix}
 				\label{eq:numerical_idm}
 			\end{equation}
