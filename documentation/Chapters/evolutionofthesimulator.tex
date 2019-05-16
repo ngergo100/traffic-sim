@@ -144,7 +144,7 @@
 		A couple of setups were made with n=5 to test the new n-car solver. The vehicles' IDM parameters were unchanged, it can be found in Table \ref{tab:idm_params}.
 		\subsection*{Case 1}
 		The initial positions and velocities of the cars can be seen on Table \ref{tab:node_case1}.
-		\begin{table}
+		\begin{table}[ht]
 			\centering
 			\begin{tabular}{ |c|c|c| }
 				\hline
@@ -160,19 +160,23 @@
 			\caption{Case 1}
 			\label{tab:node_case1}
 		\end{table}
-		The result of the simulation is on Figure \ref{fig:node_case1}. Every car's leader is a bit further than their desired safety headway so every car is accelerating then they try to maintain their desired headway. The same phenomenon can be seen in the 2-car simulation as expected.
+		The result of the simulation is on Figure \ref{fig:node_case1_headways} and \ref{fig:node_case1_velocities}. 
+
+		Every car's leader is a bit further than their desired safety headway so every car is accelerating then they try to maintain their desired headway so they decelerate to the first car's speed.
 		\begin{figure}
 			\centering
 			\begin{minipage}{.5\textwidth}
 				\centering
 				\includegraphics{node/n_car_headway_case1}
+				\caption{Case 1: headways}
+				\label{fig:node_case1_headways}
 			\end{minipage}\hfill
 			\begin{minipage}{.5\textwidth}
 				\centering
 				\includegraphics{node/n_car_velocity_case1}
+				\caption{Case 1: velocities}
+				\label{fig:node_case1_velocities}
 			\end{minipage}
-			\caption{Case 1}
-			\label{fig:node_case1}
 		\end{figure}
 		\subsection*{Case 2}
 		The initial positions and velocities of the cars can be seen on Table \ref{tab:node_case2}.
@@ -192,19 +196,23 @@
 			\caption{Case 2}
 			\label{tab:node_case2}
 		\end{table}
-		The result of the simulation is on Figure \ref{fig:node_case2}. Every car's leader is a bit closer than their desired safety headway so every car is decelerating then they try to maintain their desired headway. The same phenomenon can be seen in the 2-car simulation as well.
+		The result of the simulation is on  Figure \ref{fig:node_case2_headways} and \ref{fig:node_case2_velocities}. 
+
+		Every car's leader is a bit closer than their desired safety headway so every car is decelerating first, then they try to maintain their desired headway so the cars accelerate until they reach the first car's speed.
 		\begin{figure}
 			\centering
 			\begin{minipage}{.5\textwidth}
 				\centering
 				\includegraphics{node/n_car_headway_case2}
+				\caption{Case 2: headways}
+				\label{fig:node_case2_headways}
 			\end{minipage}\hfill
 			\begin{minipage}{.5\textwidth}
 				\centering
 				\includegraphics{node/n_car_velocity_case2}
+				\caption{Case 2: velocities}
+				\label{fig:node_case2_velocities}
 			\end{minipage}
-			\caption{Case 2}
-			\label{fig:node_case2}
 		\end{figure}
 		\subsection*{Case 3}
 		The initial positions and velocities of the cars can be seen on Table \ref{tab:node_case3}.
@@ -224,19 +232,23 @@
 			\caption{Case 3}
 			\label{tab:node_case3}
 		\end{table}
-		The result of the simulation is on Figure \ref{fig:node_case3}. In case 3 some of the cars are closer to their leader than their desired safety gap and there are cars which have more headway than their safety gap. As a result the former ones will decelerate, the latter ones will accelerate to reach the desired headway.
+		The result of the simulation is on  Figure \ref{fig:node_case3_headways} and \ref{fig:node_case3_velocities}. 
+
+		Some of the cars are closer to their leader than their desired safety gap and the others have more headway than their safety gap. As a result the former ones will decelerate, the latter ones will accelerate to reach the desired headway. At the end all of them have the same speed as the leader car.
 		\begin{figure}
 			\centering
 			\begin{minipage}{.5\textwidth}
 				\centering
 				\includegraphics{node/n_car_headway_case3}
+				\caption{Case 3: headways}
+				\label{fig:node_case3_headways}
 			\end{minipage}\hfill
 			\begin{minipage}{.5\textwidth}
 				\centering
 				\includegraphics{node/n_car_velocity_case3}
+				\caption{Case 3: velocities}
+				\label{fig:node_case3_velocities}
 			\end{minipage}
-			\caption{Case 3}
-			\label{fig:node_case3}
 		\end{figure}
 		\subsection*{Case 4}
 		The initial positions and velocities of the cars can be seen on Table \ref{tab:node_case4}.
@@ -256,17 +268,23 @@
 			\caption{Case 4}
 			\label{tab:node_case4}
 		\end{table}
-		The result of the simulation is on Figure \ref{fig:node_case4}.
+		The result of the simulation is on Figure \ref{fig:node_case4_headways} and \ref{fig:node_case4_velocities}. 
+
+		Te initial positions were kept from Case 3, however the initial velocities were varied from 70 km/h to 120 km/h. As expected the result has changed significantly. Now both the speed and the desired headway must be changed in order to be in the stationary point.
+		\section*{Case summary}
+		The same stationary point have been reached in every cases as expected. That stationary point was where all of the car had the same speed as the first car and they maintained their desired safety gap. In some cases it took longer to get to the stationary state then others.
 		\begin{figure}
 			\centering
 			\begin{minipage}{.5\textwidth}
 				\centering
 				\includegraphics{node/n_car_headway_case4}
+				\caption{Case 4: headways}
+				\label{fig:node_case4_headways}
 			\end{minipage}\hfill
 			\begin{minipage}{.5\textwidth}
 				\centering
 				\includegraphics{node/n_car_velocity_case4}
+				\caption{Case 4: velocities}
+				\label{fig:node_case4_velocities}
 			\end{minipage}
-			\caption{Case 4}
-			\label{fig:node_case4}
 		\end{figure}
