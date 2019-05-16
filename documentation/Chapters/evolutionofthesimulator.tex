@@ -116,6 +116,38 @@
 		The same two examples were implemented with ode45 as before in Section \ref{sec:base2car} with EE.
 		It can be seen on Figure \ref{fig:basic2car_case_1_ode} and \ref{fig:basic2car_case_2_ode} that the solutions are exactly the same as before, consequently the custom made solver is working as expected.
 	\section{Solution for n cars}
+		The simulator works as expected for 2 cars simulations. It is time to implement an n-car simulation as well. The simulator still uses the built-in ode45 function to solve the differential equation system. However the dimension of the system grows from 4 to 2n. The visual representation of the setup can be seen on Figure \ref{fig:basic_n_car}.
+		\begin{figure}[ht]
+			\centering
+			\includegraphics[width=\textwidth]{common/basic_n_car}
+			\caption{n-car setup}
+			\label{fig:basic_n_car}
+		\end{figure}
+		Unfortunately the previously used implementation is not enough to solve this system since the cross dependence between the equation. Namely, to be able to calculate vehicle n's position and velocity it needs to have vehicle n-1's position and velocity. Mathematically it looks the following:
+		\begin{equation}
+			\begin{pmatrix}
+				v_{\rm 1_i}\\
+				a_{\rm 1_i}\\
+				v_{\rm 2_i}\\
+				a_{\rm 2_i}\\
+				v_{\rm n-1_{i}}\\
+				a_{\rm n-1_{i}}\\
+				v_{\rm n_i}\\
+				a_{\rm n_i}
+			\end{pmatrix}
+			=
+			\begin{pmatrix}
+				v_{0}\\
+				0\\
+				a_{2_{i-1}}\\
+				idm(v_{2_{i-1}}, x_{2_{i-1}},v_{1_{i-1}}, x_{1_{i-1}})\\
+				a_{\rm n-1_{i-1}}\\
+				idm(v_{n-1_{i-1}}, x_{n-1_{i-1}},v_{n-2_{i-1}}, x_{n-2_{i-1}})
+				a_{\rm n_{i-1}}\\
+				idm(v_{n_{i-1}}, x_{n_{i-1}},v_{n-1_{i-1}}, x_{n-1_{i-1}})
+			\end{pmatrix}\,.
+			\label{eq:n_ode_math}
+		\end{equation}
 		\begin{figure}[ht]
 			\centering
 			\begin{minipage}{.5\textwidth}

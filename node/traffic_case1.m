@@ -8,7 +8,6 @@ models = {
     -200, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
     -300, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
     -400, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
-    -500, 100/3.6, IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
 };
 
 for i=1:size(models)
@@ -42,7 +41,7 @@ figure2 = figure('Units','centimeters','Position',figure_size);
 for i=2:plotcount
     hold on;
     plot(t,y(:,2*i-3)-y(:,2*i-1)-models{i,3}.L)
-    legendInfoHeadaway{i-1} = ['h' num2str(i-1) '-' num2str(i)];
+    legendInfoHeadaway{i-1} = ['h' num2str(i) '-' num2str(i-1)];
 end
 hold on;
 legend(legendInfoHeadaway,'FontSize',7)
