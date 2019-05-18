@@ -56,7 +56,7 @@
 		\end{figure}
 		Both examples showed that the stationary state does not depend on the initial gap. After a little bit of time the second car has reached the desired safety gap (which is around 64.5 meters) and the 100 km/h speed in both cases.
 	\section{Model behavior verification}
-		In Section \ref{sec:base2car} two examples were shown where the model produced the same stationary state for different initial conditions. Stationary state means that the vehicle's acceleration is zero. So equation \ref{eq:aidm} modifies as followings in a stationary state:
+		In Section \ref{sec:base2car} two examples were shown where the model produced the same stationary state for different initial conditions. Stationary state means in this case that the vehicle's acceleration is zero. So equation \ref{eq:aidm} modifies as followings in a stationary state:
 		\begin{equation}
 		1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T+\frac{v_{\rm stac}(v_{\rm stac}-v_{\rm lead,stac})}{2\sqrt{\amax \bmax}}}{x_{\rm lead,0}+v_{\rm lead, stac}\cdot t - L_{\rm lead} - (x_{0} + v_{\rm stac}\cdot t)} \right )^2=0\,,
 		\label{eq:aidm_stac1}
@@ -72,10 +72,10 @@
 		\end{equation}
 		It can be stated that the stationary gap between the vehicles equals to the denominator of the second fraction expression:
 		\begin{equation}
-		x_{\rm lead,0}-x_{0} - L_{\rm lead}=h_{\rm stac}\,.
+		h_{\rm stac}=x_{\rm lead,0}-x_{0} - L_{\rm lead}\,.
 		\label{eq:aidm_stac3}
 		\end{equation}
-		Expressions \ref{eq:aidm_stac2} and \ref{eq:aidm_stac3} show that $v_{\rm stac}$ only depends on $h_{\rm stac}$. Everything else in the equations is a parameter of the model or initial condition. Consequently every stationary gap has a corresponding speed value. Using \textsc{Matlab} fsolve method Equation \ref{eq:aidm_stac2} can be solved. Plot of the result can be seen on Figure \ref{fig:aidm_stac}.
+		Expressions \ref{eq:aidm_stac2} and \ref{eq:aidm_stac3} show that $v_{\rm stac}$ only depends on $h_{\rm stac}$. Everything else in the equations is a parameter of the model or initial condition. Consequently every stationary gap has a corresponding speed value. Using \textsc{Matlab}'s \textit{fsolve} method Equation \ref{eq:aidm_stac2} can be solved. Plot of the result can be seen on Figure \ref{fig:aidm_stac}.
 		\begin{figure}[ht]
 			\centering
 			\includegraphics{check/check_stationary_states}
@@ -116,28 +116,28 @@
 		The same two examples were implemented with ode45 as before in Section \ref{sec:base2car} with EE.
 		It can be seen on Figure \ref{fig:basic2car_case_1_ode} and \ref{fig:basic2car_case_2_ode} that the solutions are exactly the same as before, consequently the custom made solver is working as expected.
 	\section{Solution for n cars}
-		The simulator works as expected for 2 cars simulations. It is time to implement an n-car simulation as well. The simulator still uses the built-in ode45 function to solve the differential equation system so the only task is to produce $\dot{y}$. However the dimension of the system grows from 4 to 2n. The visual representation of the setup can be seen on Figure \ref{fig:basic_n_car}. The first car will have a constant velocity of 100 km/h so $\dot{y}_1 = 100$ and $\dot{y}_2 = 0$, since there is no acceleration.
+		The simulator works as expected for 2 cars simulations. It is time to implement an n-car simulation as well. The simulator still uses the built-in ode45 function to solve the differential equation system so the only task is to produce $\dot{\textbf{y}}$. The visual representation of the setup can be seen on Figure \ref{fig:basic_n_car}. However the dimension of the system grows from 4 to 2n. The first car will have a constant velocity of 100 km/h so $\dot{y}_1 = 100$ and $\dot{y}_2 = 0$, since there is no acceleration.
 		\begin{figure}[ht]
 			\centering
 			\includegraphics[width=\textwidth]{common/basic_n_car}
 			\caption{n-car setup}
 			\label{fig:basic_n_car}
 		\end{figure}
-		Unfortunately the previously used implementation is not good enough to produce $\dot{y}$. The problem is  that to be able to calculate vehicle n's position and velocity the solver needs to have vehicle n-1's position and velocity. To make it easy to read let us introduce function $f$ which represents equation \ref{eq:numerical_idm}. Than $\dot{y}$ looks like the following:
+		Unfortunately the previously used implementation is not good enough to produce $\dot{\textbf{y}}$. The problem is  that to be able to calculate vehicle n's position and velocity the solver needs to have vehicle n-1's position and velocity. To make it easy to read let us use function $f$ which represents equation \ref{eq:numerical_idm}. Than $\dot{\textbf{y}}$ looks like the following:
 		\begin{equation}
-			\dot{y}=
+			\dot{\textbf{y}}=
 			\begin{pmatrix}
 				100\\
 				0\\
 				f_1(v_{2})\\
-				f_2(v_{2}, x_{2},v_{1}, x_{1})\\
+				f_2(x_{2}, v_{2},x_{1}, v_{1})\\
 				f_1(v_{3})\\
-				f_2(v_{3}, x_{3},v_{2}, x_{2})\\
+				f_2(x_{3}, v_{3},x_{2}, v_{2})\\
 				\vdots\\
 				f_1(v_{\rm n-1})\\
-				f_2(v_{n-1}, x_{n-1},v_{n-2}, x_{n-2})\\
+				f_2(x_{n-1}, v_{n-1},x_{n-2}, v_{n-2})\\
 				f_1(v_{\rm n})\\
-				f_2(v_{n}, x_{n},v_{n-1}, x_{n-1})
+				f_2(x_{n}, v_{n},x_{n-1}, v_{n-1})
 			\end{pmatrix}\,.
 			\label{eq:n_ode_math}
 		\end{equation}
@@ -223,9 +223,9 @@
 				n [-] & $x$ [m] & $v$ [km/h]\\
 				\hline
 				1 &  280 & 100 \\
-				2 & 180 & 100 \\
+				2 & 240 & 100 \\
 				3 & 140 & 100 \\
-				4 & 40 & 100 \\
+				4 & 100 & 100 \\
 				5 & 0 & 100 \\
 				\hline
 			\end{tabular}
@@ -258,10 +258,10 @@
 				\hline
 				n [-] & $x$ [m] & $v$ [km/h]\\
 				\hline
-				1 &  280 & 100 \\
-				2 & 180 & 80 \\
-				3 & 140 & 120 \\
-				4 & 40 & 115 \\
+				1 &  290 & 100 \\
+				2 & 240 & 80 \\
+				3 & 150 & 120 \\
+				4 & 110& 115 \\
 				5 & 0 & 70 \\
 				\hline
 			\end{tabular}
@@ -270,7 +270,7 @@
 		\end{table}
 		The result of the simulation is on Figure \ref{fig:node_case4_headways} and \ref{fig:node_case4_velocities}. 
 
-		Te initial positions were kept from Case 3, however the initial velocities were varied from 70 km/h to 120 km/h. As expected the result has changed significantly. Now both the speed and the desired headway must be changed in order to be in the stationary point.
+		In this case the initial positions and the initial velocities were varied. As expected the result has changed significantly. Now both the speed and the headway must be changed by the drivers in order to get to the stationary point.
 		\section*{Case summary}
 		The same stationary point have been reached in every cases as expected. That stationary point was where all of the car had the same speed as the first car and they maintained their desired safety gap. In some cases it took longer to get to the stationary state then in others.
 		\begin{figure}
