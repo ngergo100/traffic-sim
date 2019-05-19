@@ -29,6 +29,7 @@ for i=1:lane_count
     clear legendInfoHeadway
     for j=1:headway_count
         hold on;
+        box on;
         subplots(i) = subplot(lane_count+1,1,i);
         headway = headways(j,:);
         lane = lane_config_source(j,:);
@@ -41,10 +42,10 @@ for i=1:lane_count
             end
         end
     end
-    set(gca,'fontsize',9')
+    set(gca,'fontsize',8')
     xlabel('t[s]')
     ylabel('h[m]')
-    title(['Lane#' num2str(possible_lane_numbers(i))])
+    title(['Lane#' num2str(possible_lane_numbers(i))],'Units', 'normalized', 'Position', [0.075, 1, 0])
     [~,icons] = legend(legendInfoHeadway, 'Location', 'eastoutside');
     set(findobj(icons,'-property','MarkerSize'),'MarkerSize',7)
 end
@@ -55,7 +56,7 @@ plot(t,cars_in_lane_count)
 legend(cellstr(strcat('l',num2str(possible_lane_numbers))), 'Location', 'eastoutside')
 xlabel('t[s]')
 ylabel('carcount')
-set(gca,'fontsize',10')
+set(gca,'fontsize',8')
 print('Resources/simh_case1','-depsc');
 
 % Velocities
@@ -66,6 +67,7 @@ for i=1:lane_count
     clear legendInfoVelocity
     for j=1:velocity_count
         hold on;
+        box on;
         subplots(i) = subplot(lane_count+1,1,i);
         velocity = velocities(j,:);
         lane = lane_config_source(j,:);
@@ -78,10 +80,10 @@ for i=1:lane_count
             end
         end
     end
-    set(gca,'fontsize',9')
+    set(gca,'fontsize',8')
     xlabel('t[s]')
     ylabel('v[m/s]')
-    title(['Lane#' num2str(possible_lane_numbers(i))]) 
+    title(['Lane#' num2str(possible_lane_numbers(i))],'Units', 'normalized', 'Position', [0.075, 1, 0]) 
     [~,icons] = legend(legendInfoVelocity, 'Location', 'eastoutside');
     set(findobj(icons,'-property','MarkerSize'),'MarkerSize',7)
 end
@@ -92,5 +94,5 @@ plot(t,cars_in_lane_count)
 legend(cellstr(strcat('l',num2str(possible_lane_numbers))), 'Location', 'eastoutside')
 xlabel('t[s]')
 ylabel('carcount')
-set(gca,'fontsize',9')
+set(gca,'fontsize',8')
 print('Resources/simv_case1','-depsc');
