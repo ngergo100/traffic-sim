@@ -18,7 +18,7 @@
 			\end{pmatrix}\,.
 			\label{eq:n_ode_math_revisit}
 		\end{equation}
-		As Equation \ref{eq:n_ode_math_revisit} shows there is a criterion on the car indexing.  Namely ($n-1$)-th vehicle is always the leader of $n$-th car. Every car is stored in an array called definition array with their initial position, initial velocity, identifier, current lane, target lane and parameters. An example of this definition array can be seen in Table \ref{tab:definition_array}.
+		As Equation \ref{eq:n_ode_math_revisit} shows there is a criterion on the car indexing.  Namely ($n-1$)-th vehicle is always the leader of $n$-th car. Every car is stored in an array called definition array with their identifiers,  current and target lanes, initial positions and velocities, and parameters. An example of this definition array can be seen in Table \ref{tab:definition_array}.
 		\begin{table}
 			\begin{center}
 				\begin{tabular}{ |c|c|c|c|c|c| }
@@ -37,14 +37,14 @@
 			\caption{Definition array example}
 			\label{tab:definition_array}
 		\end{table}
-		Since there were no lane changes this condition hold. However this criterion cannot be satisfied where changing lanes are allowed. Instead of this condition a new function is introduced. This is capable of calculating which car is the leader of an other vehicle. So from now on the simulator does not rely on the order of car models in the definition array.
+		Since there were no lane changes until this point,the indexing condition held. However this criterion cannot be satisfied where changing lanes are allowed. Instead of this condition a new function is introduced. The suggested method is capable of calculating which car is the leader of an other vehicle. So from now on the simulator relies on this function instead of the order of car models in the definition array.
 		\subsection*{Determining the leader vehicle}
 		The previously mentioned function does the following steps
 		\begin{itemize}
 			\item assembles and sorts a car model array with the required data by current vehicle position,
 			\item searches for cars in the same lane,
 			\item finds the row of the car by id,
-			\item if exists returns the row below (index +1) or nothing if there is no row below.
+			\item returns the row above (index - 1) if exists or nothing if there is no row above.
 		\end{itemize}
 		Let us call this function $g$. This $g$ function has one parameter, the id of the car whose leader vehicle is searched for. If there is leader than it returns exactly the same values as the IDM expects as parameters, namely the leading car's position and velocity.
 		So Equation \ref{eq:n_ode_math_revisit} modifies as follows:
@@ -65,10 +65,73 @@
 			\end{pmatrix}\,.
 			\label{eq:n_ode_math_with_find_leading}
 		\end{equation}
+		As mentioned previously $g$ function can only return the expected parameters by $f$ if there is a leader car. This makes sense since someone has to be the very first in every single time step. Consequently that cars longitudinal model has to be changed to handle that there is no car in front of it. It is handled by leaving the follower behavior out of the equation \ref{eq:aidm}. So it will not need the leader vehicle's parameters. This means that the leader cars in their lanes will always be in free acceleration state. That is coinciding with reality.
 		\subsection*{Keep track of lanes}
-		The original n-car solver only calculated and stored the \textbf{y} vector which contained the position and velocity values at each time step. Since lane change came into picture that wont be enough. Consequently, two more vectors needs to be stored. One for the current lane (named $\vcl$) and one for the target lane (named $\vtl$) which can keep track of the lane changes. $\vcl$ will store the lane numbers of the vehicle's current lane. $\vtl$ will contain the target lane identifier when a car is changing lane, otherwise it will have zero value. As an example, Vehicle 2 changing lanes from Lane 1 to Lane 2 then row of Vehicle 2 will contain 1 in the current lane vector and 2 in the target lane vector. After the vehicle has performed its lane change then current lane vector will hold a value of 2 at the row of Vehicle 2, target lane vector will reset to zero.
+		The original n-car solver only calculated and stored the \textbf{y} vector which contained the position and velocity values at each time step. Since lane changes came into picture that wont be enough. Consequently, two more vectors needs to be stored. One for the current lane (named $\vcl$) and one for the target lane (named $\vtl$) which can keep track of the lane changes. $\vcl$ will store the lane numbers of the vehicle's current lane. $\vtl$ will contain the target lane identifier when a car is changing lane, otherwise it will have zero value. Figures \ref{fig:stage1ofchanginglanes}, \ref{fig:stage2ofchanginglanes}, \ref{fig:stage3ofchanginglanes} show the stages of a lane change example.
+		\begin{figure}
+			\begin{center}
+				\begin{minipage}{.65\textwidth}
+					\includegraphics[width=\textwidth]{common/stages_of_lane_changes_1}
+				\end{minipage}\quad
+				\begin{minipage}{.3\textwidth}
+					\begin{tabular}{ |c|c|c|c| }
+						\hline
+						Id &  $\vcl$ & $\vtl$ & ... \\
+						$[-]$ & $[-]$ & $[-]$ & ...\\
+						\hline
+						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
+						$C$ & $1$ & $0$ & ...\\
+						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
+						\hline
+					\end{tabular}
+				\end{minipage}
+			\end{center}
+			\caption{Stage I of changing lanes. Vehicle C is considering a lane change.}
+			\label{fig:stage1ofchanginglanes}
+		\end{figure}
+		\begin{figure}
+			\begin{center}
+				\begin{minipage}{.65\textwidth}
+					\includegraphics[width=\textwidth]{common/stages_of_lane_changes_2}
+				\end{minipage}\quad
+				\begin{minipage}{.3\textwidth}
+					\begin{tabular}{ |c|c|c|c| }
+						\hline
+						Id &  $\vcl$ & $\vtl$ & ... \\
+						$[-]$ & $[-]$ & $[-]$ & ...\\
+						\hline
+						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
+						$C$ & $1$ & $2$ & ...\\
+						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
+						\hline
+					\end{tabular}
+				\end{minipage}
+			\end{center}
+			\caption{Stage II of changing lanes. Vehicle C changing lanes from lane 1 to lane 2. The row of vehicle C contains 1 in the current lane vector and 2 in the target lane vector.}
+			\label{fig:stage2ofchanginglanes}
+		\end{figure}
+		\begin{figure}[ht]
+			\begin{center}
+				\begin{minipage}{.65\textwidth}
+					\includegraphics[width=\textwidth]{common/stages_of_lane_changes_3}
+				\end{minipage}\quad
+				\begin{minipage}{.3\textwidth}
+					\begin{tabular}{ |c|c|c|c| }
+						\hline
+						Id &  $\vcl$ & $\vtl$ & ... \\
+						$[-]$ & $[-]$ & $[-]$ & ...\\
+						\hline
+						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
+						$C$ & $2$ & $0$ & ...\\
+						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
+						\hline
+					\end{tabular}
+				\end{minipage}
+			\end{center}
+			\caption{Stage III of changing lanes. Vehicle C has performed its lane change so the current lane vector will hold a value of 2 at the row of vehicle C, corresponding row of target lane vector will reset to zero.}
+			\label{fig:stage3ofchanginglanes}
+		\end{figure}
 		\subsection*{Decision making}
-		The updated model with vectors $\vcl$ and $\vtl$ is able to keep track of a multi lane traffic with lane changes. However the algorithm to fill those vectors correctly is not discussed yet. A lane change has multiple aspects like when does the driver wants to change, is a possible lane change safe, how much time does it take. Fortunately the first two question answered by MOBIL itself and the duration of a lane change should be implemented as well.
+		The updated model with vectors $\vcl$ and $\vtl$ is able to keep track of a multi lane traffic with lane changes. However the algorithm to fill those vectors correctly is not discussed yet. A lane change has multiple aspects like when does the driver wants to change, is it possible change lanes safely, how much time does it take. Fortunately the first two question answered by MOBIL itself and the duration of a lane change should be implemented as well.
 
-		From the implementation point of view in every time step MOBIL will calculate that should the driver change lanes or not. If the driver should change lanes based on the local traffic situation than the lane change starts by filling the corresponding row in the vector $\vtl$. The actual duration of the lane change should be defined as a driver parameter in seconds. A typical value is 2 to 3 sec. After a lane change has started the simulator checking the elapsed time and if it has exceeded the duration then car's current lane value will be the target lane value and target lane resets to zero. So a lane change is model in that way. It is worth mentioning that a lane changing car occupies both its current and target lane. So it will be the leader car in both current and target lane's immediate following cars.
-	\section{Time step independence}
+		From the implementation point of view in every time step MOBIL will calculate that should the driver change lanes or not. If the driver should change lanes based on the local traffic situation than the lane change starts by filling the corresponding row in the vector $\vtl$. The actual duration of the lane change should be defined as a driver parameter in seconds. A typical value is 2 to 3 sec. After a lane change has started the simulator is checking the elapsed time in every time step for the corresponding vehicle. When the elapsed time has exceeded the lane change duration then car's current lane value will be the target lane value and target lane resets to zero. It is worth mentioning that a lane changing car occupies both its current and target lane. So it will be the leader car in both current and target lane's immediate following cars.
