@@ -5,7 +5,7 @@ positions = y(1:2:end,:);
 velocities = y(2:2:end,:);
 lane_count = length(possible_lane_numbers);
 cars_in_lane_count = prepare_lane_count(possible_lane_numbers, lane_config_source);
-figure_size = [10,10,15,12];
+figure_size = [10,10,15,8];
 
 colors = [
     46/255,  204/255, 113/255;
@@ -30,7 +30,7 @@ for i=1:lane_count
     for j=1:headway_count
         hold on;
         box on;
-        subplots(i) = subplot(lane_count+1,1,i);
+        subplots(i) = subplot(lane_count,1,i);
         headway = headways(j,:);
         lane = lane_config_source(j,:);
         plot(t(lane==possible_lane_numbers(i)), headway(lane==possible_lane_numbers(i)), '.','MarkerSize',0.5, 'color', colors(find(identifiers==identifiers(j)),:))
@@ -50,12 +50,6 @@ for i=1:lane_count
     set(findobj(icons,'-property','MarkerSize'),'MarkerSize',7)
 end
 set(subplots,'YLim',[min(headways(:))-1 max(headways(:))+1])
-
-subplot(lane_count+1,1,lane_count+1)
-plot(t,cars_in_lane_count)
-legend(cellstr(strcat('l',num2str(possible_lane_numbers))), 'Location', 'eastoutside')
-xlabel('t[s]')
-ylabel('carcount')
 set(gca,'fontsize',8')
 print('Resources/simh_case1','-depsc');
 
@@ -68,7 +62,7 @@ for i=1:lane_count
     for j=1:velocity_count
         hold on;
         box on;
-        subplots(i) = subplot(lane_count+1,1,i);
+        subplots(i) = subplot(lane_count,1,i);
         velocity = velocities(j,:);
         lane = lane_config_source(j,:);
         plot(t(lane==possible_lane_numbers(i)), velocity(lane==possible_lane_numbers(i)), '.','MarkerSize',0.5, 'color', colors(find(identifiers==identifiers(j)),:))
@@ -88,11 +82,12 @@ for i=1:lane_count
     set(findobj(icons,'-property','MarkerSize'),'MarkerSize',7)
 end
 set(subplots,'YLim',[min(velocities(:))-0.5 max(velocities(:))+0.5])
+set(gca,'fontsize',8')
+print('Resources/simv_case1','-depsc');
 
-subplot(lane_count+1,1,lane_count+1)
+lane_count_figure = figure('Name','Lane count', 'NumberTitle','off', 'Units','centimeters', 'Position',[10,10,15,4]);
 plot(t,cars_in_lane_count)
 legend(cellstr(strcat('l',num2str(possible_lane_numbers))), 'Location', 'eastoutside')
 xlabel('t[s]')
 ylabel('carcount')
-set(gca,'fontsize',8')
-print('Resources/simv_case1','-depsc');
+print('Resources/simcc_case1','-depsc');
