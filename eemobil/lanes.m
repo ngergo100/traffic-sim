@@ -57,9 +57,6 @@ for i=1:size(models, 1)
   else
       states_of_cars(i) = 3;
       mobil_params.a_c = [current_car_data(2), 0];
-  end
-  
-  if ~paying_attention
       %disp(['Number ' num2str(current_car_data(5)) ' driver is not paying attantion at moment: ' num2str(t)])
   end
   
@@ -155,6 +152,7 @@ for i=1:size(models, 1)
      
     if latest_lane_changes_start(i) + models{i, 6}.lane_change_duration <= t && target_lane_numbers(i) ~= 0 
         latest_lane_changes_end(i) = t;
+        states_of_cars(i) = 2;
         %disp(['Number ' num2str(current_car_data(5)) ' driver ended his lane change at time: ' num2str(t)])
         next_source_lane_numbers(i) = target_lane_numbers(i);
         next_target_lane_numbers(i) = 0;
