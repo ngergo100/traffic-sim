@@ -35,16 +35,16 @@ for i=1:lane_count
         plot(t(lane==possible_lane_numbers(i)), headway(lane==possible_lane_numbers(i)), '.','MarkerSize',0.5, 'color', colors(find(identifiers==identifiers(j)),:))
         if ismember(possible_lane_numbers(i), lane) == 1
             if exist('legendInfoHeadway','var') == 1
-                legendInfoHeadway{length(legendInfoHeadway) + 1} = ['h_{' num2str(identifiers(j)) '}'];
+                legendInfoHeadway{length(legendInfoHeadway) + 1} = ['h' num2str(identifiers(j))];
             else
-                legendInfoHeadway{1} = ['h_{' num2str(identifiers(j)) '}'];
+                legendInfoHeadway{1} = ['h' num2str(identifiers(j))];
             end
         end
     end
     set(gca,'fontsize',9')
     xlabel('t[s]')
     ylabel('h[m]')
-    title(['Lane #' num2str(possible_lane_numbers(i))])
+    title(['Lane#' num2str(possible_lane_numbers(i))])
     [~,icons] = legend(legendInfoHeadway, 'Location', 'eastoutside');
     set(findobj(icons,'-property','MarkerSize'),'MarkerSize',7)
 end
@@ -52,11 +52,11 @@ set(subplots,'YLim',[min(headways(:))-1 max(headways(:))+1])
 
 subplot(lane_count+1,1,lane_count+1)
 plot(t,cars_in_lane_count)
-legend(cellstr(num2str(possible_lane_numbers)), 'Location', 'eastoutside')
+legend(cellstr(strcat('l',num2str(possible_lane_numbers))), 'Location', 'eastoutside')
 xlabel('t[s]')
 ylabel('carcount')
 set(gca,'fontsize',10')
-print('Resources/sim_case1','-depsc');
+print('Resources/simh_case1','-depsc');
 
 % Velocities
 velocity_figure = figure('Name','Velocities', 'NumberTitle','off', 'Units','centimeters', 'Position',figure_size);
@@ -72,16 +72,16 @@ for i=1:lane_count
         plot(t(lane==possible_lane_numbers(i)), velocity(lane==possible_lane_numbers(i)), '.','MarkerSize',0.5, 'color', colors(find(identifiers==identifiers(j)),:))
         if ismember(possible_lane_numbers(i), lane) == 1
             if exist('legendInfoVelocity','var') == 1
-            legendInfoVelocity{length(legendInfoVelocity) + 1} = ['v_{' num2str(identifiers(j)) '}'];
+            legendInfoVelocity{length(legendInfoVelocity) + 1} = ['v' num2str(identifiers(j))];
             else
-            legendInfoVelocity{1} = ['v_{' num2str(identifiers(j)) '}'];
+            legendInfoVelocity{1} = ['v' num2str(identifiers(j))];
             end
         end
     end
     set(gca,'fontsize',9')
     xlabel('t[s]')
     ylabel('v[m/s]')
-    title(['Lane #' num2str(possible_lane_numbers(i))]) 
+    title(['Lane#' num2str(possible_lane_numbers(i))]) 
     [~,icons] = legend(legendInfoVelocity, 'Location', 'eastoutside');
     set(findobj(icons,'-property','MarkerSize'),'MarkerSize',7)
 end
@@ -89,8 +89,8 @@ set(subplots,'YLim',[min(velocities(:))-0.5 max(velocities(:))+0.5])
 
 subplot(lane_count+1,1,lane_count+1)
 plot(t,cars_in_lane_count)
-legend(cellstr(num2str(possible_lane_numbers)), 'Location', 'eastoutside')
+legend(cellstr(strcat('l',num2str(possible_lane_numbers))), 'Location', 'eastoutside')
 xlabel('t[s]')
 ylabel('carcount')
 set(gca,'fontsize',9')
-print('Resources/sim_case2','-depsc');
+print('Resources/simv_case1','-depsc');
