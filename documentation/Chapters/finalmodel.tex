@@ -135,3 +135,23 @@
 		The updated model with vectors $\vcl$ and $\vtl$ is able to keep track of a multi lane traffic with lane changes. However the algorithm to fill those vectors correctly is not discussed yet. A lane change has multiple aspects like when does the driver wants to change, is it possible change lanes safely, how much time does it take. Fortunately the first two question answered by MOBIL itself and the duration of a lane change should be implemented as well.
 
 		From the implementation point of view in every time step MOBIL will calculate that should the driver change lanes or not. If the driver should change lanes based on the local traffic situation than the lane change starts by filling the corresponding row in the vector $\vtl$. The actual duration of the lane change should be defined as a driver parameter in seconds. A typical value is 2 to 3 sec. After a lane change has started the simulator is checking the elapsed time in every time step for the corresponding vehicle. When the elapsed time has exceeded the lane change duration then car's current lane value will be the target lane value and target lane resets to zero. It is worth mentioning that a lane changing car occupies both its current and target lane. So it will be the leader car in both current and target lane's immediate following cars.
+	\section{Solution for traffic light situation}
+		The model described in the previous section has been implemented in \textsc{Matlab}. A good way to test the solver is through an interesting case like a red traffic light with 10 vehicles. The traffic situation can be seen on Figure \ref{fig:red_light_situation}.
+		\begin{figure}[ht]
+			\centering
+			\includegraphics[width=\textwidth]{common/traffic_light_case_1}
+			\caption{Red light situation with 10 vehicles}
+			\label{fig:red_light_situation}
+		\end{figure}
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.8\textwidth]{eemobil/simh_case1}
+		\end{figure}
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.8\textwidth]{eemobil/simv_case1}
+		\end{figure}
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.8\textwidth]{eemobil/simcc_case1}
+		\end{figure}

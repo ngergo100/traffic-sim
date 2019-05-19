@@ -1,5 +1,5 @@
 \chapter{Evolution of the simulator}
-	\section{Basic 2 car setup with IDM}\label{sec:base2car}
+	\section{Solutions for 2 cars}\label{sec:base2car}
 		Equation \ref{eq:numerical_idm} can be solved with an Explicit Euler. To test the model a basic setup was implemented in \textsc{Matlab}. The visual representation of the setup can be seen on figure \ref{fig:basic2car}.
 		\begin{figure}[ht]
 			\centering
@@ -115,7 +115,7 @@
 
 		The same two examples were implemented with ode45 as before in Section \ref{sec:base2car} with EE.
 		It can be seen on Figure \ref{fig:basic2car_case_1_ode} and \ref{fig:basic2car_case_2_ode} that the solutions are exactly the same as before, consequently the custom made solver is working as expected.
-	\section{Solution for n cars}
+	\section{Solver for n cars}
 		The simulator works as expected for 2 cars simulations. It is time to implement an n-car simulation as well. The simulator still uses the built-in ode45 function to solve the differential equation system so the only task is to produce $\dot{\textbf{y}}$. The visual representation of the setup can be seen on Figure \ref{fig:basic_n_car}. However the dimension of the system grows from 4 to 2n. The first car will have a constant velocity of 100 km/h so $\dot{y}_1 = 100$ and $\dot{y}_2 = 0$, since there is no acceleration.
 		\begin{figure}[ht]
 			\centering
@@ -141,6 +141,7 @@
 			\end{pmatrix}\,.
 			\label{eq:n_ode_math}
 		\end{equation}
+		\section{Solutions for n cars}
 		A couple of setups were made with n=5 to test the new n-car solver. The vehicles' IDM parameters were unchanged, it can be found in Table \ref{tab:idm_params}.
 		\subsection*{Case 1}
 		The initial positions and velocities of the cars can be seen on Table \ref{tab:node_case1}.
