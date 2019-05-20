@@ -136,8 +136,9 @@
 
 		From the implementation point of view in every time step MOBIL will calculate that should the driver change lanes or not. If the driver should change lanes based on the local traffic situation than the lane change starts by filling the corresponding row in the vector $\vtl$. The actual duration of the lane change should be defined as a driver parameter in seconds. A typical value is 2 to 3 sec. After a lane change has started the simulator is checking the elapsed time in every time step for the corresponding vehicle. When the elapsed time has exceeded the lane change duration then car's current lane value will be the target lane value and target lane resets to zero. It is worth mentioning that a lane changing car occupies both its current and target lane. So it will be the leader car in both current and target lane's immediate following cars.
 	\section{Solution for traffic light situation}
+		\subsection*{Initial conditions}
 		The model described in the previous section has been implemented in \textsc{Matlab}. A good way to test the solver is through an interesting case like a red traffic light with 10 vehicles. The initial conditions can be found in Table \ref{tab:case_1_definition_array}. The traffic situation can be seen on Figure \ref{fig:red_light_situation}.
-		\begin{table}[ht]
+		\begin{table}
 			\begin{center}
 				\begin{tabular}{ |c|c|c|c|c|c| }
 					\hline
@@ -160,7 +161,7 @@
 			\caption{Initial contions of Case 1}
 			\label{tab:case_1_definition_array}
 		\end{table}
-		\begin{figure}[ht]
+		\begin{figure}
 			\centering
 			\includegraphics[width=\textwidth]{common/traffic_light_case_1}
 			\caption{Red light situation with 10 vehicles}
@@ -184,3 +185,5 @@
 			\caption{Red light. Car per lane }
 			\label{fig:red_light_situationcc}
 		\end{figure}
+		\subsection*{Summary of the result}
+		The traffic situation was successfully simulated. However post processing of the result turned out to be kind of a challenging task. The usage of the previous figures is not illustrating enough the traffic. To make it easy to understand the motions of the vehicles, the headway and velocity figures have been divided into two parts. One figure shows the headway of the cars in one lane the other figure shows the other lane. When a vehicle changes lanes its curve breaks and disappears from one figure and continues on the other. The headway and velocity diagrams can be seen on Figure \ref{fig:red_light_situationh} and \ref{fig:red_light_situationv}. Another figure was made to emphasize the lane changes during the simulation. Figure \ref{fig:red_light_situationcc} shows the number of vehicles in each lane. Notice that one function is reflections\textbf{?!} of the other.
