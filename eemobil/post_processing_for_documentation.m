@@ -51,7 +51,7 @@ for i=1:lane_count
 end
 set(subplots,'YLim',[min(headways(:))-1 max(headways(:))+1])
 set(gca,'fontsize',8')
-print('Resources/simh_case1','-depsc');
+print(['Resources/simh_' case_name],'-depsc');
 
 % Velocities
 velocity_figure = figure('Name','Velocities', 'NumberTitle','off', 'Units','centimeters', 'Position',figure_size);
@@ -83,11 +83,11 @@ for i=1:lane_count
 end
 set(subplots,'YLim',[min(velocities(:))-0.5 max(velocities(:))+0.5])
 set(gca,'fontsize',8')
-print('Resources/simv_case1','-depsc');
+print(['Resources/simv_' case_name],'-depsc');
 
 lane_count_figure = figure('Name','Lane count', 'NumberTitle','off', 'Units','centimeters', 'Position',[10,10,15,4]);
 plot(t,cars_in_lane_count)
 legend(cellstr(strcat('l',num2str(possible_lane_numbers))), 'Location', 'eastoutside')
 xlabel('t[s]')
 ylabel('carcount')
-print('Resources/simcc_case1','-depsc');
+print(['Resources/simcc_' case_name],'-depsc');
