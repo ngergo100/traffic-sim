@@ -173,10 +173,10 @@ for i=1:size(models, 1)
             %disp(['unit_elapsed_time ' num2str(unit_elapsed_time)])
             %disp(['unit_remaining_time ' num2str(unit_remaining_time)])
             if target_lane_numbers(i) == mobil_params.right_lane
-                dy(2*i-1) = mobil_params.a_c(1) * unit_remaining_time + mobil_params.a_c_right(1) * unit_elapsed_time;
+                dy(2*i-1) = mobil_params.a_c(1);
                 dy(2*i) = mobil_params.a_c(2) * unit_remaining_time + mobil_params.a_c_right(2) * unit_elapsed_time;
             elseif target_lane_numbers(i) == mobil_params.left_lane
-                dy(2*i-1) = mobil_params.a_c(1) * unit_remaining_time + mobil_params.a_c_left(1) * unit_elapsed_time;
+                dy(2*i-1) = mobil_params.a_c(1);
                 dy(2*i) = mobil_params.a_c(2) * unit_remaining_time + mobil_params.a_c_left(2) * unit_elapsed_time;
             else
                 dy(2*i-1) = mobil_params.a_c(1);
@@ -196,9 +196,6 @@ for i=1:size(models, 1)
   if dy(2*i-1) <= 0 && dy(2*i) < 0
       dy(2*i-1) = mobil_params.a_c(1);
       dy(2*i) = 0;
-  else
-      dy(2*i-1) = mobil_params.a_c(1);
-      dy(2*i) = mobil_params.a_c(2);
   end
 end
 
