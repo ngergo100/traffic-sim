@@ -145,16 +145,16 @@
 					Id & Current lane & Target lane & Initial position & Initial velocity& IDM params\\
 					$[-]$ & $[-]$ & $[-]$ & $[m]$ & $[m/s]$ & $[-]$\\
 					\hline
-					1 & 1 & 0 & 0 & 0 & ...\\
-					2 & 2 & 0 & 0 & 0 & ...\\
-					3 & 1 & 0 & -5.4 & 0 & ...\\
-					4 & 2 & 0 & -5.5 & 0 & ...\\
-					5 & 1 & 0 & -26.4 & 0 & ...\\
-					6 & 2 & 0 & -10.9 & 0 & ...\\
-					7 & 1 & 0 & -31.9 & 0 & ...\\
-					8 & 2 & 0 & -16.5 & 0 & ...\\
-					9 & 1 & 0 & -37.7 & 0 & ...\\
-					10 & 2 & 0 & -21.7 & 0 & ...\\
+					1 & 1 & 0 & 0 & 0 & ..., L = 4.2, ... \\
+					2 & 2 & 0 & 0 & 0 & ..., L = 4.4, ... \\
+					3 & 1 & 0 & -5.4 & 0 & ..., L = 20, ... \\
+					4 & 2 & 0 & -5.5 & 0 & ..., L = 4.1, ... \\
+					5 & 1 & 0 & -26.4 & 0 & ..., L = 4.3, ... \\
+					6 & 2 & 0 & -10.9 & 0 & ..., L = 4.5, ... \\
+					7 & 1 & 0 & -31.9 & 0 & ..., L = 4.6, ... \\
+					8 & 2 & 0 & -16.5 & 0 & ..., L = 4.2, ... \\
+					9 & 1 & 0 & -37.7 & 0 & ..., L = 4.3, ... \\
+					10 & 2 & 0 & -21.7 & 0 & ..., L = 4.4, ... \\
 					\hline
 				\end{tabular}
 			\end{center}
@@ -188,8 +188,8 @@
 		\subsection*{Summary of the result}
 		The traffic situation was successfully simulated. However post processing of the result turned out to be kind of a challenging task. The usage of the previous figures is not illustrating enough the traffic. To make it easy to understand the motions of the vehicles, the headway and velocity figures have been divided into two parts. One figure shows the headway of the cars in one lane the other figure shows the other lane. When a vehicle changes lanes its curve breaks and disappears from one figure and continues on the other. The headway and velocity diagrams can be seen on Figure \ref{fig:red_light_situationh} and \ref{fig:red_light_situationv}. Notice that the first cars of each lanes have zero headway since there is no vehicle in front of them.  Another figure was made to emphasize the lane changes during the simulation. Figure \ref{fig:red_light_situationcc} shows the number of vehicles in each lane. Notice that one function is reflections\textbf{?!} of the other.
 		\section{Multi lane traffic simulator improvements}
-		The simulator works as expected. It is capable of simulating a multi lane traffic with lane changes. But there are some driver behaviors that can be modeled slightly better to make it more realistic.
-		\subsection*{Improvement I}
+		The simulator works as expected. It is capable of simulating a multi lane traffic with lane changes. But there are some driver behaviors that can be modeled slightly better, thus making the simulator  more realistic.
+		\subsection*{Improvement I ?!!!!!!}
 		Currently the acceleration value of a vehicle during a lane change is calculated by its leader only. However in a real situation a driver changes lane because he would like to accelerate. So instead of calculating the acceleration based on the current leader only, both the current and the future leader accelerations should take into account. A reasonable approximation could be that the car's current acceleration is a weighted average by the elapsed time from the duration of the lane change between the acceleration value of the current and  future leader. A mathematical expression of this improvement would look like:
 		\begin{equation}
 			a=a_{\rm c} \cdot \left(1-\frac{t_{\rm e}}{t_{\rm d}}\right) + a_{\rm f}\cdot \frac{t_{\rm e}}{t_{\rm d}}\,,
@@ -197,4 +197,13 @@
 		\end{equation}
 		where $a_{\rm c}$ is the acceleration considering only the current leader vehicle, $a_{\rm f}$  is the acceleration considering only the future leader vehicle. $t_e$ and $t_d$ is the elapsed and total time of the lane change. Based on Equation \ref{eq:weighted_average} the improvement has been implemented in the simulator. This feature has been added with a toggle if one wishes to turn off in the future.
 		\subsection*{Improvement II}
-		The other area which can be developed is related to the attention to the road. The model currently assumes that every one is paying attention to the driving always. This is not the case at all in real life. There are several factors which can distract the driver's attention. Some of these activities could be eating, interaction with radio or gps, looking at a roadside object or messaging on the phone. These activities most likely to have an effect on the road so it is worth to implement. Another problem is that driving - as discussed earlier - consists of two parts, longitudinal and transversal motions. Probably drivers have to divide their attention and focus on only one at a time. It seems right to say that everyone is capable of paying attention to longitudinal and transversal motions at the same time when the speed is moderated aside from some edge cases. However it can be a good application that when a driver is accelerating or decelerating above a certain point he will not care about changing lanes.
+		The other area which can be developed is related to the attention of the drivers to the road. The model currently assumes that everyone is paying attention to the driving always. This is not the case in real life at all. There are several factors which can distract the driver's attention. Some of these activities could be eating, interacting with radio or gps, looking at a roadside object or messaging on the phone. These activities most likely to have an effect on the road so it is worth to implement. The model will assume that if a driver is distracted with something then it cannot take any attention to its longitudinal nor the transversal motions. So the car will go ahead with the same speed and zero acceleration when it is nobody ahead and even if its leader is braking.The actual implementation is quite simple. A new array is introduced which will contain the time intervals. These represent the the time when a driver is not paying attention to driving. Whenever a driver is not paying attention the simulator will keep its speed.
+
+		 Another problem is that driving - as discussed earlier - consists of two parts, longitudinal and transversal motions. Probably drivers have to divide their attention and focus on only one at a time. It seems right to say that everyone is capable of paying attention to longitudinal and transversal motions at the same time when the speed is moderated. However when a driver is accelerating or decelerating above or below a certain point he will not care about changing lanes. This could be included in the lane changing algorithm. If Equation \ref{eq:attention_acceleration}  holds then the driver is capable of paying attention to lane changing otherwise he cannot.
+		\begin{equation}
+			|a|<a_{\rm tr}
+			\label{eq:attention_acceleration}
+		\end{equation}
+		The current acceleration value is represented by $|a|$ and a threshold value $a_{\rm tr}$ is between 0 and $\amax$ for a human driver.
+		\subsection*{Improvement III}
+		Until this point the simulator was running until a specific time point. It would be nice to run until when all of the cars have reached a specific distance. For example a traffic light situation is interesting for the first 100 meters.
