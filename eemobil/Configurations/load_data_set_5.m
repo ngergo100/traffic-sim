@@ -27,4 +27,4 @@ end
 
 weighted_average_acceleration_calculation_enabled = false;
 possible_lane_numbers = [1;2];
-target_line = 100;
+target_line = 150;
