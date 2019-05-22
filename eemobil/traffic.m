@@ -16,7 +16,6 @@ first_car_reached_the_target_line = false;
 
 % Time initialization
 t0 = 0;
-dt = 0.1;
 i = 1;
 t(1) = 0;
 

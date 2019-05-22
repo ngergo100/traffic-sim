@@ -1,4 +1,4 @@
-global models possible_lane_numbers weighted_average_acceleration_calculation_enabled target_line
+global models possible_lane_numbers weighted_average_acceleration_calculation_enabled target_line dt
 
 models = {
      01, 1, 0, 0, 0/3.6, IDModel(struct('a_max',1.2, 'b_max',3, 'v_0',53/3.6, 'T',1.8, 'h_0',1.2, 'delta',4, 'L',4.2, 'time_to_change_lane',0, 'lane_change_duration',2.0, 'not_paying_attention',[24,26],             'acceleration_threshold',1.2, 'acceleration_difference_threshold',0.3, 'p',0));
@@ -28,3 +28,4 @@ end
 weighted_average_acceleration_calculation_enabled = false;
 possible_lane_numbers = [1;2];
 target_line = 100;
+dt = 0.1;
