@@ -40,12 +40,14 @@ for timestepi=1:length(dts)
     clearvars -except f1 f2 dts p v tveg pr vr figure_size
 end
 figure(f1);
+set(gca,'fontsize',8')
 xlabel('t[s]')
 ylabel('x[m]')
-legend(cellstr(strcat('dt=',num2str(dts))), 'Location', 'southeast')
+legend(cellstr(strcat('dt=',num2str(dts))), 'Location', 'northwest')
 print('Resources/timestepi_p','-depsc');
 
 figure(f2);
+set(gca,'fontsize',8')
 xlabel('t[s]')
 ylabel('v[m/s]')
 legend(cellstr(strcat('dt=',num2str(dts))), 'Location', 'southeast')
@@ -53,6 +55,7 @@ print('Resources/timestepi_v','-depsc');
 
 figure('Name','Time', 'Units','centimeters', 'Position',figure_size);
 plot(tveg, '.','MarkerSize',20);
+set(gca,'fontsize',8')
 xlabel('dt[s]')
 ylabel('t[s]')
 print('Resources/timestepi_t','-depsc');
@@ -67,6 +70,7 @@ for i=2:length(pr)
     hold on;
     plot(100*abs((a - b)./(b)))
 end
+set(gca,'fontsize',8')
 ylabel('relativehibap[%]')
 print('Resources/timestepi_relative_p','-depsc');
 
@@ -77,7 +81,7 @@ for i=2:length(vr)
     hold on;
     plot(100*abs((a - b)./(b)))
 end
-
+set(gca,'fontsize',8')
 ylabel('relativehibav[%]')
 print('Resources/timestepi_relative_v','-depsc');
 
