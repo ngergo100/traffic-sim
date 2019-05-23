@@ -1,5 +1,33 @@
 \chapter{Analysis}
 	\section{Self driving car variations}
+		To test the effect of the autonomous driver in traffic, the same red traffic light situation was implemented. However in this case one of the driver's parameters have been substituted with an autonomous driver parameters. The most representative figure of the result of this task is where the count of cars passed the target line (in that case it was 100 meters) respect to time. Each car has been exchanged and then simulated with the reaming cars. So a total of ten simulations were run. The result can be seen on Figure \ref{fig:vehicle_density}.
+		\begin{figure}[ht]
+			\centering
+			\includegraphics[width=0.75\textwidth]{eemobil/vehicle_density}
+			\caption{Vehicles passes the target line}
+			\label{fig:vehicle_density}
+		\end{figure}
+
+		The interesting part is at the top right corner of the figure, where it can be seen that depending on which car has been exchanged the overall elapsed time can change more than 10 \%. The minimum, maximum, average and standard deviation values can be found in Table \ref{tab:vehicle_density_minmaxavg}.
+		\begin{table}[ht]
+			\begin{center}
+				\begin{tabular}{ |c|c|c|c|}
+					\hline
+					Minimum& Maximum & Average& Standard deviation\\
+					\hline
+					27.8s&31s&30.24s&1.25s\\
+					\hline
+				\end{tabular}
+			\end{center}
+			\caption{Step sizes}
+			\label{tab:vehicle_density_minmaxavg}
+		\end{table}
+		\begin{figure}[ht]
+			\centering
+			\includegraphics[width=0.75\textwidth]{eemobil/vehicle_density_avg}
+			\caption{Vehicles passes the target line}
+			\label{fig:vehicle_density_avg}
+		\end{figure}
 		\begin{figure}
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/variations}
