@@ -1,4 +1,4 @@
-%% Define the model
+%% Case 3
 % parameters in models
 % id, sourcelane, targetlane, initial position, initial velocity, ACC model
 clc
@@ -8,6 +8,12 @@ clear
 addpath('./Configurations')
 
 config_count = 10;
+
+global real
+
+figure_size = [10,10,14,8];
+f = figure('Units','centimeters', 'Position',figure_size);
+hold all;
 
 for index=1:config_count
     should_use_images = false;
@@ -23,8 +29,14 @@ for index=1:config_count
     %post_processing
  
     %animation
+    real = false;
     
     vehicle_density_post_processing
     
     clear
 end
+set(gca,'fontsize',8')
+xlabel('t[s]')
+ylabel('n[-]')
+axis([0 inf 0 inf])
+print('Resources/vehicle_density_avg','-depsc');
