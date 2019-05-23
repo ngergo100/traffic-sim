@@ -54,7 +54,7 @@ legend(cellstr(strcat('dt=',num2str(dts))), 'Location', 'southeast', 'FontSize',
 print('Resources/timestepi_v','-depsc');
 
 figure('Name','Time', 'Units','centimeters', 'Position',figure_size);
-plot(tveg, '.','MarkerSize',20);
+plot(tveg, '.','MarkerSize',16);
 set(gca,'fontsize',8')
 xlabel('dt[s]')
 ylabel('t[s]')

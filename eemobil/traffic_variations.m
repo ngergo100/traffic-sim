@@ -38,8 +38,4 @@ end
 
 end
 
-for i=1:size(times,2)
-    hold all;
-    timetable = nonzeros(times(:,i));
-    plot(i*ones(1,length(timetable)),timetable, 'x')
-end
+time_variation_post_proc
