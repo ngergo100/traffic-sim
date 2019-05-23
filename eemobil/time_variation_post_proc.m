@@ -8,7 +8,9 @@ dotmax = 40;
 dotmin = 10;
 
 figure_size = [10,10,15,8];
-figure('Name','Variations', 'Units','centimeters', 'Position',figure_size);
+
+f1 = figure('Name','Variations', 'Units','centimeters', 'Position',figure_size);
+f1.Renderer='Painters';
 for i=1:size(times,2)
     hold all;
     timetable = nonzeros(times(:,i));
@@ -46,6 +48,6 @@ print('Resources/variations_avgminmax','-depsc');
 figure('Name','Standard deviation', 'Units','centimeters', 'Position',figure_size);
 plot(stds)
 set(gca,'fontsize',8')
-xlabel('SelfDrivinCarCount')
+xlabel('SelfDrivingCarCount')
 ylabel('Standard deviation [s]')
 print('Resources/variations_std','-depsc');
