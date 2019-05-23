@@ -43,14 +43,14 @@ figure(f1);
 set(gca,'fontsize',8')
 xlabel('t[s]')
 ylabel('x[m]')
-legend(cellstr(strcat('dt=',num2str(dts))), 'Location', 'northwest')
+legend(cellstr(strcat('dt=',num2str(dts))), 'Location', 'northwest', 'FontSize',9)
 print('Resources/timestepi_p','-depsc');
 
 figure(f2);
 set(gca,'fontsize',8')
 xlabel('t[s]')
 ylabel('v[m/s]')
-legend(cellstr(strcat('dt=',num2str(dts))), 'Location', 'southeast')
+legend(cellstr(strcat('dt=',num2str(dts))), 'Location', 'southeast', 'FontSize',9)
 print('Resources/timestepi_v','-depsc');
 
 figure('Name','Time', 'Units','centimeters', 'Position',figure_size);

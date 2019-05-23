@@ -90,4 +90,5 @@ plot(t,cars_in_lane_count)
 legend(cellstr(strcat('l',num2str(possible_lane_numbers))), 'Location', 'eastoutside')
 xlabel('t[s]')
 ylabel('carcount')
+set(gca,'fontsize',8')
 print(['Resources/simcc_' case_name],'-depsc');
