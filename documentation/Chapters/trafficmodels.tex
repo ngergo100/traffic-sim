@@ -52,7 +52,7 @@
 			\label{eq:aidm}
 		\end{equation}
 		Equation \ref{eq:aidm} represents the longitudinal behavior mechanism of a human driven car.
-	\section{Mobil} \label{sec:MOBIL}
+	\section{MOBIL -- lane changing model} \label{sec:MOBIL}
 		Beside the IDM there is a need for transversal motion model of the cars, namely a lane changing model. It has not been studied nearly as exhaustive as longitudinal behaviors. However it can have great impact on the overall traffic flow so it is worth investigating. The model should be able to decide based on the local traffic conditions that changing lane is beneficial and safe to a specific driver or not. If both conditions met the model will start to change lanes.
 
 		The first condition to satisfy is that lane changing should be safe. The model should check that how will a possible lane change effect the upstream vehicles in the target lane. Mobil states if the deceleration of the new follower car does not exceeds a given safe limit then changing lanes is safe. It can be expressed with an inequality as well:
