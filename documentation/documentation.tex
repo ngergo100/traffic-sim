@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt,twoside, openright]{report} % TODO: add `openright` option when you have at least 50 pages
+\documentclass[a4paper,12pt,twoside, openright]{report}
 
 % Packages
 \usepackage{amsmath} % -> Matrices, `pmatrix` command
@@ -29,9 +29,11 @@
 \newcommand{\vtl}{l_{\rm target}}
 
 \begin{document}
+	\pagenumbering{gobble}
 	\input{Chapters/abstract}
 	\tableofcontents
 	\input{Chapters/introduction}
+	\pagenumbering{arabic}
 	\input{Chapters/trafficmodels}
 	\input{Chapters/evolutionofthesimulator}
 	\input{Chapters/finalmodel}
