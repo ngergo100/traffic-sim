@@ -16,7 +16,7 @@ for timestepi=1:length(dts)
 
     should_use_images = false;
     
-    load_data_set_7
+    load_data_set_7 % Blending IDM and MOBIL
     
     dt = dts(timestepi);
 

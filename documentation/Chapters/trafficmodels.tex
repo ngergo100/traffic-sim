@@ -2,7 +2,7 @@
 	\section{Theory behind traffic simulators}
 		One of the main branch of these algorithms are the so called macroscopic or hydrodynamic models. These deal with traffic as a fluid flow and they do not take individual driver actions into consideration. These are based on the vehicle density.
 
-		The other type is the microscopic or car following models. These models do take individual driver behavior into consideration. So they are simulating each cars in a particular traffic situation. Some examples are the optimal velocity model, velocity difference model or the IDM. The task is to find a model that can accurately represent a human driven car. The model consists two parts, longitudinal and transversal movements. Although most of the simulations only care about the former one in this thesis both of them will be investigated.
+		The other type is the microscopic or car following models. These models do take individual driver behavior into consideration. So they are simulating each cars in a particular traffic situation. Some examples are the optimal velocity model family or velocity difference model. The task is to find a model that can accurately represent a human driven car. The model consists two parts, longitudinal and transversal movements. Although most of the simulations only care about the former one in this thesis both of them will be investigated.
 	\section{Intelligent Driver Model} \label{sec:IDM}
 		One of the most widespread microscopic model is the Intelligent Driver Model (IDM). IDM is a time continuous car following model which belongs to the Optimal Velocity model family. IDM is designed to be accident-free. It can only represents longitudinal motions. The fundamental idea behind the model is that every car chooses its speed based on the car before and its individual parameters. In case when there is no car before then it can freely accelerate to its desired speed.
 
@@ -51,11 +51,11 @@
 			a(t)=\afree+\afollower=\amax\left [ 1 - \left ( \frac{\vt}{\vd} \right )^{\delta} - \left ( \frac{\hd}{\h} \right )^2 \right ]\,.
 			\label{eq:aidm}
 		\end{equation}
-		Equation \ref{eq:aidm} represents the longitudinal behavior mechanism of a human driven car.
+		Equation \ref{eq:aidm} represents the longitudinal behavior mechanism of a human driven car. 3 cases of traffic situation were drawn on figure \ref{fig:idm} with their representative parameters.
 	\section{MOBIL -- lane changing model} \label{sec:MOBIL}
 		Beside the IDM there is a need for transversal motion model of the cars, namely a lane changing model. It has not been studied nearly as exhaustive as longitudinal behaviors. However it can have great impact on the overall traffic flow so it is worth investigating. The model should be able to decide based on the local traffic conditions that changing lane is beneficial and safe to a specific driver or not. If both conditions met the model will start to change lanes.
 
-		The first condition to satisfy is that lane changing should be safe. The model should check that how will a possible lane change effect the upstream vehicles in the target lane. Mobil states if the deceleration of the new follower car does not exceeds a given safe limit then changing lanes is safe. It can be expressed with an inequality as well:
+		The first condition to satisfy is that lane changing should be safe. The model should check that how will a possible lane change effect the upstream vehicles in the target lane. Mobil states if the deceleration of the new follower car does not exceed a given safe limit then changing lanes is safe. It can be expressed with an inequality as well:
 		\begin{equation}
 			\hat{a}_{n}\geq -b_{\rm safe}\,,
 		\end{equation}
@@ -79,14 +79,14 @@
 				\hat{a}_{\rm c} - a_{\rm c} + \hat{a}_{\rm o} - a_{\rm o} + \hat{a}_{\rm n} - a_{\rm n} > \Delta  a_{\rm th}\,,
 				\label{eq:mobil_with_tr}
 			\end{equation}
-			It can be stated that with this modification individual drivers only change lanes if the acceleration sum is significantly greater than before the lane change. The other problem with the previously discussed model is that they can't distinguish between driving style. Driver styles can vary from complete selfish to the altruistic driver. Selfish drivers would only care about  their own acceleration ($\hat{a}_{\rm c} - a_{\rm c} > \Delta  a_{\rm th}$) while altruistic ones would change lanes even if that would result in a disadvantageous position for them but with that change the local traffic situation is improved sufficiently ($\hat{a}_{\rm o} - a_{\rm o} + \hat{a}_{\rm n} - a_{\rm n} > \Delta  a_{\rm th}$). A $p$ politeness factor should be introduced to fix that. Including $p$ in equation \ref{eq:mobil_with_tr} results in the final form of the model:
+			It can be stated that with this modification individual drivers only change lanes if the acceleration sum is significantly greater than before the lane change. The other problem with the previously discussed model is that they can't distinguish between driving style. Driver styles can vary from complete selfish to the altruistic driver. Selfish drivers would only care about  their own acceleration ($\hat{a}_{\rm c} - a_{\rm c} > \Delta  a_{\rm th}$) while altruistic ones would change lanes even if that would result in a disadvantageous position for them but with that change the local traffic situation would improve sufficiently ($\hat{a}_{\rm o} - a_{\rm o} + \hat{a}_{\rm n} - a_{\rm n} > \Delta  a_{\rm th}$). A $p$ politeness factor should be introduced to fix that. Including $p$ in equation \ref{eq:mobil_with_tr} results in the final form of the model:
 			\begin{equation}
 				\hat{a}_{\rm c} - a_{\rm c} + p(\hat{a}_{\rm o} - a_{\rm o} + \hat{a}_{\rm n} - a_{\rm n}) > \Delta  a_{\rm th}\,.
 				\label{eq:mobil}
 			\end{equation}
 			A completely selfish driver would get $p=0$ factor, while an altruistic one $p>1$. In the special case where $p=1$ equation \ref{eq:mobil} simplifies back to equation \ref{eq:mobil_with_tr}, which means a lane change is performed only if the sum of all involved vehicles' acceleration will improved at least by the threshold value.
 		\section{Numerical solver}
-			In Section \ref{sec:IDM} and \ref{sec:MOBIL} a vehicle behavior in traffic has been shown and modeled. The mathematical model of a driver is a second order differential equation. There is no analytical solution, so a numerical one should be carried out. To be able to use one of the common numerical solvers (like Explict Euler or 4th order Runge Kutta) the second order differential equation should be transformed into a first order differential equation system. So the second order differential equation to solve based on \ref{eq:aidm} and the fact that $v=\dot{x},\,a=\ddot{x}$, will be the following:
+			In Section \ref{sec:IDM} and \ref{sec:MOBIL} a vehicle behavior in traffic has been shown and modeled. The mathematical model of a driver is a second order differential equation. There is no analytical solution, so a numerical one should be carried out. To be able to use one of the common numerical solvers (like Explict Euler or 4th order Runge Kutta) the second order differential equation should be transformed into a first order differential equation system. So the second order differential equation to solve based on \ref{eq:aidm} and the facts that $v=\dot{x},\,a=\ddot{x}$, will be the following:
 			\begin{equation}
 				\ddot{x}=\amax\left [ 1 - \left ( \frac{\dot{x}}{\vd} \right )^\delta - \left ( \frac{h_0 + \dot{x}\cdot T + \frac{\dot{x}(\dot{x}-v_{\rm lead})}{{\rm c}}}{x_{\rm lead}-L_{\rm lead} - x} \right )^2 \right ]\,.
 				\label{eq:idm_num1}

@@ -1,3 +1,5 @@
+% Blending IDM and MOBIL
+
 global models possible_lane_numbers weighted_average_acceleration_calculation_enabled target_line
 
 models = {

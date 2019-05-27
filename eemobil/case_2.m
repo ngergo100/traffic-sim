@@ -9,7 +9,7 @@ addpath('./Configurations')
 
 should_use_images = false;
     
-load_data_set_1
+load_data_for_case_2
 
 traffic
 

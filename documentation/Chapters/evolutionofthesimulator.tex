@@ -56,7 +56,7 @@
 		\end{figure}
 		Both examples showed that the stationary state does not depend on the initial gap. After a little bit of time the second car has reached the desired safety gap (which is around 64.5 meters) and the 100 km/h speed in both cases.
 	\section{Model behavior verification}
-		In Section \ref{sec:base2car} two examples were shown where the model produced the same stationary state for different initial conditions. Stationary state means in this case that the vehicle's acceleration is zero. So equation \ref{eq:aidm} modifies as followings in a stationary state:
+		In Section \ref{sec:base2car} two examples were shown where the model produced the same stationary state for different initial conditions. In this case stationary state means that the vehicle's acceleration is zero. So equation \ref{eq:aidm} modifies as followings in a stationary state:
 		\begin{equation}
 		1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T+\frac{v_{\rm stac}(v_{\rm stac}-v_{\rm lead,stac})}{2\sqrt{\amax \bmax}}}{x_{\rm lead,0}+v_{\rm lead, stac}\cdot t - L_{\rm lead} - (x_{0} + v_{\rm stac}\cdot t)} \right )^2=0\,,
 		\label{eq:aidm_stac1}
@@ -65,7 +65,7 @@
 		\begin{equation}
 			v_{\rm stac}=v_{\rm lead,stac}\,,
 		\end{equation}
-		so Equation \ref{eq:aidm_stac1} further simplifies to:
+		so Equation \ref{eq:aidm_stac1} simplifies further to:
 		\begin{equation}
 			1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T}{x_{\rm lead,0}-x_{0} - L_{\rm lead}} \right )^2=0\,.
 			\label{eq:aidm_stac2}
@@ -83,7 +83,7 @@
 			\label{fig:aidm_stac}
 		\end{figure}
 
-		In the examples of Section \ref{sec:base2car} the stationary gap between the vehicles was around 64.5 meters and the velocity was 100 km/h. Figure \ref{fig:aidm_stac} shows exactly the same values. It can be stated that the model and the numerical solver is working as expected. Note that the bumper to bumper or traffic jam distance ($h_0$) appears on the horizontal axis and it has a zero velocity value.
+		In the examples of Section \ref{sec:base2car} the stationary gap between the vehicles was around 64.5 meters and the velocity was 100 km/h. Figure \ref{fig:aidm_stac} shows exactly the same values. It can be stated that the model is working as expected. Note that the bumper to bumper or traffic jam distance ($h_0$) appears on the horizontal axis and it has a zero velocity value.
 	\section{Solver verification}
 		A custom Explicit Euler solver was implemented to solve equation \ref{eq:numerical_idm} numerically. However \textsc{Matlab} provides built-in solvers for differential equation systems like IDM. It has a solver called ode45. It is a 4th order numerical solver which is capable of changing some of its parameters (e.g.: time step) based on the system's behavior. So theoretically it is a better choice over a custom implemented Explicit Euler to solve differential equation systems. It also provides a verification to the custom implemented solver. 
 		\begin{figure}[ht]
@@ -123,7 +123,7 @@
 			\caption{n-car setup}
 			\label{fig:basic_n_car}
 		\end{figure}
-		Unfortunately the previously used implementation is not good enough to produce $\dot{\textbf{y}}$. The problem is  that to be able to calculate vehicle n's position and velocity the solver needs to have vehicle n-1's position and velocity. To make it easy to read let us use function $f$ which represents equation \ref{eq:numerical_idm}. Than $\dot{\textbf{y}}$ looks like the following:
+		Unfortunately the previously used implementation is not good enough to produce $\dot{\textbf{y}}$. The problem is  that to be able to calculate vehicle n's position and velocity the solver needs to have the position and velocity of vehicle n-1. To make it easy to read let us use function $f$ which represents equation \ref{eq:numerical_idm}. Than $\dot{\textbf{y}}$ looks like the following:
 		\begin{equation}
 			\dot{\textbf{y}}=
 			\begin{pmatrix}
