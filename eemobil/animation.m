@@ -39,7 +39,11 @@ for i = 1:size(positions,2)
         if lane_config_target(j,i) ~= 0
             [starting, ending] = find_start_end(i, lane_config_target(j,:));
             elapsed_steps = (i-starting)/(ending-starting);
-            yPos = (lane_config_source(j,i) + (lane_config_target(j,i) - lane_config_source(j,i)) * easeinout(elapsed_steps, 2)) * 10;
+            if isnan(elapsed_steps)
+                yPos = lane_config_source(j,i) * 10;
+            else
+                yPos = (lane_config_source(j,i) + (lane_config_target(j,i) - lane_config_source(j,i)) * easeinout(elapsed_steps, 2)) * 10;
+            end
         else
             yPos = lane_config_source(j,i) * 10;
         end

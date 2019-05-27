@@ -3,8 +3,8 @@ clc
 close all
 clear
 
-dts = [0.1; 0.05; 0.025; 0.0125; 0.00625];
-%dts = [0.2; 0.1; 0.05];
+dts = [0.4; 0.2; 0.1; 0.05; 0.025; 0.0125];
+%dts = [0.4; 0.2; 0.1; 0.05];
 figure_size = [10,10,8,5];
 
 f1 = figure('Name','Position', 'Units','centimeters', 'Position',figure_size);
@@ -16,7 +16,7 @@ for timestepi=1:length(dts)
 
     should_use_images = false;
     
-    load_data_set_5
+    load_data_set_7
     
     dt = dts(timestepi);
 

@@ -68,52 +68,10 @@
 		As mentioned previously $g$ function can only return the expected parameters by $f$ if there is a leader car. This makes sense since someone has to be the very first in every single time step. Consequently that cars longitudinal model has to be changed to handle that there is no car in front of it. It is handled by leaving the follower behavior out of the equation \ref{eq:aidm}. So it will not need the leader vehicle's parameters. This means that the leader cars in their lanes will always be in free acceleration state. That is coinciding with reality.
 		\subsection*{Implementation of lane changing}
 		The original n-car solver only calculated and stored the \textbf{y} vector which contained the position and velocity values at each time step. Since lane changes came into picture that wont be enough. Consequently, two more vectors needs to be stored. One for the current lane (named $\vcl$) and one for the target lane (named $\vtl$) which can keep track of the lane changes. $\vcl$ will store the lane numbers of the vehicle's current lane. $\vtl$ will contain the target lane identifier when a car is changing lane, otherwise it will have zero value. Figures \ref{fig:stage1ofchanginglanes}, \ref{fig:stage2ofchanginglanes}, \ref{fig:stage3ofchanginglanes} show the stages of a lane change example.
-		\begin{figure}
-			\begin{center}
-				\begin{minipage}{.65\textwidth}
-					\includegraphics[width=\textwidth]{common/stages_of_lane_changes_1}
-				\end{minipage}\quad
-				\begin{minipage}{.3\textwidth}
-					\begin{tabular}{ |c|c|c|c| }
-						\hline
-						Id &  $\vcl$ & $\vtl$ & ... \\
-						$[-]$ & $[-]$ & $[-]$ & ...\\
-						\hline
-						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
-						$C$ & $1$ & $0$ & ...\\
-						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
-						\hline
-					\end{tabular}
-				\end{minipage}
-			\end{center}
-			\caption{Stage I of changing lanes. Vehicle C is considering a lane change.}
-			\label{fig:stage1ofchanginglanes}
-		\end{figure}
-		\begin{figure}
-			\begin{center}
-				\begin{minipage}{.65\textwidth}
-					\includegraphics[width=\textwidth]{common/stages_of_lane_changes_2}
-				\end{minipage}\quad
-				\begin{minipage}{.3\textwidth}
-					\begin{tabular}{ |c|c|c|c| }
-						\hline
-						Id &  $\vcl$ & $\vtl$ & ... \\
-						$[-]$ & $[-]$ & $[-]$ & ...\\
-						\hline
-						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
-						$C$ & $1$ & $2$ & ...\\
-						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
-						\hline
-					\end{tabular}
-				\end{minipage}
-			\end{center}
-			\caption{Stage II of changing lanes. Vehicle C changing lanes from lane 1 to lane 2. The row of vehicle C contains 1 in the current lane vector and 2 in the target lane vector.}
-			\label{fig:stage2ofchanginglanes}
-		\end{figure}
 		\begin{figure}[ht]
 			\begin{center}
 				\begin{minipage}{.65\textwidth}
-					\includegraphics[width=\textwidth]{common/stages_of_lane_changes_3}
+					\includegraphics[width=\textwidth]{common/stages_of_lane_changes_1}
 				\end{minipage}\quad
 				\begin{minipage}{.3\textwidth}
 					\begin{tabular}{ |c|c|c|c| }
@@ -128,7 +86,49 @@
 					\end{tabular}
 				\end{minipage}
 			\end{center}
-			\caption{Stage III of changing lanes. Vehicle C has performed its lane change so the current lane vector will hold a value of 2 at the row of vehicle C, corresponding row of target lane vector will reset to zero.}
+			\caption{Stage I of changing lanes. Vehicle C is considering a lane change.}
+			\label{fig:stage1ofchanginglanes}
+		\end{figure}
+		\begin{figure}[ht]
+			\begin{center}
+				\begin{minipage}{.65\textwidth}
+					\includegraphics[width=\textwidth]{common/stages_of_lane_changes_2}
+				\end{minipage}\quad
+				\begin{minipage}{.3\textwidth}
+					\begin{tabular}{ |c|c|c|c| }
+						\hline
+						Id &  $\vcl$ & $\vtl$ & ... \\
+						$[-]$ & $[-]$ & $[-]$ & ...\\
+						\hline
+						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
+						$C$ & $2$ & $1$ & ...\\
+						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
+						\hline
+					\end{tabular}
+				\end{minipage}
+			\end{center}
+			\caption{Stage II of changing lanes. Vehicle C changing lanes from lane 2 to lane 1. The row of vehicle C contains 2 in the current lane vector and 1 in the target lane vector.}
+			\label{fig:stage2ofchanginglanes}
+		\end{figure}
+		\begin{figure}[ht]
+			\begin{center}
+				\begin{minipage}{.65\textwidth}
+					\includegraphics[width=\textwidth]{common/stages_of_lane_changes_3}
+				\end{minipage}\quad
+				\begin{minipage}{.3\textwidth}
+					\begin{tabular}{ |c|c|c|c| }
+						\hline
+						Id &  $\vcl$ & $\vtl$ & ... \\
+						$[-]$ & $[-]$ & $[-]$ & ...\\
+						\hline
+						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
+						$C$ & $1$ & $0$ & ...\\
+						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
+						\hline
+					\end{tabular}
+				\end{minipage}
+			\end{center}
+			\caption{Stage III of changing lanes. Vehicle C has performed its lane change so the current lane vector will hold a value of 1 at the row of vehicle C, corresponding row of target lane vector will reset to zero.}
 			\label{fig:stage3ofchanginglanes}
 		\end{figure}
 		\subsection*{Decision making and duration of a lane change}
