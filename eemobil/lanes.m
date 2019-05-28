@@ -22,12 +22,13 @@ states_of_cars = zeros(length(source_lane_numbers), 1);
 clear dy
 %% Loop over all car models
 for i=1:size(models, 1)
+  clear mobil_params
   % i-th car's position, velocity, lane and id 
   current_car_data = traffic(i,:);
   
   % Current car's left lane and right lane
-  possible_left_lane = current_car_data(3) - 1;
-  possible_right_lane = current_car_data(3) + 1;
+  possible_left_lane = current_car_data(3) + 1;
+  possible_right_lane = current_car_data(3) - 1;
   % Check if left and right lanes exist indeed (if not sign it with 0)
   mobil_params.left_lane = ismember(possible_left_lane, possible_lane_numbers) * possible_left_lane;
   mobil_params.right_lane = ismember(possible_right_lane, possible_lane_numbers) * possible_right_lane;
@@ -174,8 +175,12 @@ for i=1:size(models, 1)
             %disp(['unit_remaining_time ' num2str(unit_remaining_time)])
             if target_lane_numbers(i) == mobil_params.right_lane
                 dy(2*i-1) = mobil_params.a_c(1);
+                right_leading_car = find_leading(sorted_traffic, current_car_data, mobil_params.right_lane);
+                mobil_params.a_c_right = models{i, 6}.next_step(t, [current_car_data(1); current_car_data(2)], right_leading_car);
                 dy(2*i) = mobil_params.a_c(2) * unit_remaining_time + mobil_params.a_c_right(2) * unit_elapsed_time;
             elseif target_lane_numbers(i) == mobil_params.left_lane
+                left_leading_car = find_leading(sorted_traffic, current_car_data, mobil_params.left_lane);
+                mobil_params.a_c_left = models{i, 6}.next_step(t, [current_car_data(1); current_car_data(2)], left_leading_car);
                 dy(2*i-1) = mobil_params.a_c(1);
                 dy(2*i) = mobil_params.a_c(2) * unit_remaining_time + mobil_params.a_c_left(2) * unit_elapsed_time;
             else
@@ -190,13 +195,14 @@ for i=1:size(models, 1)
         dy(2*i-1) = mobil_params.a_c(1);
         dy(2*i) = mobil_params.a_c(2);
     end
+    if dy(2*i-1) <= 0 && dy(2*i) < 0
+      dy(2*i-1) = mobil_params.a_c(1);
+      dy(2*i) = 0;
+    end
     
   end
   
-  if dy(2*i-1) <= 0 && dy(2*i) < 0
-      dy(2*i-1) = mobil_params.a_c(1);
-      dy(2*i) = 0;
-  end
+  
 end
 
 dy = dy';
