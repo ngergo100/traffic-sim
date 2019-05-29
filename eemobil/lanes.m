@@ -1,6 +1,6 @@
 function [dy, next_source_lane_numbers, next_target_lane_numbers, states_of_cars] = lanes(t, y, source_lane_numbers, target_lane_numbers)
 
-global models possible_lane_numbers latest_lane_changes_start latest_lane_changes_end weighted_average_acceleration_calculation_enabled
+global models possible_lane_numbers latest_lane_changes_start latest_lane_changes_end weighted_average_acceleration_calculation_enabled dt
 
 %% Initial settings
 % Get identifiers for all cars
@@ -195,9 +195,11 @@ for i=1:size(models, 1)
         dy(2*i-1) = mobil_params.a_c(1);
         dy(2*i) = mobil_params.a_c(2);
     end
-    if dy(2*i-1) <= 0 && dy(2*i) < 0
-      dy(2*i-1) = mobil_params.a_c(1);
-      dy(2*i) = 0;
+    
+    if current_car_data(2)+dy(2*i)*dt<0
+        dy(2*i-1) = 0;
+        dy(2*i) = 0;
+        disp(['Number ' num2str(current_car_data(5)) ' driver stopped at t: ' num2str(t)])
     end
     
   end

@@ -9,7 +9,7 @@ addpath('./Configurations')
 
 config_count = 10;
 
-global real
+global real should_use_legend
 
 figure_size = [10,10,14,8];
 f = figure('Units','centimeters', 'Position',figure_size);
@@ -30,6 +30,7 @@ for index=1:config_count
  
     %animation
     real = false;
+    should_use_legend = true;
     
     vehicle_density_post_processing
     

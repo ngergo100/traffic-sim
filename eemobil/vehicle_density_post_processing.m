@@ -8,4 +8,7 @@ else
     plot(jumps*dt,values, 'DisplayName',num2str(index))
 end
 
-legend('-DynamicLegend', 'Location', 'southwest');
+if should_use_legend
+    legend('-DynamicLegend', 'Location', 'southwest');
+end
+
