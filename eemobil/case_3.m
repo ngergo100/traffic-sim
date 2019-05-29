@@ -17,4 +17,4 @@ case_name = 'case3';
 
 post_processing_for_documentation
  
-animation
+%animation

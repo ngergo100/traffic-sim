@@ -196,10 +196,10 @@ for i=1:size(models, 1)
         dy(2*i) = mobil_params.a_c(2);
     end
     
-    if current_car_data(2)+dy(2*i)*dt<0
+    if current_car_data(2)+dy(2*i)*dt < 0
         dy(2*i-1) = 0;
         dy(2*i) = 0;
-        disp(['Number ' num2str(current_car_data(5)) ' driver stopped at t: ' num2str(t)])
+        %disp(['Number ' num2str(current_car_data(5)) ' driver stopped at t: ' num2str(t)])
     end
     
   end
