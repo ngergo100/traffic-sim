@@ -36,9 +36,9 @@ print('Resources/variations','-depsc');
 
 figure('Name','Variations', 'Units','centimeters', 'Position',figure_size);
 hold all;
-plot(avgs)
-plot(maxs)
-plot(mins)
+plot(avgs,'-o')
+plot(maxs,'-o')
+plot(mins,'-o')
 set(gca,'fontsize',8')
 xlabel('SelfDrivingCarCount')
 ylabel('t[s]')
@@ -46,7 +46,7 @@ legend({'Average', 'Max', 'Min'})
 print('Resources/variations_avgminmax','-depsc');
 
 figure('Name','Standard deviation', 'Units','centimeters', 'Position',figure_size);
-plot(stds)
+plot(stds,'-o')
 set(gca,'fontsize',8')
 xlabel('SelfDrivingCarCount')
 ylabel('Standard deviation [s]')
