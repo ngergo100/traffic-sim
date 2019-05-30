@@ -91,16 +91,16 @@ for i=1:size(models, 1)
       else
         mobil_params.can_change_to_left = true;
       end
-   else 
+    else 
      mobil_params.a_c_left = [0,0];
      mobil_params.safe_change_to_left = false;
      mobil_params.can_change_to_left = false;
      mobil_params.a_n_left = [0,0];
      mobil_params.a_n_left_possible = [0,0];
-   end
+    end
   
   % If a right lane exist
-   if mobil_params.right_lane ~=0
+    if mobil_params.right_lane ~=0
       % Find current car's leader if it would in the right lane
       right_leading_car = find_leading(sorted_traffic, current_car_data, mobil_params.right_lane);
       % Calculate what would happen if current car would go straight behind
@@ -123,13 +123,13 @@ for i=1:size(models, 1)
       else
         mobil_params.can_change_to_right = true;
       end
-   else 
+    else 
       mobil_params.a_c_right = [0,0];
       mobil_params.safe_change_to_right = false;
       mobil_params.can_change_to_right = false;
       mobil_params.a_n_right = [0,0];
       mobil_params.a_n_right_possible = [0,0];
-   end
+    end
   
     chosen_direction = mobil(mobil_params, t);
     if chosen_direction.paying_attention_to_lane_change
@@ -149,7 +149,7 @@ for i=1:size(models, 1)
     dy(2*i-1)= chosen_direction.a_c(1);
     dy(2*i)= chosen_direction.a_c(2);
   
- else % if target_lane_numbers(i) not 0 or she/he does not want to change yet
+  else % if target_lane_numbers(i) not 0 or she/he does not want to change yet
      
     if latest_lane_changes_start(i) + models{i, 6}.lane_change_duration <= t && target_lane_numbers(i) ~= 0 
         latest_lane_changes_end(i) = t;
@@ -197,7 +197,6 @@ for i=1:size(models, 1)
     end
     
     if current_car_data(2)+dy(2*i)*dt < 0
-        dy(2*i-1) = 0;
         dy(2*i) = 0;
         %disp(['Number ' num2str(current_car_data(5)) ' driver stopped at t: ' num2str(t)])
     end
