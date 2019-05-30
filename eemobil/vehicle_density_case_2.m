@@ -14,7 +14,7 @@ f = figure('Units','centimeters', 'Position',figure_size);
 hold all;
 
 config_count = 10;
-changed_cars_count = 3;
+changed_cars_count = 2;
 nonzerotimes = [];
 
 for variation_config_index=1:changed_cars_count
@@ -55,7 +55,7 @@ set(gca,'fontsize',8')
 xlabel('t[s]')
 ylabel('n[-]')
 axis([0 inf 0 inf])
-print('Resources/vehicle_density_case_3','-depsc');
+print('Resources/vehicle_density_case_2','-depsc');
 
 % Save latex table content
 fid = fopen('Resources/vehicle_density_table_case_template','rt') ;
@@ -66,6 +66,6 @@ X = strrep(X, 'minvar', num2str(min(nonzerotimes)));
 X = strrep(X, 'maxvar', num2str(max(nonzerotimes)));
 X = strrep(X, 'avgvar', num2str(mean(nonzerotimes)));
 X = strrep(X, 'stdvar', num2str(std(nonzerotimes)));
-fid2 = fopen('Resources/vehicle_density_table_case_3','wt') ;
+fid2 = fopen('Resources/vehicle_density_table_case_2','wt') ;
 fwrite(fid2,X);
 fclose(fid2);

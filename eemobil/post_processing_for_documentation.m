@@ -93,3 +93,7 @@ ylabel('carcount')
 ylim([0 velocity_count])
 set(gca,'fontsize',8')
 print(['Resources/simcc_' case_name],'-depsc');
+
+fileID = fopen(['Resources/simt_' case_name],'w');
+fprintf(fileID, num2str(t(length(t))));
+fclose(fileID);

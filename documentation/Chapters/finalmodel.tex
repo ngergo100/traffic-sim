@@ -173,19 +173,19 @@
 		\begin{figure}
 			\centering
 			\includegraphics[width=\textwidth]{common/traffic_light_init}
-			\caption{Red light situation with 10 vehicles}
+			\caption{Initial positions}
 			\label{fig:traffic_light_init}
 		\end{figure}
 		\begin{figure}
 			\centering
 			\includegraphics[width=\textwidth]{common/traffic_light_end}
-			\caption{Initial position}
+			\caption{End positions}
 			\label{fig:traffic_light_end}
 		\end{figure}
 		\begin{figure}
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/simh_case1}
-			\caption{End position}
+			\caption{Red light traffic. Headway of the vehicles respect to their position in lanes}
 			\label{fig:red_light_situationh}
 		\end{figure}
 		\begin{figure}
@@ -201,7 +201,8 @@
 			\label{fig:red_light_situationcc}
 		\end{figure}
 		\subsection*{Summary of the result}
-		The traffic situation was successfully simulated. However post processing of the result turned out to be kind of a challenging task. The usage of the previous figures is not illustrating enough the traffic. To make it easy to understand the motions of the vehicles, the headway and velocity figures have been divided into two parts. One figure shows the headway of the cars in one lane the other figure shows the other lane. When a vehicle changes lanes its curve breaks and disappears from one figure and continues on the other. The headway and velocity diagrams can be seen on Figure \ref{fig:red_light_situationh} and \ref{fig:red_light_situationv}. Notice that the first cars of each lanes have zero headway since there is no vehicle in front of them.  Another figure was made to emphasize the lane changes during the simulation. Figure \ref{fig:red_light_situationcc} shows the number of vehicles in each lane. Notice that one function is opposite of the other.
+		The traffic situation was successfully simulated. However post processing of the result turned out to be kind of a challenging task. The usage of the previous figures is not illustrating enough the traffic. To make it easy to understand the motions of the vehicles, the headway and velocity figures have been divided into two parts. One figure shows the headway of the cars in one lane the other figure shows the other lane. When a vehicle changes lanes its curve breaks and disappears from one figure and continues on the other.
+		The headway and velocity diagrams can be seen on Figure \ref{fig:red_light_situationh} and \ref{fig:red_light_situationv}. Notice that the first cars of each lanes have zero headway since there is no vehicle in front of them.  Another figure was made to emphasize the lane changes during the simulation. Figure \ref{fig:red_light_situationcc} shows the number of vehicles in each lane. Notice that one function is the opposite of the other. The total time until the last car has reached the target line was \casetime{1}seconds.
 		\section{Effect of the time step size on solutions}
 		A numerical solution should be independent from the time step. Thus a time step independence analysis has been carried out. What practically it means is that one particular simulation should be run multiple times with decreasing step size. If the solution is converged than it can be said that the model is step size independent. The default value of the step size was 0.1 second. The simulations were run with the values defined in Table \ref{tab:timestepsizes}.
 		Using the same parameters and initial conditions as before, the analysis has been performed. The result can be seen on Figure \ref{fig:tsip}, \ref{fig:tsiv}, \ref{fig:tsipr}, \ref{fig:tsivr} and \ref{fig:tsit}.
@@ -282,7 +283,7 @@
 			\label{tab:lane_change_duration}
 		\end{table}
 		
-		Results of the simulation can be seen on Figure \ref{fig:red_light_situationh_impr1}, \ref{fig:red_light_situationv_impr1} and \ref{fig:red_light_situationcc_impr1}.
+		Results of the simulation can be seen on Figure \ref{fig:red_light_situationh_impr1}, \ref{fig:red_light_situationv_impr1} and \ref{fig:red_light_situationcc_impr1}. After implementing this improvement the overall duration has increased to \casetime{2}seconds.
 		\begin{figure}[ht]
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/simh_case2}
@@ -307,9 +308,9 @@
 			a=a_{\rm c} \cdot \left(1-\frac{t_{\rm e}}{t_{\rm d}}\right) + a_{\rm f}\cdot \frac{t_{\rm e}}{t_{\rm d}}\,,
 			\label{eq:weighted_average}
 		\end{equation}
-		where $a_{\rm c}$ is the acceleration considering only the current leader vehicle, $a_{\rm f}$  is the acceleration considering only the future leader vehicle. $t_e$ and $t_d$ is the elapsed and total time of the lane change. Based on Equation \ref{eq:weighted_average} the improvement has been implemented in the simulator. This feature has been added with a toggle if one wishes to turn off in the future.
+		where $a_{\rm c}$ is the acceleration considering only the current leader vehicle, $a_{\rm f}$  is the acceleration considering only the future leader vehicle. $t_e$ and $t_d$ is the elapsed and total time of the lane change. Unfortunately this improvement only makes sense if the previously defined lane changing duration is active as well. Based on Equation \ref{eq:weighted_average} the improvement has been implemented in the simulator. This feature has been added with a toggle if one wishes to turn it off in the future.
 		
-		Results of the simulation can be seen on Figure \ref{fig:red_light_situationh_impr2}, \ref{fig:red_light_situationv_impr2} and \ref{fig:red_light_situationcc_impr2}.
+		Results of the simulation can be seen on Figure \ref{fig:red_light_situationh_impr2}, \ref{fig:red_light_situationv_impr2} and \ref{fig:red_light_situationcc_impr2}. After implementing this improvement the overall duration has increased to \casetime{3}seconds.
 		\begin{figure}[ht]
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/simh_case3}
@@ -338,7 +339,7 @@
 		\end{equation}
 		The current acceleration value is represented by $|a|$ and $a_{\rm p,tr}$ is threshold value which is typically between 0 and $\amax$ for a human driver.
 		
-		Results of the simulation can be seen on Figure \ref{fig:red_light_situationh_impr3}, \ref{fig:red_light_situationv_impr3} and \ref{fig:red_light_situationcc_impr3}.
+		Results of the simulation can be seen on Figure \ref{fig:red_light_situationh_impr3}, \ref{fig:red_light_situationv_impr3} and \ref{fig:red_light_situationcc_impr3}. After implementing this improvement the overall duration has increased to \casetime{4}seconds.
 		\begin{figure}[ht]
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/simh_case4}
@@ -358,8 +359,9 @@
 			\label{fig:red_light_situationcc_impr3}
 		\end{figure}
 	\section{Solution including all improvements}
+		Until this point the improvements were only run separated from each other (except the second improvement). However the final goal was to used them all in the simulator and check how it effects the outcome.
 		\subsection*{Initial conditions}
-		The initial conditions remained the same, except additional parameters were necessary to provide for the improvements. The initial conditions with the additional parameters can be found in Table \ref{tab:new_array}. The table contains the time intervals whenever a driver is not paying attention as well as the acceleration threshold value.
+		The initial conditions remained the same, except additional parameters were necessary to provide for the improvements. The initial conditions with the additional parameters can be found in Table \ref{tab:new_array}. The table contains the time intervals whenever a driver is not paying attention as well as the acceleration threshold values.
 		\begin{table}[ht]
 			\begin{center}
 				\begin{tabular}{ |c|c|c|c| }
@@ -402,5 +404,5 @@
 			\label{fig:red_light_situationcc2}
 		\end{figure}
 		\subsection*{Summary of the result}
-		The results can be seen on Figure \ref{fig:red_light_situationh2}, \ref{fig:red_light_situationv2} and \ref{fig:red_light_situationcc2}.
+		The results can be seen on Figure \ref{fig:red_light_situationh2}, \ref{fig:red_light_situationv2} and \ref{fig:red_light_situationcc2}. The results shows that including all improvement the overall duration has increased to \casetime{5}from the original \casetime{1}seconds.
 		[TODO: Here comes the magnifier images.]
