@@ -2,7 +2,7 @@ close all
 clear
 clc
 
-load('times.mat')
+%load('times.mat')
 
 dotmax = 40;
 dotmin = 10;
@@ -22,11 +22,11 @@ for i=1:size(times,2)
     if length(timetable) > 1
         for j=1:length(timetable)
             plot(i,timetable(j), '.','MarkerSize', dotmin + (dotmax-dotmin)/(max(counts)-min(counts))*(counts(j)-min(counts)), 'color',[46/255,  204/255, 113/255])
+            plot(i,timetable(j), '.','MarkerSize',10, 'color',[46/255,  204/255, 113/255])
         end
     else
         plot(i,timetable(1), '.','MarkerSize', dotmin + (dotmax-dotmin)/2, 'color',[46/255,  204/255, 113/255])
     end
-    
     
 end
 set(gca,'fontsize',8')

@@ -47,8 +47,8 @@ for index=1:size(variations,1)
     clearvars -except config_count changed_cars_count variations times variation_config_index groupsmall groupbig
 end
 
+disp('Variation diff')
 setdiff(groupsmall,groupbig)
-disp('Another Variations')
 
 clearvars -except config_count changed_cars_count variations times variation_config_index
 

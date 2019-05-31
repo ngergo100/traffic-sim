@@ -75,14 +75,24 @@
 			\label{fig:vehicle_density_case_3}
 		\end{figure}
 		\subsection{Analyzing all of the combinations}
-		As seen in the previous examples the more self-driving vehicles in the traffic the better. So let us investigate all possible combinations to see that is the connection between the time and the number of self-driving cars. The expectation is that the after a certain point self driving car cannot make traffic better. Until that point the connection is linear.
-		So all the possible combinations were built from only one exchanged car until all the ten cars exchanged. The total number of simulations were 1023. The plot of 
+		As seen in the previous examples the more self-driving vehicles in the traffic the better. So let us investigate all possible combinations to see what is the connection between the time and the number of self-driving cars. The expectation is that until a certain point the connection is almost linear but after that point self driving car cannot make traffic better.
+		So all the possible combinations were simulated from only one exchanged car until all the ten cars exchanged. The total number of simulations were 1023.
+		\begin{figure}[ht]
+			\centering
+			\includegraphics[width=0.8\textwidth]{eemobil/variations_nosize}
+			\caption{Time variation of autonomous drivers}
+			\label{fig:self_variations_nosize}
+		\end{figure}
+
+		The result can be seen on Figure \ref{fig:self_variations_nosize}. The horizontal axis represents how many car has been exchanged. The vertical axis shows the duration of the simulation. Unfortunately most of the points are in the same place - because of the time step - so the figure could be a little bit misleading. To make it more expressive the plot has been modified to show a larger dot where there are more simulation results and smaller where there are just a few. The result of this modification can be seen on Figure \ref{fig:self_variations}.
 		\begin{figure}[ht]
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/variations}
 			\caption{Time variation of autonomous drivers}
 			\label{fig:self_variations}
 		\end{figure}
+		
+		Now on Figure \ref{fig:self_variations}
 		\begin{figure}[ht]
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/variations_avgminmax}
