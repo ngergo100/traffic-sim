@@ -12,6 +12,9 @@ changed_cars_count = 10;
 
 for variation_config_index=1:changed_cars_count
     
+groupsmall = [];
+groupbig = [];
+    
 variations = nchoosek(1:config_count, variation_config_index);
 
 for index=1:size(variations,1)
@@ -31,10 +34,23 @@ for index=1:size(variations,1)
     
     times(index,variation_config_index) = t(length(t));
     
-    fprintf(['Progress of variation: ' num2str(index) '/' num2str(size(variations,1)) '\nProgress of varitaions: ' num2str(variation_config_index) '/' num2str(changed_cars_count) '\n'])
+    if t(length(t)) < 29.5
+        indices = find(ismember(actual_variation, groupsmall)==0);
+        groupsmall = [groupsmall,actual_variation(indices)];
+    else
+        indices = find(ismember(actual_variation, groupbig)==0);
+        groupbig = [groupbig,actual_variation(indices)];
+    end
     
-    clearvars -except config_count changed_cars_count variations times variation_config_index
+%     fprintf(['Progress of variation: ' num2str(index) '/' num2str(size(variations,1)) '\nProgress of varitaions: ' num2str(variation_config_index) '/' num2str(changed_cars_count) '\n'])
+    
+    clearvars -except config_count changed_cars_count variations times variation_config_index groupsmall groupbig
 end
+
+setdiff(groupsmall,groupbig)
+disp('Another Variations')
+
+clearvars -except config_count changed_cars_count variations times variation_config_index
 
 end
 

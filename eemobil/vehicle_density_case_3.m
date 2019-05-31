@@ -14,10 +14,12 @@ f = figure('Units','centimeters', 'Position',figure_size);
 hold all;
 
 config_count = 10;
-changed_cars_count = 3;
+changed_cars_count = 4;
 nonzerotimes = [];
+groupsmall = [];
+groupbig = [];
 
-for variation_config_index=1:changed_cars_count
+for variation_config_index=4:changed_cars_count
     
 variations = nchoosek(1:config_count, variation_config_index);
 
@@ -44,9 +46,21 @@ for index=1:size(variations,1)
     
     vehicle_density_post_processing
     
+    if t(length(t)) < 29.5
+        disp(['Kisebb ' num2str(actual_variation)])
+        indices = find(ismember(actual_variation, groupsmall)==0);
+        groupsmall = [groupsmall,actual_variation(indices)];
+        groupissmaller(index) = 1;
+    else
+        disp(['Nagyobb ' num2str(actual_variation)])
+        indices = find(ismember(actual_variation, groupbig)==0);
+        groupbig = [groupbig,actual_variation(indices)];
+        groupissmaller(index) = 0;
+    end
+    
     nonzerotimes = [nonzerotimes,t(length(t))];
     
-    clearvars -except nonzerotimes variations config_count
+    clearvars -except nonzerotimes variations config_count groupsmall groupbig groupissmaller
 end
 
 end
