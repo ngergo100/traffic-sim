@@ -15,6 +15,6 @@ traffic
 
 case_name = 'case6';
 
-post_processing_for_documentation
+post_proc_for_case_2_cod
  
 animation

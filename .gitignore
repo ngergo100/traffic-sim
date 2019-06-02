@@ -1,5 +1,5 @@
 .DS_Store
-video.mp4
+*.mp4
 *.aux
 *.bit
 *.blg

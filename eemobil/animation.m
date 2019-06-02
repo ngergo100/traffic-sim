@@ -1,6 +1,6 @@
 %% Animation
 disp(['Animation'])
-v = VideoWriter('video','MPEG-4');
+v = VideoWriter(['video' case_name],'MPEG-4');
 v.Quality = 50;
 open(v);
 ratio = 600/1200;
@@ -10,7 +10,7 @@ fig = figure('Renderer', 'painters', 'Position', [0 0 width width*ratio]);
 [img_bus, map_bus, alphachannel_bus] = imread('Pics/bus.png');
 carToFollow = 11;
 indexOfChosenCar = find(identifiers==carToFollow);
-path_limit = [min(positions(:)) max(positions(:))];
+path_limit = [min(positions(2:size(positions,1),:)) max(positions(2:size(positions,1),:))];
 
 for i = 1:size(positions,2)
     clf(fig)
