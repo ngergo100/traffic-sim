@@ -40,10 +40,10 @@
 		\end{equation}
 		where $x(t)$ is the position of the car, $\posleader$ and $\lengthleader$ is the position and length of the  car's leader vehicle.
 		Equation \ref{eq:afollower} will decreases with increasing own speed, increasing velocity difference and decreasing distance to the front car.
-		\begin{figure}[ht]
+		\begin{figure}
 			\centering
 			\includegraphics[width=.95\textwidth]{common/idm}
-			\caption{3 cases of IDM model}
+			\caption{3 cases of IDM}
 			\label{fig:idm}
 		\end{figure}
 		The sum of equation \ref{eq:afree} and \ref{eq:afollower} is the IDM equation which reads as follows:
@@ -60,7 +60,7 @@
 			\hat{a}_{n}\geq -b_{\rm safe}\,,
 		\end{equation}
 		where $\hat{a}_{n}$ is the new follower car's acceleration if car $c$ changes lanes and $b_{\rm safe}$ is a parameter of car $n$. This criterion ensures that the model remains accident free even for edge cases.
-			\begin{figure}[ht]
+			\begin{figure}
 				\centering
 				\includegraphics[width=.95\textwidth]{common/mobil}
 				\caption{Based on the local traffic conditions vehicle \textit{c} is considering changing lanes  to the right. Vehicle \textit{n} and \textit{o} will be the new and old followers of car \textit{c} respectively.}

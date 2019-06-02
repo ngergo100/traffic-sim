@@ -1,14 +1,14 @@
 \chapter{Evolution of the simulator}
 	\section{Solutions for 2 cars}\label{sec:base2car}
 		Equation \ref{eq:numerical_idm} can be solved with an Explicit Euler. To test the model a basic setup was implemented in \textsc{Matlab}. The visual representation of the setup can be seen on figure \ref{fig:basic2car}.
-		\begin{figure}[ht]
+		\begin{figure}
 			\centering
 			\includegraphics[width=.95\textwidth]{common/basic_2_car}
 			\caption{Basic setup with 2 cars}
 			\label{fig:basic2car}
 		\end{figure}
 		The leading car has a constant 100 km/h velocity. The following car - which is modeled with IDM - has an initial velocity of 100 km/h as well. The second car is 100 meters behind the other car. The parameters of following car can be seen in Table \ref{tab:idm_params}. The parameters have been chosen based on literature from [TODO:reference here].
-		\begin{table}[ht]
+		\begin{table}
 			\begin{center}
 				\begin{tabular}{ |c|c|c| }
 					\hline
@@ -26,7 +26,7 @@
 			\label{tab:idm_params}
 		\end{table}
 		The simulation was run until 100 seconds. Figure \ref{fig:basic2car_case_1} shows the result. The initial gap between the cars is greater than the second car's desired headway, consequently the vehicle will accelerate. The gap between the vehicles starts to decrease. At a certain time (around $t =$ 10) the second car starts to decelerate slowly based on the velocity difference and the decreasing headway. It will reach the desired safe gap at some point and will have exactly the same speed as the car before. It will maintain its desired headway.
-		\begin{figure}[ht]
+		\begin{figure}
 			\centering
 			\begin{minipage}{.5\textwidth}
 				\centering
@@ -41,7 +41,7 @@
 		\end{figure}
 
 		Another simulation was run with the same configuration except that the first car's front is set to be at 40 meters instead of 100. Figure \ref{fig:basic2car_case_2} shows the result. In this case the gap between cars is less than the second vehicle's desired safety headway. So it will decelerate first than accelerate to reach the desired gap. Fundamentally the same happened but in the opposite direction.
-		\begin{figure}[ht]
+		\begin{figure}
 			\centering
 			\begin{minipage}{.5\textwidth}
 				\centering
@@ -76,7 +76,7 @@
 		\label{eq:aidm_stac3}
 		\end{equation}
 		Expressions \ref{eq:aidm_stac2} and \ref{eq:aidm_stac3} show that $v_{\rm stac}$ only depends on $h_{\rm stac}$. Everything else in the equations is a parameter of the model or initial condition. Consequently every stationary gap has a corresponding speed value. Using \textsc{Matlab}'s \textit{fsolve} method Equation \ref{eq:aidm_stac2} can be solved. Plot of the result can be seen on Figure \ref{fig:aidm_stac}.
-		\begin{figure}[ht]
+		\begin{figure}
 			\centering
 			\includegraphics{check/check_stationary_states}
 			\caption{Stationary velocity based on stationary headway}
@@ -86,7 +86,7 @@
 		In the examples of Section \ref{sec:base2car} the stationary gap between the vehicles was around 64.5 meters and the velocity was 100 km/h. Figure \ref{fig:aidm_stac} shows exactly the same values. It can be stated that the model is working as expected. Note that the bumper to bumper or traffic jam distance ($h_0$) appears on the horizontal axis and it has a zero velocity value.
 	\section{Solver verification}
 		A custom Explicit Euler solver was implemented to solve equation \ref{eq:numerical_idm} numerically. However \textsc{Matlab} provides built-in solvers for differential equation systems like IDM. It has a solver called ode45. It is a 4th order numerical solver which is capable of changing some of its parameters (e.g.: time step) based on the system's behavior. So theoretically it is a better choice over a custom implemented Explicit Euler to solve differential equation systems. It also provides a verification to the custom implemented solver. 
-		\begin{figure}[ht]
+		\begin{figure}
 			\centering
 			\begin{minipage}{.5\textwidth}
 				\centering
@@ -99,7 +99,7 @@
 			\caption{Following car's headway and velocity in Setup 1 with ode45}
 			\label{fig:basic2car_case_1_ode}
 		\end{figure}
-		\begin{figure}[ht]
+		\begin{figure}
 			\centering
 			\begin{minipage}{.5\textwidth}
 				\centering
@@ -117,7 +117,7 @@
 		It can be seen on Figure \ref{fig:basic2car_case_1_ode} and \ref{fig:basic2car_case_2_ode} that the solutions are exactly the same as before, consequently the custom made solver is working as expected.
 	\section{Solver for n cars}
 		The simulator works as expected for 2 cars simulations. It is time to implement an n-car simulation as well. The simulator still uses the built-in ode45 function to solve the differential equation system so the only task is to produce $\dot{\textbf{y}}$. The visual representation of the setup can be seen on Figure \ref{fig:basic_n_car}. However the dimension of the system grows from 4 to 2n. The first car will have a constant velocity of 100 km/h so $\dot{y}_1 = 100$ and $\dot{y}_2 = 0$, since there is no acceleration.
-		\begin{figure}[ht]
+		\begin{figure}
 			\centering
 			\includegraphics[width=\textwidth]{common/basic_n_car}
 			\caption{n-car setup}
@@ -145,7 +145,7 @@
 		A couple of setups were made with n=5 to test the new n-car solver. The vehicles' IDM parameters were unchanged, it can be found in Table \ref{tab:idm_params}.
 		\subsection*{Case 1}
 		The initial positions and velocities of the cars can be seen on Table \ref{tab:node_case1}.
-		\begin{table}[ht]
+		\begin{table}
 			\centering
 			\begin{tabular}{ |c|c|c| }
 				\hline
