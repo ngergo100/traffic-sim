@@ -2,7 +2,7 @@
 % clear
 % clc
 
-%load('times.mat')
+%load('times2.mat')
 
 dotmax = 40;
 dotmin = 10;
@@ -32,7 +32,7 @@ end
 set(gca,'fontsize',8')
 xlabel('SelfDrivingCarCount')
 ylabel('t[s]')
-print('Resources/variations','-depsc');
+print('Resources/variations2','-depsc');
 
 figure('Name','Variations', 'Units','centimeters', 'Position',figure_size);
 hold all;
@@ -43,11 +43,11 @@ set(gca,'fontsize',8')
 xlabel('SelfDrivingCarCount')
 ylabel('t[s]')
 legend({'Average', 'Max', 'Min'})
-print('Resources/variations_avgminmax','-depsc');
+print('Resources/variations_avgminmax2','-depsc');
 
 figure('Name','Standard deviation', 'Units','centimeters', 'Position',figure_size);
 plot(stds,'-o')
 set(gca,'fontsize',8')
 xlabel('SelfDrivingCarCount')
 ylabel('Standard deviation [s]')
-print('Resources/variations_std','-depsc');
+print('Resources/variations_std2','-depsc');

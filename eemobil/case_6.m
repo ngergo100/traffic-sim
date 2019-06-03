@@ -17,4 +17,4 @@ case_name = 'case6';
 
 post_proc_for_case_2_cod
  
-animation
+%animation
