@@ -5,7 +5,7 @@
 		So the task is to find a model of an autonomous driver. The key observation is that an self driven car can be modeled with the same model as used before. The only difference relies on IDM and MOBIL parameters. So the task is to find proper parameters for the model that can be used for autonomous driver simulation.
 	
 		There are three main components representing human behavior built in the model currently. The first one is the attention for driving. An autonomous driver always paying attention to the road. The other component is that a self driving car can always pay attention to both longitudinal and transversal motions. They are not limited to longitudinal motion attention when they have a higher acceleration or deceleration value. The last but not least component that it can have more favorable IDM and MOBIL parameters than most of the non self driving cars. E.g. an autonomous driver will always accelerate with the greatest possible value which is comfortable, they would not change lanes if the advantage they would get be marginal however would put others significantly worst position.
-	\section{Self driving car variations}
+	\section{Self driving car variations for case 1}
 		To test the effect of autonomous drivers in traffic, the same red traffic light situation was implemented. However in this case one of the driver's parameters have been substituted with an autonomous driver parameters. The most representative figure of the result of this task is where the count of cars passed the target line - 100 meters - is illustrated as a function of time. 
 		\subsection{Effect of 1 self-driving car}
 		Cars one by one have been exchanged and then simulated with the reaming cars. So a total of ten simulations were run. The result can be seen on Figure \ref{fig:vehicle_density}.
@@ -81,7 +81,20 @@
 		\end{figure}
 		\subsection{Analyzing all of the combinations}
 		As seen in the previous examples the more self-driving vehicles in the traffic the better. So let us investigate all possible combinations to see what is the connection between the time and the number of self-driving cars. The expectation is that until a certain point the connection is almost linear but after that point self driving cars cannot make traffic situation better.
-		So all the possible combinations were simulated from only one exchanged car until all the ten cars exchanged. The total number of simulations were 1023.
+		So all the possible combinations were simulated from only one exchanged car until all the ten cars exchanged. Table \ref{tab:all_variations} shows the count of the simulations for each exchanged car numbers.
+		\begin{table}
+			\begin{center}
+				\begin{tabular}{ |c||c|c|c|c|c|c|c|c|c|c| }
+					\hline
+					Cars exchanged & 1   & 2    & 3    & 4     & 5      & 6     & 7     & 8   & 9   & 10\\
+					\hline
+					Variations            & 10 & 45 & 120 & 210 & 252 & 210 & 120 & 45 & 10 & 1\\
+					\hline
+				\end{tabular}
+			\end{center}
+			\caption{Summary of variations}
+			\label{tab:all_variations}
+		\end{table}
 		\begin{figure}
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/variations_nosize}
@@ -110,3 +123,5 @@
 			\caption{Standard deviation of elapsed time}
 			\label{fig:self_variations_std}
 		\end{figure}
+	\section{Self driving car variations for case 2}
+		Let us analyze the other case where the target line was 100 meters also but there there was an obstacle just before that. The first three simulations can be skipped unfortunately since the result plots had no more meaningful than the plot containing all of the result.

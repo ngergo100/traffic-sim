@@ -22,7 +22,8 @@ for i=1:size(times,2)
     avgs(i) = mean(timetable);
     maxs(i) = max(timetable);
     mins(i) = min(timetable);
-    counts = sum(nonzeros(times(:,i))==nonzeros(times(:,i))');
+    nonzero_times = nonzeros(times(:,i));
+    counts = sum(nonzero_times==nonzero_times');
     if length(timetable) > 1
         for j=1:length(timetable)
             plot(i,timetable(j), '.','MarkerSize',counts(j)*dotmin, 'color',[46/255,  204/255, 113/255], 'HandleVisibility','off')

@@ -1,6 +1,6 @@
 \chapter{Cases}
+		Until this point the improvements were only run separated from each other (except the second improvement). However the final goal was to used them all in the simulator and check how they effects the outcome.
 		\section{Case 1}
-			Until this point the improvements were only run separated from each other (except the second improvement). However the final goal was to used them all in the simulator and check how it effects the outcome.
 			\subsection*{Initial conditions}
 			The initial conditions remained the same, except additional parameters were necessary to provide for the improvements. The initial conditions with the additional parameters can be found in Table \ref{tab:new_array}. The table contains the time intervals whenever a driver is not paying attention as well as the acceleration threshold values.
 			\begin{table}[ht]
@@ -29,52 +29,54 @@
 			\begin{figure}
 				\centering
 				\includegraphics[width=0.8\textwidth]{eemobil/simh_case5}
-				\caption{Traffic light case 1. Headway of the vehicles respect to their position in lanes}
+				\caption{Case 1: headway of the vehicles respect to their position in lanes}
 				\label{fig:red_light_situationh2}
 			\end{figure}
 			\begin{figure}
 				\centering
 				\includegraphics[width=0.8\textwidth]{eemobil/simv_case5}
-				\caption{Traffic light case 1. Velocity of the vehicles respect to their position in lanes}
+				\caption{Case 1: velocity of the vehicles respect to their position in lanes}
 				\label{fig:red_light_situationv2}
 			\end{figure}
 			\begin{figure}
 				\centering
 				\includegraphics[width=0.8\textwidth]{eemobil/simcc_case5}
-				\caption{Traffic light case 1. Number of cars in lanes }
+				\caption{Case 1: number of cars in lanes}
 				\label{fig:red_light_situationcc2}
 			\end{figure}
 			\subsection*{Summary of the result}
-			The results can be seen on Figure \ref{fig:red_light_situationh2}, \ref{fig:red_light_situationv2} and \ref{fig:red_light_situationcc2}. The results shows that including all improvement the overall duration has increased to \casetime{5}from the original \casetime{1}seconds.
+			The results can be seen on Figure \ref{fig:red_light_situationh2}, \ref{fig:red_light_situationv2} and \ref{fig:red_light_situationcc2}. The results show that including all improvement the overall duration has increased to \casetime{5}from the original \casetime{1}seconds.
 		\section{Case 2}
-			Another interesting situation is that how an obstacle effects this simulation. E.g.: Place an obstacle into target line and see what is the outcome. Every other parameters of the simulation remained the same.
+			Another interesting question is that how an obstacle effects this situation. E.g.: place an obstacle onto the target line and see how the outcome differs. Every other parameter of the simulation remains the same. The initial configuration can be see on Figure \ref{fig:traffic_light_init2} and a possible outcome on Figure \ref{fig:traffic_light_end2}.
+			\subsection*{Summary of the result}
+			The results can be seen on Figure \ref{fig:red_light_situationh3}, \ref{fig:red_light_situationv3} and \ref{fig:red_light_situationcc3}. These plots show that the effect of adding an obstacle. The overall duration has increased drastically to \casetime{6}from the original \casetime{5}seconds.
 			\begin{figure}[ht]
 				\centering
 				\includegraphics[width=\textwidth]{common/traffic_light_init_case2}
-				\caption{Case 2 initial positions}
+				\caption{Case 2: initial positions}
 				\label{fig:traffic_light_init2}
 			\end{figure}
 			\begin{figure}[ht]
 				\centering
 				\includegraphics[width=\textwidth]{common/traffic_light_end_case2}
-				\caption{Case 2 end postions}
+				\caption{Case 2: possible end positions}
 				\label{fig:traffic_light_end2}
 			\end{figure}
 			\begin{figure}
 				\centering
 				\includegraphics[width=0.8\textwidth]{eemobil/simh_case6}
-				\caption{Traffic light case 2. Headway of the vehicles respect to their position in lanes}
+				\caption{Case 2: headway of the vehicles respect to their position in lanes}
 				\label{fig:red_light_situationh3}
 			\end{figure}
 			\begin{figure}
 				\centering
 				\includegraphics[width=0.8\textwidth]{eemobil/simv_case6}
-				\caption{Traffic light case 2. Velocity of the vehicles respect to their position in lanes}
+				\caption{Case 2: velocity of the vehicles respect to their position in lanes}
 				\label{fig:red_light_situationv3}
 			\end{figure}
 			\begin{figure}
 				\centering
 				\includegraphics[width=0.8\textwidth]{eemobil/simcc_case6}
-				\caption{Traffic light case 2. Number of cars in lanes }
+				\caption{Case 2: number of cars in lanes}
 				\label{fig:red_light_situationcc3}
 			\end{figure}
