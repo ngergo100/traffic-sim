@@ -1,11 +1,15 @@
-% close all
-% clear
-% clc
+close all
+clear
+clc
 
-%load('times.mat')
+fid = fopen('Resources/simt_case5','rt');
+original_time = fread(fid);
+original_time = str2num(char(original_time.'));
+fclose(fid);
 
-dotmax = 40;
-dotmin = 10;
+load('times_case1.mat')
+
+dotmin = 3;
 
 figure_size = [10,10,15,8];
 
@@ -21,14 +25,15 @@ for i=1:size(times,2)
     counts = sum(nonzeros(times(:,i))==nonzeros(times(:,i))');
     if length(timetable) > 1
         for j=1:length(timetable)
-            plot(i,timetable(j), '.','MarkerSize', dotmin + (dotmax-dotmin)/(max(counts)-min(counts))*(counts(j)-min(counts)), 'color',[46/255,  204/255, 113/255])
-            plot(i,timetable(j), '.','MarkerSize',10, 'color',[46/255,  204/255, 113/255])
+            plot(i,timetable(j), '.','MarkerSize',counts(j)*dotmin, 'color',[46/255,  204/255, 113/255], 'HandleVisibility','off')
         end
     else
-        plot(i,timetable(1), '.','MarkerSize', dotmin + (dotmax-dotmin)/2, 'color',[46/255,  204/255, 113/255])
+        plot(i,timetable(1), '.','MarkerSize', dotmin, 'color',[46/255,  204/255, 113/255], 'HandleVisibility','off')
     end
     
 end
+plot(1:size(times,2),ones(1,size(times,2))*original_time)
+legend('Original')
 set(gca,'fontsize',8')
 xlabel('SelfDrivingCarCount')
 ylabel('t[s]')
