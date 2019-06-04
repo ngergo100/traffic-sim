@@ -10,7 +10,7 @@ addpath('./Configurations')
 config_count = 10;
 changed_cars_count = 10;
 
-load('times.mat')
+load('times_case1.mat')
 
 for variation_config_index=1:changed_cars_count
     
@@ -23,7 +23,7 @@ for index=1:size(variations,1)
     
     actual_variation = variations(index,:);
     
-    if times(index,variation_config_index) < 29.5
+    if times(index,variation_config_index) < 27.5
         if ismember(actual_variation,groupsmall,'rows')==0
             groupsmall = [groupsmall;actual_variation];
         end

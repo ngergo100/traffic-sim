@@ -1,6 +1,5 @@
 \chapter{Analysis}
-	[TODO:felvezets]
-	Nowadays almost every new car has some level of automated driving assistant feature.
+	Nowadays almost every new car has some level of automated driving assistant feature. The automation level is scaled from 0 to 5 where 0 means the absolute human control and 5 means full autonomy. The low level automation like lane keeping or adaptive cruse control is quite common in today's car however nobody reached full autonomy yet. So why does the autonomous car matter in a congested traffic. They may be better at deciding which lane to be in helping the every vehicles faster traveling. Another plus for the self-driving cars that they have a better reaction time than humans, and also they cannot be distracted from driving. These are just a few examples why a self driving car could improve the capacity of a road network and make traffic better.
 	\section{Model of a self driving car}
 		So the task is to find a model of an autonomous driver. The key observation is that an self driven car can be modeled with the same model as used before. The only difference relies on IDM and MOBIL parameters. So the task is to find proper parameters for the model that can be used for autonomous driver simulation.
 	
@@ -50,7 +49,7 @@
 					\hline
 				\end{tabular}
 			\end{center}
-			\caption{Time until the last car has reached the target line. Two autonomous car}
+			\caption{Time until the last car has reached the target line with two autonomous car}
 			\label{tab:vehicle_density_minmaxavg_case2}
 		\end{table}
 		\begin{figure}
@@ -70,7 +69,7 @@
 					\hline
 				\end{tabular}
 			\end{center}
-			\caption{Time until the last car has reached the target line. Three autonomous car}
+			\caption{Time until the last car has reached the target line with three autonomous car}
 			\label{tab:vehicle_density_minmaxavg_case3}
 		\end{table}
 		\begin{figure}
@@ -82,7 +81,7 @@
 		\subsection{Analyzing all of the combinations}
 		As seen in the previous examples the more self-driving vehicles in the traffic the better. So let us investigate all possible combinations to see what is the connection between the time and the number of self-driving cars. The expectation is that until a certain point the connection is almost linear but after that point self driving cars cannot make traffic situation better.
 		So all the possible combinations were simulated from only one exchanged car until all the ten cars exchanged. Table \ref{tab:all_variations} shows the count of the simulations for each exchanged car numbers.
-		\begin{table}
+		\begin{table}[ht]
 			\begin{center}
 				\begin{tabular}{ |c||c|c|c|c|c|c|c|c|c|c| }
 					\hline
@@ -92,31 +91,32 @@
 					\hline
 				\end{tabular}
 			\end{center}
-			\caption{Summary of variations}
+			\caption{Count of variations}
 			\label{tab:all_variations}
 		\end{table}
 		\begin{figure}
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/variations_nosize}
-			\caption{Time variation of autonomous drivers}
+			\caption{Variation of autonomous drivers}
 			\label{fig:self_variations_nosize}
 		\end{figure}
 
-		The result can be seen on Figure \ref{fig:self_variations_nosize}. The horizontal axis represents how many car has been exchanged. The vertical axis shows the duration of the simulation. Unfortunately most of the points are in the same place - because of the time step - so the figure could be a little bit misleading. To make it more expressive the plot has been modified to show a larger dot where there are more simulation results and smaller where there are just a few. The result of this modification can be seen on Figure \ref{fig:self_variations}.
+		The result can be seen on Figure \ref{fig:self_variations_nosize}. The horizontal axis represents how many car has been exchanged. The vertical axis shows the duration of the simulation. The red line represents the original elapsed time without and autonomous vehicles. Unfortunately most of the points are in the same place - because of the time step - so the figure could be a little bit misleading. To make it more expressive the plot has been modified to show a larger dot where there are more simulation results and smaller where there are just a few. The result of this modification can be seen on Figure \ref{fig:self_variations}.
+		
+		As the plot shows the vast majority of dots are below the red line. It means that exchanging human driven cars to autonomous vehicles has an effect on the  elapsed time, moreover this effect is positive since the time until the last car has reached the target line decreased.
 		\begin{figure}
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/variations}
-			\caption{Time variation of autonomous drivers}
+			\caption{Variation of autonomous drivers with highlights}
 			\label{fig:self_variations}
 		\end{figure}
-		
-		On Figure \ref{fig:self_variations} there are multiple 
 		\begin{figure}
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/variations_avgminmax}
 			\caption{Average, minimum and maximum of elapsed time.}
 			\label{fig:self_variations_avgminmax}
 		\end{figure}
+		
 		\begin{figure}
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/variations_std}
@@ -124,4 +124,22 @@
 			\label{fig:self_variations_std}
 		\end{figure}
 	\section{Self driving car variations for case 2}
-		Let us analyze the other case where the target line was 100 meters also but there there was an obstacle just before that. The first three simulations can be skipped unfortunately since the result plots had no more meaningful than the plot containing all of the result.
+		Let us analyze the other case where the target line was 100 meters also. However there was an obstacle just before the line. The first three simulations can be skipped since unfortunately the result plots had no more meaningful than the plot containing all of the result.
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.8\textwidth]{eemobil/variations2}
+			\caption{Time variation of autonomous drivers}
+			\label{fig:self_variations2}
+		\end{figure}
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.8\textwidth]{eemobil/variations_avgminmax2}
+			\caption{Average, minimum and maximum of elapsed time.}
+			\label{fig:self_variations_avgminmax2}
+		\end{figure}
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.8\textwidth]{eemobil/variations_std2}
+			\caption{Standard deviation of elapsed time}
+			\label{fig:self_variations_std2}
+		\end{figure}
