@@ -3,7 +3,7 @@ clc
 close all
 clear
 
-dts = [0.4; 0.2; 0.1; 0.05; 0.025; 0.0125];
+dts = [0.4; 0.2; 0.1; 0.05; 0.025; 0.0125; 0.00625];
 %dts = [0.4; 0.2; 0.1; 0.05];
 figure_size = [10,10,8,5];
 
@@ -16,7 +16,7 @@ for timestepi=1:length(dts)
 
     should_use_images = false;
     
-    load_data_set_7 % Blending IDM and MOBIL
+    load_data_for_case_5 % Blending IDM and MOBIL
     
     dt = dts(timestepi);
 
@@ -58,6 +58,7 @@ plot(dts,tveg, '.','MarkerSize',16);
 set(gca,'fontsize',8')
 xlabel('dt[s]')
 ylabel('t[s]')
+set(gca, 'XScale', 'log')
 print('Resources/timestepi_t','-depsc');
 
 minlengthpr = min(cellfun(@length,pr));
