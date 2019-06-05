@@ -7,8 +7,9 @@ open(v);
 ratio = 600/1200;
 width = 1200;
 fig = figure('Renderer', 'painters', 'Position', [0 0 width width*ratio]);
-[img_car, map_car, alphachannel_car] = imread('Pics/bugattismall.png');
-[img_bus, map_bus, alphachannel_bus] = imread('Pics/bus.png');
+[img_car, map_car, alphachannel_car] = imread('Pics/active_car.svg.png');
+[img_bus, map_bus, alphachannel_bus] = imread('Pics/bus.svg.png');
+[img_ob, map_ob, alphachannel_ob] = imread('Pics/traffic-cone.png');
 carToFollow = 11;
 indexOfChosenCar = find(identifiers==carToFollow);
 path_limit = [min(positions(:)) max(positions(:))];
@@ -18,7 +19,7 @@ for i = 1:size(positions,2)
     for j = 1:length(possible_lane_numbers)-1
         path = path_limit(1);
         while path < path_limit(2)
-            plot([path path+8],[(possible_lane_numbers(j)+0.5)*10 (possible_lane_numbers(j)+0.5)*10],'b');
+            plot([path path+8],[(possible_lane_numbers(j)+0.5)*10 (possible_lane_numbers(j)+0.5)*10],'black');
             path = path + 30;
             hold on;
         end
@@ -50,9 +51,11 @@ for i = 1:size(positions,2)
         end
         if should_use_images
             if models{j,6}.L > 10 
-                image('CData',img_bus,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel_bus);
+                image('CData',img_bus,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-2 yPos+2],'AlphaData', alphachannel_bus);
+            elseif models{j,6}.L < 3
+                image('CData',img_ob,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel_ob);
             else
-                image('CData',img_car,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-1 yPos+1],'AlphaData', alphachannel_car);
+                image('CData',img_car,'XData', [xPos - models{j,6}.L xPos],'YData',[yPos-1.5 yPos+1.5],'AlphaData', alphachannel_car);
             end
         else
             r = rectangle('Position',[xPos-models{j,6}.L yPos-1 models{j,6}.L 2]);

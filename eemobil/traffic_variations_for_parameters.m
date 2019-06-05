@@ -7,8 +7,8 @@ clear
 
 addpath('./Configurations')
 cars_count = 10;
-change = 0.75;
-name = 'case2';
+change = 1.25;
+name = 'case1';
 
 % Save latex table content
 fid = fopen('Resources/vehicle_density_par_template','rt') ;
@@ -35,7 +35,7 @@ for i=1:cars_count
 end
 traffic
 table = strrep(table, 'tamax', num2str(t(length(t))));
-DisplayName = 'a_{max}';
+DisplayName = 'amax';
 post_process_density_parameter
 clearvars -except cars_count f figure_size change table name
 
@@ -57,7 +57,7 @@ for i=1:cars_count
 end
 traffic
 table = strrep(table, 'th0', num2str(t(length(t))));
-DisplayName = 'h_0';
+DisplayName = 'h0';
 post_process_density_parameter
 clearvars -except cars_count f figure_size change table name
 

@@ -7,7 +7,7 @@ global case_name
 
 addpath('./Configurations')
 
-should_use_images = false;
+should_use_images = true;
     
 load_data_for_case_5
 
@@ -17,4 +17,4 @@ case_name = 'case5';
 
 post_processing_for_documentation
  
-%animation
+animation
