@@ -2,7 +2,7 @@
 		Until this point the improvements were only run separated from each other (except the second improvement). However the final goal was to used them all in the simulator and check how they effects the outcome.
 		\section{Case 1}
 			\subsection*{Initial conditions}
-			The initial conditions remained the same, except additional parameters were necessary to provide for the improvements. The initial conditions with the additional parameters can be found in Table \ref{tab:new_array}. The table contains the time intervals whenever a driver is not paying attention as well as the acceleration threshold values.
+			The initial conditions remained the same, except additional parameters were necessary to provide for all of the improvements. The initial conditions with the additional parameters can be found in Table \ref{tab:new_array}. The table contains the time intervals whenever a driver is not paying attention as well as the acceleration threshold values.
 			\begin{table}[ht]
 				\begin{center}
 					\begin{tabular}{ |c|c|c|c| }
@@ -45,14 +45,36 @@
 				\label{fig:red_light_situationcc2}
 			\end{figure}
 			\subsection*{Summary of the result}
-			The results can be seen on Figure \ref{fig:red_light_situationh2}, \ref{fig:red_light_situationv2} and \ref{fig:red_light_situationcc2}. These figures show that the overall duration has increased to \casetime{5}from the original \casetime{1}seconds with all of the improvements. The increased elapsed time means that the included human behavior in the simulator indeed slows down the traffic.
+			The results can be seen on Figure \ref{fig:red_light_situationh2}, \ref{fig:red_light_situationv2} and \ref{fig:red_light_situationcc2}. These figures show that the overall duration has increased to \casetime{5}from the original \casetime{1}seconds with all of the improvements. The increased elapsed time means that the included human behavior in the simulator indeed slows the traffic down.
 			Some notable observations from the simulation of case 1:
 			
 			\begin{itemize}
 				\item a total of 4 lane changes happened,
 				\item at the end everybody can maintain its desired speed and safe headway,
-				\item the final order of the cars has not changed significantly.
+				\item the final order of the cars has not changed significantly (See Table \ref{tab:car_order_case_1}).
 			\end{itemize}
+			\begin{table}
+				\begin{center}
+					\begin{tabular}{ |c|c| }
+						\hline
+						Initial order & Final order \\
+						\hline
+						1 & 1\\
+						2 & 2\\
+						3 & 4\\
+						4 & 6\\
+						6 & 3\\
+						8 & 8\\
+						10 & 5\\
+						5 & 10\\
+						7 & 7\\
+						9 & 9\\
+						\hline
+					\end{tabular}
+				\end{center}
+				\caption{Initial and final order of the cars by identifier}
+				\label{tab:car_order_case_1}
+			\end{table}
 		\section{Case 2}
 			Another interesting question is that how an obstacle effects this situation. E.g.: place an obstacle onto the target line and see how the outcome differs. Every other parameter of the simulation remains the same. The initial configuration can be see on Figure \ref{fig:traffic_light_init2} and a possible outcome on Figure \ref{fig:traffic_light_end2}.
 			\begin{figure}
@@ -75,9 +97,30 @@
 				\item a total of 11 lane changes happened,
 				\item for the first 50 meters the simulation remained almost the same as case 1
 				\item the obstacle forces the vehicles to change lanes
-				\item because of these mandatory lane changes the final order of the cars changed significantly.
+				\item because of these mandatory lane changes the final order of the cars changed significantly (See Table \ref{tab:car_order_case_2}).
 			\end{itemize}
-			
+			\begin{table}
+				\begin{center}
+					\begin{tabular}{ |c|c| }
+						\hline
+						Initial order & Final order \\
+						\hline
+						1 & 2\\
+						2 & 4\\
+						3 & 6\\
+						4 & 8\\
+						6 & 1\\
+						8 & 5\\
+						10 & 10\\
+						5 & 9\\
+						7 & 7\\
+						9 & 3\\
+						\hline
+					\end{tabular}
+				\end{center}
+				\caption{Initial and final order of the cars by identifier for case 2}
+				\label{tab:car_order_case_2}
+			\end{table}
 			\begin{figure}
 				\centering
 				\includegraphics[width=0.8\textwidth]{eemobil/simh_case6}
