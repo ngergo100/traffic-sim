@@ -6,7 +6,7 @@ models = {
     0, 100/3.6, ChillModel;
 };
 
-for i=2:100
+for i=2:7 % Generate some random car
    models{i,1} = -((i-1)*50 + randi([-20 20],1,1));
    models{i,2} = 100/3.6;
    models{i,3} = IDModel(struct('a_max',1.5, 'b_max',1.67, 'v_0',130/3.6, 'T',1.8, 'h_0',2, 'delta',4, 'L', 4.5));
@@ -20,7 +20,7 @@ end
 y0 = y0';
 
 T = 150;
-opts = odeset('RelTol',1e-6);
+opts = odeset('RelTol',1e-5);
 [t,y] = ode45(@(t,y) lane(t, y, models), [0 T], y0, opts);
 
 plotcount = size(models,1);
