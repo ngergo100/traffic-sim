@@ -2,12 +2,14 @@
 
 % Packages
 \usepackage{amsmath} % -> Matrices, `pmatrix` command
-\usepackage[toc,page]{appendix}
+\usepackage[toc,page]{appendix} % -> Include appendix
 \usepackage{auto-pst-pdf} % -> Dependency of psfrag. Add `-shell-escape` paramter to pdflatex command in Commands menu
 \usepackage[top=2cm, bottom=2.5cm, inner=2cm, outer=2cm, bindingoffset=1.5cm]{geometry} % -> Makes custom margins for the twoside document style. Use `\usepackage{showframe}` command to show the margins
 \usepackage{graphicx} % -> Images, `includegraphics` command
 \usepackage[parfill]{parskip} % -> Makes new paragraphs without indentation.
+\usepackage[final]{pdfpages} % -> Include pdf pages
 \usepackage{psfrag} % -> To be able to change text font on matlab exports, `psfrag` command
+
 
 % Other configuration
 \graphicspath{{./Resources/}}
@@ -33,6 +35,10 @@
 \newcommand{\vehicledensitypartable}[1]{\input{Resources/eemobil/vehicle_density_par_pos_tab_case#1}}
 
 \begin{document}
+	\input{titlepage}
+	\input{copyright}
+	\includepdf[pages=-]{task.pdf}
+	\input{declaration}
 	\pagenumbering{gobble}
 	\tableofcontents
 	\input{Chapters/introduction}

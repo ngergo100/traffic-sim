@@ -22,3 +22,5 @@
 *.toc
 *.dvi
 *.ps
+
+!documentation/task.pdf
