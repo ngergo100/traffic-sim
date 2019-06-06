@@ -1,13 +1,13 @@
 \chapter{Evolution of the simulator}
 	\section{Solutions for 2 cars}\label{sec:base2car}
-		Equation \ref{eq:numerical_idm} can be solved with an Explicit Euler. To test the model a basic setup was implemented in \textsc{Matlab}. The visual representation of the setup can be seen on figure \ref{fig:basic2car}.
+		Equation \ref{eq:numerical_idm} can be solved with an Explicit Euler. To test the model a basic setup was implemented in \textsc{Matlab} \cite{matlab}. The visual representation of the setup can be seen on figure \ref{fig:basic2car}.
 		\begin{figure}
 			\centering
 			\includegraphics[width=.95\textwidth]{common/basic_2_car}
 			\caption{Basic setup with 2 cars}
 			\label{fig:basic2car}
 		\end{figure}
-		The leading car has a constant 100 km/h velocity. The following car - which is modeled with IDM - has an initial velocity of 100 km/h as well. The second car is 100 meters behind the other car. The parameters of following car can be seen in Table \ref{tab:idm_params}. The parameters have been chosen based on literature from [TODO:reference here].
+		The leading car has a constant 100 km/h velocity. The following car - which is modeled with IDM - has an initial velocity of 100 km/h as well. The second car is 100 meters behind the other car. The parameters of following car can be seen in Table \ref{tab:idm_params}. The parameters have been chosen based on literature from \cite{opensource}.
 		\begin{table}
 			\begin{center}
 				\begin{tabular}{ |c|c|c| }
