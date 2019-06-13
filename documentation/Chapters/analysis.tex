@@ -1,7 +1,7 @@
 \chapter{Analysis}
 		For the previous simulations the parameters of every driver were arbitrary chosen. The only constraint was that all of the parameters must be in the range of real values. However it could important that which parameters matter more and which less.
 	\section{Effect of the parameters of drivers}
-		So all of the important parameters and their effects on the traffic flow should be examined. The tested parameters are the followings: $a_{\rm max}$, $T$ $h_0$ $t_{\rm change} $, $\Delta  a_{\rm th}$.
+		So all of the important parameters and their effects on the traffic flow should be examined. The tested parameters are the followings: $a_{\rm max}$, $T$ $h_0$ $t_{\rm change} $, $\Delta a_{\rm th}$.
 		\subsection{Changing parameters of case 1}
 		Let us start with case 1. First increase the parameters by 25 \%. The effect can be seen in Table \ref{tab:vehicle_density_par_pos_case_1} and Figure \ref{fig:vehicle_density_par_pos_case_1}. As the result shows $\amax$ has the greatest improvement on time however it is still not significant. The greatest regression comes with $T$, the safe headway time. The effect of the other parameters are almost negligible.
 		\begin{figure}[ht]
@@ -183,7 +183,7 @@
 
 		The result can be seen on Figure \ref{fig:self_variations_nosize}. The horizontal axis represents how many car has been exchanged. The vertical axis shows the duration of the simulation. The red line represents the original elapsed time without and autonomous vehicles. Unfortunately most of the points are in the same place - because of the time step - so the figure could be a little bit misleading. To make it more expressive the plot has been modified to show a larger dot where there are more simulation results and smaller where there are just a few. The result of this modification can be seen on Figure \ref{fig:self_variations}. Figures \ref{fig:self_variations_avgminmax} and \ref{fig:self_variations_std} show the average, minimum, maximum and standard deviation for the simulations.
 		
-		As the plot shows the vast majority of dots are below the red line. It means that exchanging human driven cars to autonomous vehicles has an effect on the  elapsed time, moreover this effect is positive since the time until the last car has reached the target line decreased. Interesting part of Figure \ref{fig:self_variations} is that at $t~27.5\rm s$ there are clearly visible gaps. After some investigation it turned out that above the gap there are only results when Vehicle 2 and Vehicle 7 stayed human driven and below the gap they are always autonomous vehicles.
+		As the plot shows the vast majority of dots are below the red line. It means that exchanging human driven cars to autonomous vehicles has an effect on the elapsed time, moreover this effect is positive since the time until the last car has reached the target line decreased. Interesting part of Figure \ref{fig:self_variations} is that at $t~27.5\rm s$ there are clearly visible gaps. After some investigation it turned out that above the gap there are only results when Vehicle 2 and Vehicle 7 stayed human driven and below the gap they are always autonomous vehicles.
 		\begin{figure}
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/variations}

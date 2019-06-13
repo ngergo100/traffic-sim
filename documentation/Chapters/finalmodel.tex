@@ -18,7 +18,7 @@
 			\end{pmatrix}\,.
 			\label{eq:n_ode_math_revisit}
 		\end{equation}
-		As Equation \ref{eq:n_ode_math_revisit} shows there is a criterion on the car indexing.  Namely n-1-th vehicle is always the leader of n-th car. Every car is stored in an array called \textit{definition array} with their identifiers,  current and target lanes, initial positions and velocities, and parameters. An example of this definition array can be seen in Table \ref{tab:definition_array}.
+		As Eq. \eqref{eq:n_ode_math_revisit} shows there is a criterion on the car indexing. Namely n-1-th vehicle is always the leader of n-th car. Every car is stored in an array called \textit{definition array} with their identifiers, current and target lanes, initial positions and velocities, and parameters. An example of this definition array can be seen in Table \ref{tab:definition_array}.
 		\begin{table}
 			\begin{center}
 				\begin{tabular}{ |c|c|c|c|c|c| }
@@ -30,7 +30,7 @@
 					2 & 2 & 0 & 50 & 0 & ...\\
 					\vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
 					n - 1 & 1 & 0 & 200 & 0 & ...\\
-					n & 1 & 0 & 0 &  & ...\\
+					n & 1 & 0 & 0 & & ...\\
 					\hline
 				\end{tabular}
 			\end{center}
@@ -47,7 +47,7 @@
 			\item returns the row above (index - 1) if exists or nothing if there is no row above.
 		\end{itemize}
 		Let us call this function $g$. This $g$ function has one parameter, the id of the car whose leader vehicle is searched for. If there is leader than it returns exactly the same values as the IDM expects as parameters, namely the leading car's position and velocity.
-		So Equation \ref{eq:n_ode_math_revisit} modifies as follows:
+		So Eq. \eqref{eq:n_ode_math_revisit} modifies as follows:
 		\begin{equation}
 			\dot{\textbf{y}}=
 			\begin{pmatrix}
@@ -65,7 +65,7 @@
 			\end{pmatrix}\,.
 			\label{eq:n_ode_math_with_find_leading}
 		\end{equation}
-		As mentioned previously $g$ function can only return the expected parameters by $f$ if there is a leader car. This makes sense since someone has to be the very first in every single time step. Consequently that cars longitudinal model has to be changed to handle that there is no car in front of it. It is handled by leaving the follower behavior out of the equation \ref{eq:aidm}. So it will not need the leader vehicle's parameters. This means that the leader cars in their lanes will always be in free acceleration state. That is coinciding with reality. 
+		As mentioned previously $g$ function can only return the expected parameters by $f$ if there is a leader car. This makes sense since someone has to be the very first in every single time step. Consequently that cars longitudinal model has to be changed to handle that there is no car in front of it. It is handled by leaving the follower behavior out of the Eq. \eqref{eq:aidm}. So it will not need the leader vehicle's parameters. This means that the leader cars in their lanes will always be in free acceleration state. That is coinciding with reality. 
 		\subsection*{Implementation of lane changing}
 		The original n-car solver only calculated and stored the \textbf{y} vector which contained the position and velocity values at each time step. Since lane changes came into picture that wont be enough. Consequently, two more vectors needs to be stored. One for the current lane (named $\vcl$) and one for the target lane (named $\vtl$) which can keep track of the lane changes. $\vcl$ will store the lane numbers of the vehicle's current lane. $\vtl$ will contain the target lane identifier when a car is changing lanes, otherwise it will have zero value. Figures \ref{fig:stage1ofchanginglanes}, \ref{fig:stage2ofchanginglanes}, \ref{fig:stage3ofchanginglanes} show the stages of an example lane change.
 		\begin{figure}
@@ -76,7 +76,7 @@
 				\begin{minipage}{.3\textwidth}
 					\begin{tabular}{ |c|c|c|c| }
 						\hline
-						Id &  $\vcl$ & $\vtl$ & ... \\
+						Id & $\vcl$ & $\vtl$ & ... \\
 						$[-]$ & $[-]$ & $[-]$ & ...\\
 						\hline
 						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
@@ -97,7 +97,7 @@
 				\begin{minipage}{.3\textwidth}
 					\begin{tabular}{ |c|c|c|c| }
 						\hline
-						Id &  $\vcl$ & $\vtl$ & ... \\
+						Id & $\vcl$ & $\vtl$ & ... \\
 						$[-]$ & $[-]$ & $[-]$ & ...\\
 						\hline
 						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
@@ -118,7 +118,7 @@
 				\begin{minipage}{.3\textwidth}
 					\begin{tabular}{ |c|c|c|c| }
 						\hline
-						Id &  $\vcl$ & $\vtl$ & ... \\
+						Id & $\vcl$ & $\vtl$ & ... \\
 						$[-]$ & $[-]$ & $[-]$ & ...\\
 						\hline
 						$\vdots$ & $\vdots$ & $\vdots$ & \vdots\\
@@ -139,7 +139,7 @@
 		The model described in the previous section has been implemented in \textsc{Matlab}. It is worth mentioning that both algorithms' (IDM and MOBIL) primary focus were simulating highway traffic. However in this document urban traffic was investigated. The task is to test the simulator through interesting cases like a red traffic light with 10 waiting vehicles and see the outcome after the traffic light turns into green.
 		
 		\subsection*{Initial conditions}
-		The initial conditions can be found in Table \ref{tab:case_1_definition_array}. The arrangement of the cars can be seen on Figure \ref{fig:red_light_situation}. The front of the first car of each lane has been placed at zero position. Then every vehicle has been behind its leader by its traffic jam distance. The initial velocity of all cars is zero since they are waiting the traffic light turn to green.  The IDM parameters of the simulated cars have been varied between realistic values. Also for the first time a bus has been introduced to traffic. From the model point of view a bus is only different from a regular car by its length and some of its IDM parameters like the maximum acceleration or duration of a lane change.
+		The initial conditions can be found in Table \ref{tab:case_1_definition_array}. The arrangement of the cars can be seen on Figure \ref{fig:red_light_situation}. The front of the first car of each lane has been placed at zero position. Then every vehicle has been behind its leader by its traffic jam distance. The initial velocity of all cars is zero since they are waiting the traffic light turn to green. The IDM parameters of the simulated cars have been varied between realistic values. Also for the first time a bus has been introduced to traffic. From the model point of view a bus is only different from a regular car by its length and some of its IDM parameters like the maximum acceleration or duration of a lane change.
 		
 		Until now the simulator was running until a specific time point. It would be nice to run until when all of the cars have reached a specific distance. For example a traffic light situation is interesting for the first 100 meters. A while loop has been implemented into the simulator which is checking that every car has reached the target line and stops the simulation when all of them have done. Figure \ref{fig:traffic_light_init} shows the start position of the simulation and the target distance. Figure \ref{fig:traffic_light_end} represents the end of the simulation when the last car has reached the target line.
 		\begin{table}
@@ -203,7 +203,7 @@
 		\end{figure}
 		\subsection*{Summary of the result}
 		The traffic situation was successfully simulated. However post processing of the result turned out to be kind of a challenging task. The usage of the previous figures is not illustrating enough the traffic. An excellent way of showing the result could be animating the vehicles and create a video from that. Unfortunately it cannot be included in the paper here for obvious reasons however it can be found in the references. To make it easy to understand the motions of the vehicles here in the paper, the headway and velocity figures have been divided into two parts. One figure shows the headway of the cars in one lane the other figure shows the other lane. When a vehicle changes lanes its curve breaks and disappears from one figure and continues on the other.
-		The headway and velocity diagrams can be seen on Figure \ref{fig:red_light_situationh} and \ref{fig:red_light_situationv}. Notice that the first cars of each lanes have zero headway since there is no vehicle in front of them.  Another figure was made to emphasize the lane changes during the simulation. Figure \ref{fig:red_light_situationcc} shows the number of vehicles in each lane. Notice that one function is the opposite of the other. The total time until the last car has reached the target line was \casetime{1}seconds.
+		The headway and velocity diagrams can be seen on Figure \ref{fig:red_light_situationh} and \ref{fig:red_light_situationv}. Notice that the first cars of each lanes have zero headway since there is no vehicle in front of them. Another figure was made to emphasize the lane changes during the simulation. Figure \ref{fig:red_light_situationcc} shows the number of vehicles in each lane. Notice that one function is the opposite of the other. The total time until the last car has reached the target line was \casetime{1}seconds.
 		\section{Effect of the time step size on solutions}
 		A numerical solution should be independent from the time step. Thus a time step independence analysis has been carried out. What practically it means is that one particular simulation should be run multiple times with decreasing step size. If the solution is converged than it can be said that the model is step size independent. The default value of the step size was 0.1 second. The simulations were run with the values defined in Table \ref{tab:timestepsizes}.
 		Using the same parameters and initial conditions as before, the analysis has been performed. The result can be seen on Figure \ref{fig:tsip}, \ref{fig:tsiv}, \ref{fig:tsipr}, \ref{fig:tsivr} and \ref{fig:tsit}.
@@ -257,9 +257,9 @@
 			\label{fig:tsit}
 		\end{figure}
 		\section{Simulator improvements}
-		The simulator works as expected. It is capable of simulating a multi lane traffic with lane changes. But there are some human driver behaviors that can be modeled slightly better, thus making the simulator  more realistic.
+		The simulator works as expected. It is capable of simulating a multi lane traffic with lane changes. But there are some human driver behaviors that can be modeled slightly better, thus making the simulator more realistic.
 		\subsection{Improvement I}
-		As mentioned previously the duration of a lane change is not modeled or implemented yet.  However it must be implemented since it probably has a great impact on the overall traffic outcome. It makes the simulator a bit more reasonable too. The actual duration of the lane change should be defined as a driver specific parameter in seconds. A typical value is 2 to 4 sec. After a lane change has started (by filling the corresponding row of the target lane vector) the simulator is checking the elapsed time in every time step for the lane changing vehicle. The simulator will end the lane change when the elapsed time has exceeded the lane change duration. To see the effect of this improvement the same configuration was simulated with the same initial conditions as before, only the newly introduced lane change duration parameters were added. See Table \ref{tab:lane_change_duration}.
+		As mentioned previously the duration of a lane change is not modeled or implemented yet. However it must be implemented since it probably has a great impact on the overall traffic outcome. It makes the simulator a bit more reasonable too. The actual duration of the lane change should be defined as a driver specific parameter in seconds. A typical value is 2 to 4 sec. After a lane change has started (by filling the corresponding row of the target lane vector) the simulator is checking the elapsed time in every time step for the lane changing vehicle. The simulator will end the lane change when the elapsed time has exceeded the lane change duration. To see the effect of this improvement the same configuration was simulated with the same initial conditions as before, only the newly introduced lane change duration parameters were added. See Table \ref{tab:lane_change_duration}.
 		\begin{table}
 			\begin{center}
 				\begin{tabular}{ |c|c|c| }
@@ -309,7 +309,7 @@
 			a=a_{\rm c} \cdot \left(1-\frac{t_{\rm e}}{t_{\rm d}}\right) + a_{\rm f}\cdot \frac{t_{\rm e}}{t_{\rm d}}\,,
 			\label{eq:weighted_average}
 		\end{equation}
-		where $a_{\rm c}$ is the acceleration considering only the current leader vehicle, $a_{\rm f}$  is the acceleration considering only the future leader vehicle. $t_e$ and $t_d$ is the elapsed and total time of the lane change. Unfortunately this improvement only makes sense if the previously defined lane changing duration is active as well. Based on Equation \ref{eq:weighted_average} the improvement has been implemented in the simulator. This feature has been added with a toggle if one wishes to turn it off in the future.
+		where $a_{\rm c}$ is the acceleration considering only the current leader vehicle, $a_{\rm f}$ is the acceleration considering only the future leader vehicle. $t_e$ and $t_d$ is the elapsed and total time of the lane change. Unfortunately this improvement only makes sense if the previously defined lane changing duration is active as well. Based on Eq. \eqref{eq:weighted_average} the improvement has been implemented in the simulator. This feature has been added with a toggle if one wishes to turn it off in the future.
 		
 		Results of the simulation can be seen on Figure \ref{fig:red_light_situationh_impr2}, \ref{fig:red_light_situationv_impr2} and \ref{fig:red_light_situationcc_impr2}. After implementing this improvement the overall duration has increased to \casetime{3}seconds.
 		\begin{figure}
@@ -333,7 +333,7 @@
 		\subsection{Improvement III}
 		The other area which can be developed is related to the attention of the drivers to the road. The model currently assumes that everyone is paying attention to the driving always. This is not the case in real life at all. There are several factors which can distract the driver's attention. Some of these activities could be eating, interacting with radio or gps, looking at a roadside object or messaging on the phone. These activities most likely to have an effect on the traffic so it is worth to implement. The model will assume that if a driver is distracted with something then it cannot take any attention to its longitudinal or its transversal motions. So the car will go ahead with the same speed and zero acceleration when it is nobody ahead and even if its leader is braking. The actual implementation is quite simple. A new array is introduced which will contain the time intervals. These represent the the time when a driver is not paying attention to driving. Whenever a driver is not paying attention the simulator will keep its speed.
 
-		 Another problem is that driving - as discussed earlier - consists two parts, longitudinal and transversal motions. Probably drivers have to divide their attention and focus on only one at a time. It seems right to say that everyone is capable of paying attention to longitudinal and transversal motions at the same time when the speed is moderated. However when a driver is accelerating or decelerating above or below a certain point he will not care about changing lanes. This could be included in the lane changing algorithm. If Equation \ref{eq:attention_acceleration}  holds then the driver is capable of paying attention to lane changing otherwise he cannot.
+		 Another problem is that driving - as discussed earlier - consists two parts, longitudinal and transversal motions. Probably drivers have to divide their attention and focus on only one at a time. It seems right to say that everyone is capable of paying attention to longitudinal and transversal motions at the same time when the speed is moderated. However when a driver is accelerating or decelerating above or below a certain point he will not care about changing lanes. This could be included in the lane changing algorithm. If Eq. \eqref{eq:attention_acceleration} holds then the driver is capable of paying attention to lane changing otherwise he cannot.
 		\begin{equation}
 			|a|<a_{\rm tr}
 			\label{eq:attention_acceleration}

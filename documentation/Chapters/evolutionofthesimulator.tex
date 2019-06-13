@@ -1,6 +1,6 @@
 \chapter{Evolution of the simulator}
 	\section{Solutions for 2 cars}\label{sec:base2car}
-		Equation \ref{eq:numerical_idm} can be solved with an Explicit Euler. To test the model a basic setup was implemented in \textsc{Matlab} \cite{matlab}. The visual representation of the setup can be seen on figure \ref{fig:basic2car}.
+		Equation \eqref{eq:numerical_idm} can be solved with an Explicit Euler. To test the model a basic setup was implemented in \textsc{Matlab} \cite{matlab}. The visual representation of the setup can be seen on figure \ref{fig:basic2car}.
 		\begin{figure}
 			\centering
 			\includegraphics[width=.95\textwidth]{common/basic_2_car}
@@ -56,7 +56,7 @@
 		\end{figure}
 		Both examples showed that the stationary state does not depend on the initial gap. After a little bit of time the second car has reached the desired safety gap (which is around 64.5 meters) and the 100 km/h speed in both cases.
 	\section{Model behavior verification}
-		In Section \ref{sec:base2car} two examples were shown where the model produced the same stationary state for different initial conditions. In this case stationary state means that the vehicle's acceleration is zero. So equation \ref{eq:aidm} modifies as followings in a stationary state:
+		In Section \ref{sec:base2car} two examples were shown where the model produced the same stationary state for different initial conditions. In this case stationary state means that the vehicle's acceleration is zero. So Eq. \eqref{eq:aidm} modifies as followings in a stationary state:
 		\begin{equation}
 		1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T+\frac{v_{\rm stac}(v_{\rm stac}-v_{\rm lead,stac})}{2\sqrt{\amax \bmax}}}{x_{\rm lead,0}+v_{\rm lead, stac}\cdot t - L_{\rm lead} - (x_{0} + v_{\rm stac}\cdot t)} \right )^2=0\,,
 		\label{eq:aidm_stac1}
@@ -65,7 +65,7 @@
 		\begin{equation}
 			v_{\rm stac}=v_{\rm lead,stac}\,,
 		\end{equation}
-		so Equation \ref{eq:aidm_stac1} simplifies further to:
+		so Eq. \eqref{eq:aidm_stac1} simplifies further to:
 		\begin{equation}
 			1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T}{x_{\rm lead,0}-x_{0} - L_{\rm lead}} \right )^2=0\,.
 			\label{eq:aidm_stac2}
@@ -75,7 +75,7 @@
 		h_{\rm stac}=x_{\rm lead,0}-x_{0} - L_{\rm lead}\,.
 		\label{eq:aidm_stac3}
 		\end{equation}
-		Expressions \ref{eq:aidm_stac2} and \ref{eq:aidm_stac3} show that $v_{\rm stac}$ only depends on $h_{\rm stac}$. Everything else in the equations is a parameter of the model or initial condition. Consequently every stationary gap has a corresponding speed value. Using \textsc{Matlab}'s \textit{fsolve} method Equation \ref{eq:aidm_stac2} can be solved. Plot of the result can be seen on Figure \ref{fig:aidm_stac}.
+		Equation \eqref{eq:aidm_stac2} and \eqref{eq:aidm_stac3} show that $v_{\rm stac}$ only depends on $h_{\rm stac}$. Everything else in the equations is a parameter of the model or initial condition. Consequently every stationary gap has a corresponding speed value. Using \textsc{Matlab}'s \textit{fsolve} method Eq. \eqref{eq:aidm_stac2} can be solved. Plot of the result can be seen on Figure \ref{fig:aidm_stac}.
 		\begin{figure}
 			\centering
 			\includegraphics{check/check_stationary_states}
@@ -85,7 +85,7 @@
 
 		In the examples of Section \ref{sec:base2car} the stationary gap between the vehicles was around 64.5 meters and the velocity was 100 km/h. Figure \ref{fig:aidm_stac} shows exactly the same values. It can be stated that the model is working as expected. Note that the bumper to bumper or traffic jam distance ($h_0$) appears on the horizontal axis and it has a zero velocity value.
 	\section{Solver verification}
-		A custom Explicit Euler solver was implemented to solve equation \ref{eq:numerical_idm} numerically. However \textsc{Matlab} provides built-in solvers for differential equation systems like IDM. It has a solver called ode45. It is a 4th order numerical solver which is capable of changing some of its parameters (e.g.: time step) based on the system's behavior. So theoretically it is a better choice over a custom implemented Explicit Euler to solve differential equation systems. It also provides a verification to the custom implemented solver. 
+		A custom Explicit Euler solver was implemented to solve Eq. \eqref{eq:numerical_idm} numerically. However \textsc{Matlab} provides built-in solvers for differential equation systems like IDM. It has a solver called ode45. It is a 4th order numerical solver which is capable of changing some of its parameters (e.g.: time step) based on the system's behavior. So theoretically it is a better choice over a custom implemented Explicit Euler to solve differential equation systems. It also provides a verification to the custom implemented solver. 
 		\begin{figure}
 			\centering
 			\begin{minipage}{.5\textwidth}
@@ -109,7 +109,7 @@
 				\centering
 				\includegraphics{ode/basic_2_car_velocity_case_2_2}
 			\end{minipage}
-			\caption{Following car's headway and velocity in Setup 2  with ode45}
+			\caption{Following car's headway and velocity in Setup 2 with ode45}
 			\label{fig:basic2car_case_2_ode}
 		\end{figure}
 
@@ -123,7 +123,7 @@
 			\caption{n-car setup}
 			\label{fig:basic_n_car}
 		\end{figure}
-		Unfortunately the previously used implementation is not good enough to produce $\dot{\textbf{y}}$. The problem is  that to be able to calculate vehicle n's position and velocity the solver needs to have the position and velocity of vehicle n-1. To make it easy to read let us use function $f$ which represents equation \ref{eq:numerical_idm}. Than $\dot{\textbf{y}}$ looks like the following:
+		Unfortunately the previously used implementation is not good enough to produce $\dot{\textbf{y}}$. The problem is that to be able to calculate vehicle n's position and velocity the solver needs to have the position and velocity of vehicle n-1. To make it easy to read let us use function $f$ which represents Eq. \eqref{eq:numerical_idm}. Than $\dot{\textbf{y}}$ looks like the following:
 		\begin{equation}
 			\dot{\textbf{y}}=
 			\begin{pmatrix}
@@ -197,7 +197,7 @@
 			\caption{Case 2}
 			\label{tab:node_case2}
 		\end{table}
-		The result of the simulation is on  Figure \ref{fig:node_case2_headways} and \ref{fig:node_case2_velocities}. 
+		The result of the simulation is on Figure \ref{fig:node_case2_headways} and \ref{fig:node_case2_velocities}. 
 
 		Every car's leader is a bit closer than their desired safety headway so every car is decelerating first, then they try to maintain their desired headway so the cars accelerate until they reach the first car's speed.
 		\begin{figure}
@@ -223,7 +223,7 @@
 				\hline
 				n [-] & $x$ [m] & $v$ [km/h]\\
 				\hline
-				1 &  280 & 100 \\
+				1 & 280 & 100 \\
 				2 & 240 & 100 \\
 				3 & 140 & 100 \\
 				4 & 100 & 100 \\
@@ -233,7 +233,7 @@
 			\caption{Case 3}
 			\label{tab:node_case3}
 		\end{table}
-		The result of the simulation is on  Figure \ref{fig:node_case3_headways} and \ref{fig:node_case3_velocities}. 
+		The result of the simulation is on Figure \ref{fig:node_case3_headways} and \ref{fig:node_case3_velocities}. 
 
 		Some of the cars are closer to their leader than their desired safety gap and the others have more headway than their safety gap. As a result the former ones will decelerate, the latter ones will accelerate to reach the desired headway. At the end all of them have the same speed as the leader car.
 		\begin{figure}
@@ -259,7 +259,7 @@
 				\hline
 				n [-] & $x$ [m] & $v$ [km/h]\\
 				\hline
-				1 &  290 & 100 \\
+				1 & 290 & 100 \\
 				2 & 240 & 80 \\
 				3 & 150 & 120 \\
 				4 & 110& 115 \\
