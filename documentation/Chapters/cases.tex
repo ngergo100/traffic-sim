@@ -2,7 +2,7 @@
 		Until this point the improvements were only run separated from each other (except the second improvement). However the final goal was to used them all in the simulator and check how they effects the outcome.
 		\section{Case 1}
 			\subsection*{Initial conditions}
-			The initial conditions remained the same, except additional parameters were necessary to provide for all of the improvements. The initial conditions with the additional parameters can be found in Table \ref{tab:new_array}. The table contains the time intervals whenever a driver is not paying attention as well as the acceleration threshold values.
+			The initial conditions remained the same, except additional parameters were necessary to provide for all of the improvements. The initial conditions with the additional parameters can be found in Table~\ref{tab:new_array}. The table contains the time intervals whenever a driver is not paying attention as well as the acceleration threshold values.
 			\begin{table}[ht]
 				\begin{center}
 					\begin{tabular}{ |c|c|c|c| }
@@ -45,15 +45,15 @@
 				\label{fig:red_light_situationcc2}
 			\end{figure}
 			\subsection*{Summary of the result}
-			The results can be seen on Figure \ref{fig:red_light_situationh2}, \ref{fig:red_light_situationv2} and \ref{fig:red_light_situationcc2}. These figures show that the overall duration has increased to \casetime{5}from the original \casetime{1}seconds with all of the improvements. The increased elapsed time means that the included human behavior in the simulator indeed slows the traffic down. The link to the animation can be found in the appendix.
+			The results can be seen on Figure~\ref{fig:red_light_situationh2}, \ref{fig:red_light_situationv2} and \ref{fig:red_light_situationcc2}. These figures show that the overall duration has increased to \casetime{5}from the original \casetime{1}seconds with all of the improvements. The increased elapsed time means that the included human behavior in the simulator indeed slows the traffic down. The link to the animation can be found in the appendix.
 			Some notable observations from the simulation of case 1:
 			
 			\begin{itemize}
 				\item a total of 4 lane changes happened,
 				\item at the end everybody can maintain its desired speed and safe headway,
-				\item the final order of the cars has not changed significantly (See Table \ref{tab:car_order_case_1}).
+				\item the final order of the cars does not differ significantly from the initial order of the cars (See Table~\ref{tab:car_order_case_1}).
 			\end{itemize}
-			\begin{table}
+			\begin{table}[ht]
 				\begin{center}
 					\begin{tabular}{ |c|c| }
 						\hline
@@ -76,7 +76,7 @@
 				\label{tab:car_order_case_1}
 			\end{table}
 		\section{Case 2}
-			Another interesting question is that how an obstacle effects this situation. E.g.: place an obstacle onto the target line and see how the outcome differs. Every other parameter of the simulation remains the same. The initial configuration can be see on Figure \ref{fig:traffic_light_init2} and a possible outcome on Figure \ref{fig:traffic_light_end2}.
+			Another interesting question is that how an obstacle effects this situation. E.g.: place an obstacle onto the target line and see how the outcome differs. Every other parameter of the simulation remains the same. The initial configuration can be see on Figure~\ref{fig:traffic_light_init2} and a possible outcome on Figure~\ref{fig:traffic_light_end2}.
 			\begin{figure}
 				\centering
 				\includegraphics[width=\textwidth]{common/traffic_light_init_case2}
@@ -90,14 +90,14 @@
 				\label{fig:traffic_light_end2}
 			\end{figure}
 			\subsection*{Summary of the result}
-			The results can be seen on Figure \ref{fig:red_light_situationh3}, \ref{fig:red_light_situationv3} and \ref{fig:red_light_situationcc3}. These plots show that the effect of adding an obstacle. The overall duration has increased drastically to \casetime{6}from the original \casetime{5}seconds. The link to the animation can be found in the appendix.
+			The results can be seen on Figure~\ref{fig:red_light_situationh3}, \ref{fig:red_light_situationv3} and \ref{fig:red_light_situationcc3}. These plots show that the effect of adding an obstacle. The overall duration has increased drastically to \casetime{6}from the original \casetime{5}seconds. The link to the animation can be found in the appendix.
 			Some notable observations from the simulation of case 2:
 			
 			\begin{itemize}
 				\item a total of 11 lane changes happened,
 				\item for the first 50 meters the simulation remained almost the same as case 1
 				\item the obstacle forces the vehicles to change lanes
-				\item because of these mandatory lane changes the final order of the cars changed significantly (See Table \ref{tab:car_order_case_2}).
+				\item because of these mandatory lane changes the final order of the cars changed significantly (See Table~\ref{tab:car_order_case_2}).
 			\end{itemize}
 			\begin{table}
 				\begin{center}
