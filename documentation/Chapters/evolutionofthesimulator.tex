@@ -56,26 +56,13 @@
 		\end{figure}
 		Both examples showed that the stationary state does not depend on the initial gap. After a little bit of time the second car has reached the desired safety gap (which is around 64.5 meters) and the 100 km/h speed in both cases.
 	\section{Model behavior verification}
-		In Section \ref{sec:base2car} two examples were shown where the model produced the same stationary state for different initial conditions. In this case stationary state means that the vehicle's acceleration is zero. So Eq.~\eqref{eq:aidm} modifies as followings in a stationary state:
+		In Section \ref{sec:base2car} two examples were shown where the model produced the same stationary state for different initial conditions. In this case stationary state means that the vehicle's acceleration is zero. So Eq.~\eqref{eq:aidm} modifies in a stationary state when $\dot{x}(t)\equiv \dot{x}_{\rm lead}(t)\equiv v_{\rm stac}$:
 		\begin{equation}
-		1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T+\frac{v_{\rm stac}(v_{\rm stac}-v_{\rm lead,stac})}{2\sqrt{\amax \bmax}}}{x_{\rm lead,0}+v_{\rm lead, stac}\cdot t - L_{\rm lead} - (x_{0} + v_{\rm stac}\cdot t)} \right )^2=0\,,
+		1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T}{h_{\rm stac}} \right )^2=0\,.
 		\label{eq:aidm_stac1}
 		\end{equation}
-		There is an other consequence of this situation as well. As it can be seen in the examples, cars' velocities were equal, which means:
-		\begin{equation}
-			v_{\rm stac}=v_{\rm lead,stac}\,,
-		\end{equation}
-		so Eq.~\eqref{eq:aidm_stac1} simplifies further to:
-		\begin{equation}
-			1 - \left ( \frac{v_{\rm stac}}{v_{\rm d}} \right )^{\rm \delta} - \left ( \frac{h_0+v_{\rm stac}\cdot T}{x_{\rm lead,0}-x_{0} - L_{\rm lead}} \right )^2=0\,.
-			\label{eq:aidm_stac2}
-		\end{equation}
-		It can be stated that the stationary gap between the vehicles equals to the denominator of the second fraction expression:
-		\begin{equation}
-		h_{\rm stac}=x_{\rm lead,0}-x_{0} - L_{\rm lead}\,.
-		\label{eq:aidm_stac3}
-		\end{equation}
-		Equations~\eqref{eq:aidm_stac2} and \eqref{eq:aidm_stac3} show that $v_{\rm stac}$ only depends on $h_{\rm stac}$. Everything else in the equations is a parameter of the model or initial condition. Consequently every stationary gap has a corresponding stationary speed value. Using \textsc{Matlab}'s \textit{fsolve} method Eq.~\eqref{eq:aidm_stac2} can be solved. Plot of the result can be seen on Figure \ref{fig:aidm_stac}.
+		Of course all this means that the initial headway should be chosen properly, namely $h(t=0)=h_{\rm stac}$.
+		Equation~\eqref{eq:aidm_stac1} shows that $v_{\rm stac}$ only depends on $h_{\rm stac}$. Everything else in the equations is a parameter of the model or initial condition. Consequently every stationary gap has a corresponding stationary speed value. Using \textsc{Matlab}'s \textit{fsolve} method Eq.~\eqref{eq:aidm_stac1} can be solved. Plot of the result can be seen on Figure \ref{fig:aidm_stac}.
 		\begin{figure}
 			\centering
 			\includegraphics{check/check_stationary_states}
