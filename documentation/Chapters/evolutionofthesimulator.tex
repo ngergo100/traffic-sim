@@ -1,6 +1,6 @@
 \chapter{Evolution of the simulator}
 	\section{Solutions for 2 cars}\label{sec:base2car}
-		Equation~\eqref{eq:numerical_idm} can be solved with the Explicit Euler method. To test the model a basic setup was implemented in \textsc{Matlab} \cite{matlab}. The visual representation of the setup can be seen on Figure~\ref{fig:basic2car}.
+		Equation~\eqref{eq:numerical_idm} can be solved with the Explicit Euler method. To test the model a basic setup was implemented in \textsc{Matlab} \cite{matlab}. The visual representation of the setup can be seen in Figure~\ref{fig:basic2car}.
 		\begin{figure}
 			\centering
 			\includegraphics[width=.95\textwidth]{common/basic_2_car}
@@ -62,7 +62,7 @@
 		\label{eq:aidm_stac1}
 		\end{equation}
 		Of course all this means that the initial headway should be chosen properly, namely $h(t=0)=h_{\rm stac}$.
-		Equation~\eqref{eq:aidm_stac1} shows that $v_{\rm stac}$ only depends on $h_{\rm stac}$. Everything else in the equations is a parameter of the model or initial condition. Consequently every stationary gap has a corresponding stationary speed value. Using \textsc{Matlab}'s \textit{fsolve} method Eq.~\eqref{eq:aidm_stac1} can be solved. Plot of the result can be seen on Figure \ref{fig:aidm_stac}.
+		Equation~\eqref{eq:aidm_stac1} shows that $v_{\rm stac}$ only depends on $h_{\rm stac}$. Everything else in the equations is a parameter of the model or initial condition. Consequently every stationary gap has a corresponding stationary speed value. Using \textsc{Matlab}'s \textit{fsolve} method Eq.~\eqref{eq:aidm_stac1} can be solved. Plot of the result can be seen in Figure \ref{fig:aidm_stac}.
 		\begin{figure}
 			\centering
 			\includegraphics{check/check_stationary_states}
@@ -101,7 +101,7 @@
 		\end{figure}
 
 		The same two examples were implemented with ode45 as before in Section \ref{sec:base2car}. The time step is not given this time since the solver can adjust it to the system's current behavior. But it is recommended the provide a relative error tolerance value to ensure a fine solution. For this case it was set to $10^{-4}$s.
-		It can be seen on Figure \ref{fig:basic2car_case_1_ode} and \ref{fig:basic2car_case_2_ode} that the solutions are overlapping exactly, consequently the custom made solver is working as expected.
+		It can be seen in Figure \ref{fig:basic2car_case_1_ode} and \ref{fig:basic2car_case_2_ode} that the solutions are overlapping exactly, consequently the custom made solver is working as expected.
 	\section{Solver for $n$ cars}
 		The simulator works as expected for 2 cars simulations. It is time to implement an $n$-car simulation as well. The simulator still uses the built-in ode45 function to solve the differential equation system so the only task is to produce $\dot{\textbf{y}}$. The visual representation of the setup can be seen in Figure \ref{fig:basic_n_car}. The dimension of the system grows from 4 to 2n. The first car will have a constant velocity of 100 km/h so $\dot{y}_1 = 100$ and $\dot{y}_2 = 0$, since there is no acceleration.
 		\begin{figure}
@@ -184,7 +184,7 @@
 			\caption{Case 2}
 			\label{tab:node_case2}
 		\end{table}
-		The result of the simulation is on Figure~\ref{fig:node_case2_headways} and \ref{fig:node_case2_velocities}. 
+		The result of the simulation is in Figure~\ref{fig:node_case2_headways} and \ref{fig:node_case2_velocities}. 
 
 		Every car's leader is a bit closer than their desired safety headway so every car is decelerating first, then they try to maintain their desired headway so the cars accelerate until they reach the first car's speed.
 		\begin{figure}
@@ -220,7 +220,7 @@
 			\caption{Case 3}
 			\label{tab:node_case3}
 		\end{table}
-		The result of the simulation is on Figure~\ref{fig:node_case3_headways} and \ref{fig:node_case3_velocities}. 
+		The result of the simulation is in Figure~\ref{fig:node_case3_headways} and \ref{fig:node_case3_velocities}. 
 
 		Some of the cars are closer to their leader than their desired safety gap and the others have more headway than their safety gap. As a result the former ones will decelerate, the latter ones will accelerate to reach the desired headway. At the end all of them have the same speed as the leader car.
 		\begin{figure}
@@ -256,7 +256,7 @@
 			\caption{Case 4}
 			\label{tab:node_case4}
 		\end{table}
-		The result of the simulation is on Figure~\ref{fig:node_case4_headways} and \ref{fig:node_case4_velocities}. 
+		The result of the simulation is in Figure~\ref{fig:node_case4_headways} and \ref{fig:node_case4_velocities}. 
 
 		In this case the initial positions and the initial velocities were varied. As expected the result has changed significantly. Now both the speed and the headway must be changed by the drivers in order to get to the stationary point.
 		\section*{Case summary}

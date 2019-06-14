@@ -54,7 +54,7 @@
 			a(t)=\afree+\afollower=\amax\left [ 1 - \left ( \frac{\vt}{\vd} \right )^{\delta} - \left ( \frac{\hd}{\h} \right )^2 \right ]\,.
 			\label{eq:aidm}
 		\end{equation}
-		Equation~\eqref{eq:aidm} represents the longitudinal behavior mechanism of a human driven car. 3 cases of traffic situation were drawn on Figure~\ref{fig:idm} with their representative parameters.
+		Equation~\eqref{eq:aidm} represents the longitudinal behavior mechanism of a human driven car. 3 cases of traffic situation were drawn in Figure~\ref{fig:idm} with their representative parameters.
 	\section{MOBIL -- lane changing model} \label{sec:MOBIL}
 		As mentioned in Section \ref{sec:IDM}, there is a need for transversal motion model of the cars, namely a lane changing model. It has not been studied nearly as exhaustive as longitudinal behaviors. However it can have great impact on the overall traffic flow so it is worth investigating. The model should be able to decide based on the local traffic conditions that changing lane is beneficial and safe to a specific driver or not. If both conditions met the model will start to change lanes.
 
@@ -62,7 +62,7 @@
 		\begin{equation}
 			\hat{a}_{n}\geq -b_{\rm safe}\,,
 		\end{equation}
-		where $\hat{a}_{n}$ is the new follower car's acceleration if car $c$ changes lanes and $b_{\rm safe}$ is a parameter of car $n$. The mechanism is illustrated on Figure~\ref{fig:mobil}. This criterion ensures that the model remains accident free even for edge cases.
+		where $\hat{a}_{n}$ is the new follower car's acceleration if car $c$ changes lanes and $b_{\rm safe}$ is a parameter of car $n$. The mechanism is illustrated in Figure~\ref{fig:mobil}. This criterion ensures that the model remains accident free even for edge cases.
 			\begin{figure}
 				\centering
 				\includegraphics[width=.95\textwidth]{common/mobil}
