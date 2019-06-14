@@ -202,7 +202,7 @@
 			\label{fig:self_variations_std}
 		\end{figure}
 	\section{Self-driving car variations in case 2}
-		Let us analyze the other case where the target line was 100 meters also, but there was an obstacle just before the line. The first three simulations can be skipped since unfortunately the result plots had no more meaningful information than the plot containing all of the result. The same three plots were created for this case as well. Figure~\ref{fig:self_variations2} shows the elapsed time as the function of exchanged human drivers. Figures~\ref{fig:self_variations_avgminmax2} and \ref{fig:self_variations_std2} show the average, minimum, maximum and standard deviation for the simulations. In this case the self-driving cars are not performing that well as in case 1. The average of the elapsed times for the first four cases is greater than in the original case. Probably because there were significantly more lane changes in case 2 then case 1. There are no clear gaps which can identify bad driving behaviors either.
+		Let us analyze the other case where the target line was 100 meters also, but there was an obstacle just before the line. The first three simulations can be skipped since unfortunately these result plots had no more meaningful information than the plot containing all of the result. The same three plots were created for this case as well. Figure~\ref{fig:self_variations2} shows the elapsed time as the function of exchanged human drivers. Figures~\ref{fig:self_variations_avgminmax2} and \ref{fig:self_variations_std2} show the average, minimum, maximum and standard deviation for the simulations. In this case the self-driving cars are not performing that well as in case 1. The average of the elapsed times for the first four cases is even greater than in the original case. Probably because there were significantly more lane changes in case 2 then case 1. There are no clear gaps which can identify wrong driving behaviors either.
 		\begin{figure}
 			\centering
 			\includegraphics[width=0.8\textwidth]{eemobil/variations2}
@@ -224,4 +224,8 @@
 	\section{Conclusion}
 		As a conclusion it can be stated that improvement of driver or vehicle parameter will improve the traffic flow as well. However the biggest improvement can be accomplished by exchanging human driven cars to autonomous vehicles. There are some edge cases however when self-driving cars would not improve the traffic situation either.
 
-		The source code of the fully working \textsc{Matlab} implementation of this simulator is publicly available on the web. The link can be found in the appendices.
+		The source code of the fully working \textsc{Matlab} implementation of the simulator is publicly available on the web. The link can be found in the appendices for the repository.
+
+		Every case has an own script which can be run separately. These cases were built on a configuration script which defines the initial conditions, the driver parameters and other simulator parameters. Defining different configuration files one can experiment with the simulator. Several interesting cases can be simulated with this code.
+
+		The implemented simulator's goal is to be as realistic as possible. However it is still neglecting some facts that might be important, e.g.: time delay or different driving strategies.
