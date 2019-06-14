@@ -16,10 +16,9 @@ dt = 0.01;
 Tend = 100;
 t(1) = 0;
 N = ((Tend - t(1)) / dt) - 1;
-y(1)= 1;
 
-x1(1) = 100;        % Initial position of car 1
-x2(1) = 0;          % Initial position of car 2
+x1(1) = 0;          % Initial position of car 1
+x2(1) = -100;       % Initial position of car 2
 v1(1) = 100/3.6;    % Initial velocity of car 1
 v2(1) = 100/3.6;    % Initial velocity of car 2
 
